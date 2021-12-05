@@ -1,0 +1,6 @@
+framework module Pods_iTobacWorker_iTobacWorkerUITests {
+  umbrella header "Pods-iTobacWorker-iTobacWorkerUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

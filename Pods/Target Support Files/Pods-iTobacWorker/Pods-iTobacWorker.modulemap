@@ -1,0 +1,6 @@
+framework module Pods_iTobacWorker {
+  umbrella header "Pods-iTobacWorker-umbrella.h"
+
+  export *
+  module * { export * }
+}
