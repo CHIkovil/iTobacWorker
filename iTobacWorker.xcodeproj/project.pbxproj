@@ -27,7 +27,11 @@
 		17F90EF3275D8050002D03CD /* iTobacWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F90EF2275D8050002D03CD /* iTobacWorkerTests.swift */; };
 		17F90EFD275D8050002D03CD /* iTobacWorkerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F90EFC275D8050002D03CD /* iTobacWorkerUITests.swift */; };
 		17F90EFF275D8050002D03CD /* iTobacWorkerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F90EFE275D8050002D03CD /* iTobacWorkerUITestsLaunchTests.swift */; };
-		17F90F0D275D81FB002D03CD /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 17F90F0C275D81FB002D03CD /* Images */; };
+		17FB366D275E5B1A0046F6E0 /* info.png in Resources */ = {isa = PBXBuildFile; fileRef = 17FB3668275E5B190046F6E0 /* info.png */; };
+		17FB366E275E5B1A0046F6E0 /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = 17FB3669275E5B190046F6E0 /* search.png */; };
+		17FB366F275E5B1A0046F6E0 /* progress.png in Resources */ = {isa = PBXBuildFile; fileRef = 17FB366A275E5B190046F6E0 /* progress.png */; };
+		17FB3670275E5B1A0046F6E0 /* cigarette.png in Resources */ = {isa = PBXBuildFile; fileRef = 17FB366B275E5B1A0046F6E0 /* cigarette.png */; };
+		17FB3671275E5B1A0046F6E0 /* smoke.png in Resources */ = {isa = PBXBuildFile; fileRef = 17FB366C275E5B1A0046F6E0 /* smoke.png */; };
 		688067CF4C454BF842E84131 /* Pods_iTobacWorker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10C7E1F6C4C8C067D68F6016 /* Pods_iTobacWorker.framework */; };
 		E254F0CCEC1731FCCEDE9228 /* Pods_iTobacWorker_iTobacWorkerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B62FCBEB2C148C285597BF /* Pods_iTobacWorker_iTobacWorkerUITests.framework */; };
 /* End PBXBuildFile section */
@@ -74,7 +78,11 @@
 		17F90EF8275D8050002D03CD /* iTobacWorkerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iTobacWorkerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		17F90EFC275D8050002D03CD /* iTobacWorkerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTobacWorkerUITests.swift; sourceTree = "<group>"; };
 		17F90EFE275D8050002D03CD /* iTobacWorkerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTobacWorkerUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		17F90F0C275D81FB002D03CD /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
+		17FB3668275E5B190046F6E0 /* info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = info.png; sourceTree = "<group>"; };
+		17FB3669275E5B190046F6E0 /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search.png; sourceTree = "<group>"; };
+		17FB366A275E5B190046F6E0 /* progress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = progress.png; sourceTree = "<group>"; };
+		17FB366B275E5B1A0046F6E0 /* cigarette.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cigarette.png; sourceTree = "<group>"; };
+		17FB366C275E5B1A0046F6E0 /* smoke.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smoke.png; sourceTree = "<group>"; };
 		27731B277CC6197EFAFC4A28 /* Pods-iTobacWorker-iTobacWorkerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iTobacWorker-iTobacWorkerUITests.debug.xcconfig"; path = "Target Support Files/Pods-iTobacWorker-iTobacWorkerUITests/Pods-iTobacWorker-iTobacWorkerUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		388C7545A4F58196245E19D0 /* Pods-iTobacWorkerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iTobacWorkerTests.release.xcconfig"; path = "Target Support Files/Pods-iTobacWorkerTests/Pods-iTobacWorkerTests.release.xcconfig"; sourceTree = "<group>"; };
 		6113D42F1E5CFF4455D37F71 /* Pods-iTobacWorker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iTobacWorker.release.xcconfig"; path = "Target Support Files/Pods-iTobacWorker/Pods-iTobacWorker.release.xcconfig"; sourceTree = "<group>"; };
@@ -207,7 +215,7 @@
 		17F90F0B275D805A002D03CD /* Support */ = {
 			isa = PBXGroup;
 			children = (
-				17F90F0C275D81FB002D03CD /* Images */,
+				17FB3667275E5B020046F6E0 /* Images */,
 				17F90EDA275D8050002D03CD /* SceneDelegate.swift */,
 				17F90ED8275D8050002D03CD /* AppDelegate.swift */,
 				17F90EE4275D8050002D03CD /* Assets.xcassets */,
@@ -215,6 +223,18 @@
 				17F90EE1275D8050002D03CD /* iTobacWorker.xcdatamodeld */,
 			);
 			path = Support;
+			sourceTree = "<group>";
+		};
+		17FB3667275E5B020046F6E0 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				17FB366B275E5B1A0046F6E0 /* cigarette.png */,
+				17FB3668275E5B190046F6E0 /* info.png */,
+				17FB366A275E5B190046F6E0 /* progress.png */,
+				17FB3669275E5B190046F6E0 /* search.png */,
+				17FB366C275E5B1A0046F6E0 /* smoke.png */,
+			);
+			path = Images;
 			sourceTree = "<group>";
 		};
 		6440D1556584387EA3F319AD /* Frameworks */ = {
@@ -350,8 +370,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				17F90EE8275D8050002D03CD /* LaunchScreen.storyboard in Resources */,
-				17F90F0D275D81FB002D03CD /* Images in Resources */,
 				17F90EE5275D8050002D03CD /* Assets.xcassets in Resources */,
+				17FB3671275E5B1A0046F6E0 /* smoke.png in Resources */,
+				17FB366D275E5B1A0046F6E0 /* info.png in Resources */,
+				17FB366E275E5B1A0046F6E0 /* search.png in Resources */,
+				17FB3670275E5B1A0046F6E0 /* cigarette.png in Resources */,
+				17FB366F275E5B1A0046F6E0 /* progress.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

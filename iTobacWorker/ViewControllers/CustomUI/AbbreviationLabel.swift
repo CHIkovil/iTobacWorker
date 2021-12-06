@@ -11,20 +11,10 @@ import Dispatch
 
 final class AbbreviationLabel: UIView {
     
-    // MARK: init
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    // MARK: draw
+    override func draw(_ rect: CGRect) {
         makeUI()
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        makeUI()
-    }
-    
-    //MARK: INTERNAL FUNC
-    
-    
     
     //MARK: drawAbbreviation
     func drawAbbreviation() {
@@ -48,9 +38,18 @@ final class AbbreviationLabel: UIView {
     
     
     
-    //MARK: imageView
-    private lazy var imageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "cigarette.png"))
+    //MARK: cigaretteImageView
+    private lazy var cigaretteImageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "cigarette"))
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.backgroundColor = .clear
+        imageView.alpha = 0
+        return imageView
+    }()
+    
+    //MARK: smokeImageView
+    private lazy var smokeImageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "smoke"))
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.backgroundColor = .clear
         imageView.alpha = 0
@@ -67,13 +66,23 @@ private extension AbbreviationLabel {
     
     
     
-    //MARK: constraintsImageView
-    func constraintsImageView() {
-        imageView.snp.makeConstraints {(make) -> Void in
+    //MARK: constraintsCigaretteImageView
+    func constraintsCigaretteImageView() {
+        cigaretteImageView.snp.makeConstraints {(make) -> Void in
             make.width.equalTo(30)
             make.height.equalTo(30)
             make.centerX.equalTo(self.snp.centerX).offset(-22)
-            make.bottom.equalTo(self.snp.bottom).offset(-8)
+            make.bottom.equalTo(self.snp.bottom).offset(-9)
+        }
+    }
+    
+    //MARK: constraintsSmokeImageView
+    func constraintsSmokeImageView() {
+        smokeImageView.snp.makeConstraints {(make) -> Void in
+            make.width.equalTo(40)
+            make.height.equalTo(40)
+            make.centerX.equalTo(cigaretteImageView.snp.centerX).offset(-7)
+            make.bottom.equalTo(cigaretteImageView.snp.top).offset(8)
         }
     }
     
@@ -83,8 +92,11 @@ private extension AbbreviationLabel {
     
     //MARK: makeUI
     func makeUI() {
-        self.addSubview(imageView)
-        constraintsImageView()
+        self.addSubview(cigaretteImageView)
+        self.addSubview(smokeImageView)
+        
+        constraintsCigaretteImageView()
+        constraintsSmokeImageView()
     }
     
     //MARK: getCharacterPaths
@@ -154,9 +166,14 @@ private extension AbbreviationLabel {
 //MARK: DELEGATE EXTENSION
 extension AbbreviationLabel:CAAnimationDelegate{
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        UIView.animate(withDuration: 1){[weak self] in
+        UIView.animate(withDuration: 2, animations: {[weak self] in
             guard let self = self else{return}
-            self.imageView.alpha = 1
-        }
+            self.cigaretteImageView.alpha = 1
+        }, completion: { [weak self] _ in
+            guard let self = self else{return}
+            UIView.transition(with: self.smokeImageView, duration: 3, options: .curveEaseIn) {
+                self.smokeImageView.alpha = 1
+            }
+        })
     }
 }

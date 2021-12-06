@@ -11,14 +11,8 @@ import SnapKit
 
 final class WakeUpTextField: UIView {
     
-    // MARK: init
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        makeUI()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+    // MARK: draw
+    override func draw(_ rect: CGRect) {
         makeUI()
     }
     
@@ -104,6 +98,7 @@ private extension WakeUpTextField {
         let lineLayer = drawLineFromPoint(start: CGPoint(x: 6, y: 85), toPoint: CGPoint(x: 144, y: 85), color: .lightGray, width: 2)
         
         self.layer.addSublayer(lineLayer)
+        
         self.addSubview(titleLabel)
         self.addSubview(inputTextField)
         

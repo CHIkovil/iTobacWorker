@@ -24,7 +24,6 @@ class AuthorizationViewController: UIViewController
     var router: AuthorizationRoutingLogic?
     
     // MARK: Object lifecycle
-    
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)
     {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -38,7 +37,6 @@ class AuthorizationViewController: UIViewController
     }
     
     // MARK: Setup
-    
     private func setup()
     {
         let viewController = self
@@ -54,7 +52,6 @@ class AuthorizationViewController: UIViewController
     }
     
     // MARK: View lifecycle
-    
     override func viewDidLoad()
     {
         super.viewDidLoad()

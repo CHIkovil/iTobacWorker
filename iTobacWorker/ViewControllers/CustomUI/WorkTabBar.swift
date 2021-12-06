@@ -12,7 +12,7 @@ final class WorkTabBar: UITabBar{
     
     // MARK: draw
     override func draw(_ rect: CGRect) {
-        drawTabBar()
+        makeUI()
     }
     
     //MARK: point
@@ -50,7 +50,7 @@ final class WorkTabBar: UITabBar{
         button.backgroundColor = #colorLiteral(red: 0.2118592262, green: 0.2122503817, blue: 0.2306241989, alpha: 1)
         button.layer.cornerRadius = otherButtonDiameter / 2
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.layer.borderWidth = 5
+        button.layer.borderWidth = 4
         button.layer.borderColor = #colorLiteral(red: 0.1395464242, green: 0.1398070455, blue: 0.1519106925, alpha: 1)
         return button
     }()
@@ -74,7 +74,7 @@ final class WorkTabBar: UITabBar{
         button.backgroundColor = #colorLiteral(red: 0.2118592262, green: 0.2122503817, blue: 0.2306241989, alpha: 1)
         button.layer.cornerRadius = otherButtonDiameter / 2
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.layer.borderWidth = 5
+        button.layer.borderWidth = 4
         button.layer.borderColor = #colorLiteral(red: 0.1395464242, green: 0.1398070455, blue: 0.1519106925, alpha: 1)
         return button
     }()
@@ -122,8 +122,8 @@ extension WorkTabBar {
     
     
     
-    // MARK: drawTabBar
-    func drawTabBar() {
+    // MARK: makeUI
+    func makeUI() {
         self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowOpacity = 1
         self.layer.shadowOffset = .zero

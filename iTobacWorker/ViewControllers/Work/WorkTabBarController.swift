@@ -18,23 +18,25 @@ class WorkTabBarController: UITabBarController {
         super.viewDidLoad()
         makeUI()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        workTabBar.infoButton.addTarget(self, action: #selector(didPressInfoButton), for: .touchUpInside)
-        workTabBar.searchButton.addTarget(self, action: #selector(didPressMiddleButton), for: .touchUpInside)
-        workTabBar.progressButton.addTarget(self, action: #selector(didPressProgressButton), for: .touchUpInside)
-    }
 }
 
 //MARK: PRIVATE UI FUNC
 private extension WorkTabBarController {
     
+    
+    //MARK: SUPPORT FUNC
+    
+    
+    
     // MARK: makeUI
     func makeUI(){
         let tabBar = WorkTabBar()
-        self.workTabBar = tabBar
         self.setValue(tabBar, forKey: "tabBar")
+        self.workTabBar = tabBar
+        
+        workTabBar.infoButton.addTarget(self, action: #selector(didPressInfoButton), for: .touchUpInside)
+        workTabBar.searchButton.addTarget(self, action: #selector(didPressMiddleButton), for: .touchUpInside)
+        workTabBar.progressButton.addTarget(self, action: #selector(didPressProgressButton), for: .touchUpInside)
         
         let firstVC = UIViewController()
         firstVC.view.backgroundColor = #colorLiteral(red: 0.2118592262, green: 0.2122503817, blue: 0.2306241989, alpha: 1)
@@ -44,9 +46,23 @@ private extension WorkTabBarController {
         
         let secondVC = UIViewController()
         secondVC.view.backgroundColor = #colorLiteral(red: 0.2118592262, green: 0.2122503817, blue: 0.2306241989, alpha: 1)
-
+        
         
         viewControllers = [firstVC, middleVC, secondVC]
+    }
+    
+    // MARK: deselectItemColor
+    func deselectItemColor(){
+        switch selectedIndex{
+        case 0:
+            workTabBar.infoButton.animateDeselect()
+        case 1:
+            workTabBar.searchButton.animateDeselect()
+        case 2:
+            workTabBar.progressButton.animateDeselect()
+        default:
+            break
+        }
     }
     
     // MARK: OBJC
@@ -55,27 +71,32 @@ private extension WorkTabBarController {
     
     // MARK: didPressInfoButton
     @objc func didPressInfoButton() {
+        deselectItemColor()
         selectedIndex = 0
+        workTabBar.infoButton.animateSelect()
     }
     
     // MARK: didPressMiddleButton
-    
     @objc func didPressMiddleButton() {
+        deselectItemColor()
         selectedIndex = 1
-        workTabBar.searchButton.animateWakeUp()
+        workTabBar.searchButton.animateSelect()
+        workTabBar.searchButton.animateWakening()
     }
     
     // MARK: didPressProgressButton
     @objc func didPressProgressButton() {
+        deselectItemColor()
         selectedIndex = 2
+        workTabBar.progressButton.animateSelect()
     }
 }
 
 //MARK: PRIVATE UI EXTENSION
 private extension UIButton{
     
-    //MARK: animateWakeUp
-    func animateWakeUp(){
+    //MARK: animateWakening
+    func animateWakening(){
         UIView.animate(withDuration: 0.2,
                        animations: {[weak self] in
             guard let self = self else{return}
@@ -91,5 +112,19 @@ private extension UIButton{
         })
     }
     
+    //MARK: animateSelect
+    func animateSelect(){
+        UIView.animate(withDuration: 0.1) {[weak self] in
+            guard let self = self else{return}
+            self.layer.borderColor = #colorLiteral(red: 0.6985495687, green: 0.6986688375, blue: 0.6985339522, alpha: 1).cgColor
+        }
+    }
+    
+    //MARK: animateDeselect
+    func animateDeselect(){
+        UIView.animate(withDuration: 0.1) {[weak self] in
+            guard let self = self else{return}
+            self.layer.borderColor = #colorLiteral(red: 0.1395464242, green: 0.1398070455, blue: 0.1519106925, alpha: 1).cgColor
+        }
+    }
 }
-
