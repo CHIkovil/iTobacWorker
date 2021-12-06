@@ -51,17 +51,10 @@ private extension WorkTabBarController {
         viewControllers = [firstVC, middleVC, secondVC]
     }
     
-    // MARK: deselectItemColor
-    func deselectItemColor(){
-        switch selectedIndex{
-        case 0:
-            workTabBar.infoButton.animateDeselect()
-        case 1:
-            workTabBar.searchButton.animateDeselect()
-        case 2:
-            workTabBar.progressButton.animateDeselect()
-        default:
-            break
+    // MARK: deselectItemsColor
+    func deselectItemsColor(){
+        for button in self.tabBar.subviews{
+            button.animateDeselect()
         }
     }
     
@@ -71,14 +64,14 @@ private extension WorkTabBarController {
     
     // MARK: didPressInfoButton
     @objc func didPressInfoButton() {
-        deselectItemColor()
+        deselectItemsColor()
         selectedIndex = 0
         workTabBar.infoButton.animateSelect()
     }
     
     // MARK: didPressMiddleButton
     @objc func didPressMiddleButton() {
-        deselectItemColor()
+        deselectItemsColor()
         selectedIndex = 1
         workTabBar.searchButton.animateSelect()
         workTabBar.searchButton.animateWakening()
@@ -86,21 +79,21 @@ private extension WorkTabBarController {
     
     // MARK: didPressProgressButton
     @objc func didPressProgressButton() {
-        deselectItemColor()
+        deselectItemsColor()
         selectedIndex = 2
         workTabBar.progressButton.animateSelect()
     }
 }
 
 //MARK: PRIVATE UI EXTENSION
-private extension UIButton{
+private extension UIView{
     
     //MARK: animateWakening
     func animateWakening(){
         UIView.animate(withDuration: 0.2,
                        animations: {[weak self] in
             guard let self = self else{return}
-            self.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+            self.transform = CGAffineTransform(scaleX: 0.92, y: 0.92)
         },
                        completion: {  _ in
             UIView.animate(withDuration: 0.2) {[weak self] in
@@ -114,7 +107,7 @@ private extension UIButton{
     
     //MARK: animateSelect
     func animateSelect(){
-        UIView.animate(withDuration: 0.1) {[weak self] in
+        UIView.animate(withDuration: 0.2) {[weak self] in
             guard let self = self else{return}
             self.layer.borderColor = #colorLiteral(red: 0.6985495687, green: 0.6986688375, blue: 0.6985339522, alpha: 1).cgColor
         }
@@ -122,7 +115,7 @@ private extension UIButton{
     
     //MARK: animateDeselect
     func animateDeselect(){
-        UIView.animate(withDuration: 0.1) {[weak self] in
+        UIView.animate(withDuration: 0.2) {[weak self] in
             guard let self = self else{return}
             self.layer.borderColor = #colorLiteral(red: 0.1395464242, green: 0.1398070455, blue: 0.1519106925, alpha: 1).cgColor
         }
