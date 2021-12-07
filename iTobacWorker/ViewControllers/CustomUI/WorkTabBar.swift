@@ -29,21 +29,23 @@ final class WorkTabBar: UITabBar{
         return pointIsInside
     }
     
-    //MARK: PRIVATE VAR
+    //MARK: selectItem
+    func selectItem(at item: Int){
+        deselectItems()
+        switch item{
+        case 0:
+            self.infoButton.animateSelect()
+        case 1:
+            self.searchButton.animateSelect()
+            self.searchButton.animateWakening()
+        case 2:
+            self.progressButton.animateSelect()
+        default:break
+        }
+    }
     
-    private let middleButtonDiameter: CGFloat = 70
-    private let otherButtonDiameter: CGFloat = 60
-    private let circleRadius: CGFloat = 43
+    //MARK:  UI
     
-    private var tabBarWidth: CGFloat {self.bounds.width}
-    private var tabBarHeight: CGFloat {self.bounds.height}
-    private var buttonStep: CGFloat { self.bounds.width / 4}
-    
-    //MARK: PRIVATE UI
-    
-    
-    
-    //MARK: infoButton
     lazy var infoButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "info"), for: .normal)
@@ -55,7 +57,6 @@ final class WorkTabBar: UITabBar{
         return button
     }()
     
-    //MARK: searchButton
     lazy var searchButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "search"), for: .normal)
@@ -67,7 +68,7 @@ final class WorkTabBar: UITabBar{
         return button
     }()
     
-    //MARK: progressButton
+
     lazy var progressButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "progress"), for: .normal)
@@ -78,18 +79,20 @@ final class WorkTabBar: UITabBar{
         button.layer.borderColor = #colorLiteral(red: 0.1395464242, green: 0.1398070455, blue: 0.1519106925, alpha: 1)
         return button
     }()
-}
-
-//MARK: PRIVATE UI FUNC
-extension WorkTabBar {
     
+    //MARK: PRIVATE
+    
+    private let middleButtonDiameter: CGFloat = 70
+    private let otherButtonDiameter: CGFloat = 60
+    private let circleRadius: CGFloat = 43
+    
+    private var tabBarWidth: CGFloat {self.bounds.width}
+    private var tabBarHeight: CGFloat {self.bounds.height}
+    private var buttonStep: CGFloat {self.bounds.width / 4}
     
     //MARK: CONSTRAINTS
     
-    
-    
-    //MARK: constraintsInfoButton
-    func constraintsInfoButton(){
+    private func constraintsInfoButton(){
         infoButton.snp.makeConstraints {(make) -> Void in
             make.width.equalTo(otherButtonDiameter)
             make.height.equalTo(otherButtonDiameter)
@@ -98,8 +101,7 @@ extension WorkTabBar {
         }
     }
     
-    //MARK: constraintsSearchButton
-    func constraintsSearchButton(){
+    private func constraintsSearchButton(){
         searchButton.snp.makeConstraints {(make) -> Void in
             make.width.equalTo(middleButtonDiameter)
             make.height.equalTo(middleButtonDiameter)
@@ -108,8 +110,7 @@ extension WorkTabBar {
         }
     }
     
-    //MARK: constraintsProgressButton
-    func constraintsProgressButton(){
+    private func constraintsProgressButton(){
         progressButton.snp.makeConstraints {(make) -> Void in
             make.width.equalTo(otherButtonDiameter)
             make.height.equalTo(otherButtonDiameter)
@@ -120,10 +121,7 @@ extension WorkTabBar {
     
     //MARK: SUPPORT FUNC
     
-    
-    
-    // MARK: makeUI
-    func makeUI() {
+    private func makeUI() {
         self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowOpacity = 1
         self.layer.shadowOffset = .zero
@@ -140,8 +138,7 @@ extension WorkTabBar {
         constraintsProgressButton()
     }
     
-    //MARK: drawShapeLayer
-    func drawShapeLayer() -> CAShapeLayer{
+    private func drawShapeLayer() -> CAShapeLayer{
         let path = UIBezierPath(
             roundedRect: bounds,
             byRoundingCorners: [.topLeft, .topRight],
@@ -152,8 +149,7 @@ extension WorkTabBar {
         return shapeLayer
     }
     
-    //MARK: drawCircleLayer
-    func drawCircleLayer() -> CAShapeLayer {
+    private func drawCircleLayer() -> CAShapeLayer {
         let path = UIBezierPath()
         path.addArc(withCenter: CGPoint(x: buttonStep * 2, y: 20),
                     radius: circleRadius,
@@ -164,5 +160,43 @@ extension WorkTabBar {
         circleLayer.path = path.cgPath
         circleLayer.fillColor = #colorLiteral(red: 0.1598679423, green: 0.1648836732, blue: 0.1904173791, alpha: 1).cgColor
         return circleLayer
+    }
+    
+    private func deselectItems(){
+        for button in self.subviews{
+            button.animateDeselect()
+        }
+    }
+}
+
+//MARK: UI EXTENSION
+private extension UIView{
+    
+    func animateWakening(){
+        UIView.animate(withDuration: 0.2,
+                       animations: {[weak self] in
+            guard let self = self else{return}
+            self.transform = CGAffineTransform(scaleX: 0.92, y: 0.92)
+        },
+                       completion: {  _ in
+            UIView.animate(withDuration: 0.2) {[weak self] in
+                guard let self = self else{return}
+                self.transform = CGAffineTransform.identity
+            }
+        })
+    }
+    
+    func animateSelect(){
+        UIView.animate(withDuration: 0.2) {[weak self] in
+            guard let self = self else{return}
+            self.layer.borderColor = #colorLiteral(red: 0.6985495687, green: 0.6986688375, blue: 0.6985339522, alpha: 1).cgColor
+        }
+    }
+    
+    func animateDeselect(){
+        UIView.animate(withDuration: 0.2) {[weak self] in
+            guard let self = self else{return}
+            self.layer.borderColor = #colorLiteral(red: 0.1395464242, green: 0.1398070455, blue: 0.1519106925, alpha: 1).cgColor
+        }
     }
 }

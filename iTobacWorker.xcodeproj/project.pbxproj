@@ -32,6 +32,13 @@
 		17FB366F275E5B1A0046F6E0 /* progress.png in Resources */ = {isa = PBXBuildFile; fileRef = 17FB366A275E5B190046F6E0 /* progress.png */; };
 		17FB3670275E5B1A0046F6E0 /* cigarette.png in Resources */ = {isa = PBXBuildFile; fileRef = 17FB366B275E5B1A0046F6E0 /* cigarette.png */; };
 		17FB3671275E5B1A0046F6E0 /* smoke.png in Resources */ = {isa = PBXBuildFile; fileRef = 17FB366C275E5B1A0046F6E0 /* smoke.png */; };
+		17FB3679275FFFEC0046F6E0 /* ProgressPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB3673275FFFEC0046F6E0 /* ProgressPresenter.swift */; };
+		17FB367A275FFFEC0046F6E0 /* ProgressWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB3674275FFFEC0046F6E0 /* ProgressWorker.swift */; };
+		17FB367B275FFFEC0046F6E0 /* ProgressRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB3675275FFFEC0046F6E0 /* ProgressRouter.swift */; };
+		17FB367C275FFFEC0046F6E0 /* ProgressModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB3676275FFFEC0046F6E0 /* ProgressModels.swift */; };
+		17FB367D275FFFEC0046F6E0 /* ProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB3677275FFFEC0046F6E0 /* ProgressViewController.swift */; };
+		17FB367E275FFFEC0046F6E0 /* ProgressInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB3678275FFFEC0046F6E0 /* ProgressInteractor.swift */; };
+		17FB3680276003560046F6E0 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB367F276003560046F6E0 /* ProgressView.swift */; };
 		688067CF4C454BF842E84131 /* Pods_iTobacWorker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10C7E1F6C4C8C067D68F6016 /* Pods_iTobacWorker.framework */; };
 		E254F0CCEC1731FCCEDE9228 /* Pods_iTobacWorker_iTobacWorkerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B62FCBEB2C148C285597BF /* Pods_iTobacWorker_iTobacWorkerUITests.framework */; };
 /* End PBXBuildFile section */
@@ -83,6 +90,13 @@
 		17FB366A275E5B190046F6E0 /* progress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = progress.png; sourceTree = "<group>"; };
 		17FB366B275E5B1A0046F6E0 /* cigarette.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cigarette.png; sourceTree = "<group>"; };
 		17FB366C275E5B1A0046F6E0 /* smoke.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smoke.png; sourceTree = "<group>"; };
+		17FB3673275FFFEC0046F6E0 /* ProgressPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressPresenter.swift; sourceTree = "<group>"; };
+		17FB3674275FFFEC0046F6E0 /* ProgressWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressWorker.swift; sourceTree = "<group>"; };
+		17FB3675275FFFEC0046F6E0 /* ProgressRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressRouter.swift; sourceTree = "<group>"; };
+		17FB3676275FFFEC0046F6E0 /* ProgressModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressModels.swift; sourceTree = "<group>"; };
+		17FB3677275FFFEC0046F6E0 /* ProgressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewController.swift; sourceTree = "<group>"; };
+		17FB3678275FFFEC0046F6E0 /* ProgressInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressInteractor.swift; sourceTree = "<group>"; };
+		17FB367F276003560046F6E0 /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		27731B277CC6197EFAFC4A28 /* Pods-iTobacWorker-iTobacWorkerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iTobacWorker-iTobacWorkerUITests.debug.xcconfig"; path = "Target Support Files/Pods-iTobacWorker-iTobacWorkerUITests/Pods-iTobacWorker-iTobacWorkerUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		388C7545A4F58196245E19D0 /* Pods-iTobacWorkerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iTobacWorkerTests.release.xcconfig"; path = "Target Support Files/Pods-iTobacWorkerTests/Pods-iTobacWorkerTests.release.xcconfig"; sourceTree = "<group>"; };
 		6113D42F1E5CFF4455D37F71 /* Pods-iTobacWorker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iTobacWorker.release.xcconfig"; path = "Target Support Files/Pods-iTobacWorker/Pods-iTobacWorker.release.xcconfig"; sourceTree = "<group>"; };
@@ -135,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				17003031275D84CC0093DAC3 /* WorkTabBarController.swift */,
+				17FB3672275FFFAD0046F6E0 /* Progress */,
 			);
 			path = Work;
 			sourceTree = "<group>";
@@ -152,13 +167,13 @@
 		17003039275D854A0093DAC3 /* Authorization */ = {
 			isa = PBXGroup;
 			children = (
-				1700303D275D85AB0093DAC3 /* AuthorizationInteractor.swift */,
 				1700303A275D85AB0093DAC3 /* AuthorizationModels.swift */,
-				1700303B275D85AB0093DAC3 /* AuthorizationPresenter.swift */,
 				1700303F275D85AB0093DAC3 /* AuthorizationRouter.swift */,
 				1700303E275D85AB0093DAC3 /* AuthorizationView.swift */,
 				1700303C275D85AB0093DAC3 /* AuthorizationViewController.swift */,
+				1700303D275D85AB0093DAC3 /* AuthorizationInteractor.swift */,
 				17003040275D85AB0093DAC3 /* AuthorizationWorker.swift */,
+				1700303B275D85AB0093DAC3 /* AuthorizationPresenter.swift */,
 			);
 			path = Authorization;
 			sourceTree = "<group>";
@@ -189,7 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				17F90EE9275D8050002D03CD /* Info.plist */,
-				17F90F0B275D805A002D03CD /* Support */,
+				17F90F0B275D805A002D03CD /* AppSupport */,
 				1700302E275D84720093DAC3 /* ViewControllers */,
 			);
 			path = iTobacWorker;
@@ -212,7 +227,7 @@
 			path = iTobacWorkerUITests;
 			sourceTree = "<group>";
 		};
-		17F90F0B275D805A002D03CD /* Support */ = {
+		17F90F0B275D805A002D03CD /* AppSupport */ = {
 			isa = PBXGroup;
 			children = (
 				17FB3667275E5B020046F6E0 /* Images */,
@@ -222,7 +237,7 @@
 				17F90EE6275D8050002D03CD /* LaunchScreen.storyboard */,
 				17F90EE1275D8050002D03CD /* iTobacWorker.xcdatamodeld */,
 			);
-			path = Support;
+			path = AppSupport;
 			sourceTree = "<group>";
 		};
 		17FB3667275E5B020046F6E0 /* Images */ = {
@@ -235,6 +250,20 @@
 				17FB366C275E5B1A0046F6E0 /* smoke.png */,
 			);
 			path = Images;
+			sourceTree = "<group>";
+		};
+		17FB3672275FFFAD0046F6E0 /* Progress */ = {
+			isa = PBXGroup;
+			children = (
+				17FB3676275FFFEC0046F6E0 /* ProgressModels.swift */,
+				17FB3675275FFFEC0046F6E0 /* ProgressRouter.swift */,
+				17FB367F276003560046F6E0 /* ProgressView.swift */,
+				17FB3677275FFFEC0046F6E0 /* ProgressViewController.swift */,
+				17FB3678275FFFEC0046F6E0 /* ProgressInteractor.swift */,
+				17FB3674275FFFEC0046F6E0 /* ProgressWorker.swift */,
+				17FB3673275FFFEC0046F6E0 /* ProgressPresenter.swift */,
+			);
+			path = Progress;
 			sourceTree = "<group>";
 		};
 		6440D1556584387EA3F319AD /* Frameworks */ = {
@@ -509,13 +538,20 @@
 				17003046275D85AB0093DAC3 /* AuthorizationRouter.swift in Sources */,
 				17003041275D85AB0093DAC3 /* AuthorizationModels.swift in Sources */,
 				17003038275D84F70093DAC3 /* AbbreviationLabel.swift in Sources */,
+				17FB367B275FFFEC0046F6E0 /* ProgressRouter.swift in Sources */,
 				17F90EE3275D8050002D03CD /* iTobacWorker.xcdatamodeld in Sources */,
 				17003044275D85AB0093DAC3 /* AuthorizationInteractor.swift in Sources */,
 				17003037275D84F70093DAC3 /* WorkTabBar.swift in Sources */,
 				17003036275D84F70093DAC3 /* WakeUpTextField.swift in Sources */,
+				17FB3680276003560046F6E0 /* ProgressView.swift in Sources */,
+				17FB367E275FFFEC0046F6E0 /* ProgressInteractor.swift in Sources */,
+				17FB367D275FFFEC0046F6E0 /* ProgressViewController.swift in Sources */,
 				17F90ED9275D8050002D03CD /* AppDelegate.swift in Sources */,
+				17FB367C275FFFEC0046F6E0 /* ProgressModels.swift in Sources */,
 				17003047275D85AB0093DAC3 /* AuthorizationWorker.swift in Sources */,
+				17FB3679275FFFEC0046F6E0 /* ProgressPresenter.swift in Sources */,
 				17003043275D85AB0093DAC3 /* AuthorizationViewController.swift in Sources */,
+				17FB367A275FFFEC0046F6E0 /* ProgressWorker.swift in Sources */,
 				17F90EDB275D8050002D03CD /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

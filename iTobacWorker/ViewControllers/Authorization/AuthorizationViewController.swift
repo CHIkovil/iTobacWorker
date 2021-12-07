@@ -63,8 +63,8 @@ class AuthorizationViewController: UIViewController
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         authorizationView.titleAppLabel.drawAbbreviation()
+        authorizationView.loginTextField.showTextField()
     }
-    
 }
 
 

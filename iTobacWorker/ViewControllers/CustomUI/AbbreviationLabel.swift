@@ -33,12 +33,15 @@ final class AbbreviationLabel: UIView {
         
         animateToAbbreviation(charLayers)
     }
+ 
+    //MARK: PRIVATE
     
-    //MARK: PRIVATE UI
+    
+    
+    //MARK: UI
     
     
     
-    //MARK: cigaretteImageView
     private lazy var cigaretteImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "cigarette"))
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -47,7 +50,6 @@ final class AbbreviationLabel: UIView {
         return imageView
     }()
     
-    //MARK: smokeImageView
     private lazy var smokeImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "smoke"))
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -56,18 +58,9 @@ final class AbbreviationLabel: UIView {
         return imageView
     }()
     
-}
-
-//MARK: PRIVATE UI FUNC
-private extension AbbreviationLabel {
-    
-    
     //MARK: CONSTRAINTS
     
-    
-    
-    //MARK: constraintsCigaretteImageView
-    func constraintsCigaretteImageView() {
+    private func constraintsCigaretteImageView() {
         cigaretteImageView.snp.makeConstraints {(make) -> Void in
             make.width.equalTo(30)
             make.height.equalTo(30)
@@ -76,8 +69,7 @@ private extension AbbreviationLabel {
         }
     }
     
-    //MARK: constraintsSmokeImageView
-    func constraintsSmokeImageView() {
+   private func constraintsSmokeImageView() {
         smokeImageView.snp.makeConstraints {(make) -> Void in
             make.width.equalTo(40)
             make.height.equalTo(40)
@@ -88,10 +80,7 @@ private extension AbbreviationLabel {
     
     //MARK: SUPPORT FUNC
     
-    
-    
-    //MARK: makeUI
-    func makeUI() {
+    private func makeUI() {
         self.addSubview(cigaretteImageView)
         self.addSubview(smokeImageView)
         
@@ -99,8 +88,7 @@ private extension AbbreviationLabel {
         constraintsSmokeImageView()
     }
     
-    //MARK: getCharacterPaths
-    func getCharacterPaths(attributedString: NSAttributedString, position: CGPoint) -> [CGPath] {
+    private func getCharacterPaths(attributedString: NSAttributedString, position: CGPoint) -> [CGPath] {
 
         let line = CTLineCreateWithAttributedString(attributedString)
 
@@ -133,9 +121,8 @@ private extension AbbreviationLabel {
         }
         return characterPaths
     }
-    
-    //MARK: animateToAbbreviation
-    func animateToAbbreviation(_ charLayers: [CAShapeLayer]) {
+
+    private func animateToAbbreviation(_ charLayers: [CAShapeLayer]) {
         for (index,layer) in charLayers.enumerated(){
             self.layer.addSublayer(layer)
             let animation = CABasicAnimation(keyPath: "opacity")
@@ -161,10 +148,13 @@ private extension AbbreviationLabel {
             layer.add(animation, forKey: "charAnimation")
         }
     }
+    
 }
 
 //MARK: DELEGATE EXTENSION
+
 extension AbbreviationLabel:CAAnimationDelegate{
+    
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         UIView.animate(withDuration: 2, animations: {[weak self] in
             guard let self = self else{return}

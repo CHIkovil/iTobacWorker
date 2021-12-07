@@ -16,24 +16,27 @@ final class WakeUpTextField: UIView {
         makeUI()
     }
     
-    //MARK: touch event
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touchLocation = touches.first?.location(in: self) else {return}
-        if (!titleLabel.frame.contains(touchLocation) || !inputTextField.frame.contains(touchLocation)) {return}
+    // MARK: showTextField
+    func showTextField(){
         activateLine()
-        titleLabel.transform.ty = -inputTextField.frame.height
-        inputTextField.alpha = 1
-        inputTextField.isEnabled = true
+        UIView.animate(withDuration: 0.4) {[weak self] in
+            guard let self = self else{return}
+            self.titleLabel.transform.ty = -self.inputTextField.frame.height
+            self.inputTextField.alpha = 1
+        }
     }
     
-    //MARK: PRIVATE UI
+    //MARK: PRIVATE
     
+    private var lineStartPoint:CGPoint {CGPoint(x: 15, y: 85)}
+    private var lineEndPoint:CGPoint {CGPoint(x: 185, y: 85)}
     
+    //MARK:  UI
     
-    //MARK: titleLabel
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
         label.textColor = .gray
         label.backgroundColor = .clear
         label.font = UIFont(name: "Chalkduster", size: 13.6)
@@ -41,61 +44,44 @@ final class WakeUpTextField: UIView {
         return label
     }()
     
-    //MARK: inputTextField
     private lazy var inputTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = .white
+        textField.font = UIFont(name: "Chalkduster", size: 16)
         textField.textColor = .black
         textField.tintColor = .clear
-        textField.layer.cornerRadius = 10
-        textField.setLeftPaddingPoints(5)
+        textField.layer.cornerRadius = 15
+        textField.setLeftPaddingPoints(12)
+        textField.isUserInteractionEnabled = false
         textField.alpha = 0
-        textField.isEnabled = false
-        textField.font = UIFont(name: "Chalkduster", size: 16)
         return textField
     }()
     
-    
-}
-
-//MARK: PRIVATE UI FUNC
-private extension WakeUpTextField {
-    
-    
     //MARK: CONSTRAINTS
     
-    
-    
-    //MARK: constraintsTitleLabel
-    func constraintsTitleLabel(){
+    private func constraintsTitleLabel(){
         titleLabel.snp.makeConstraints {(make) -> Void in
             make.width.equalTo(self.snp.width)
             make.height.equalTo(32)
-            make.left.equalTo(inputTextField.snp.left)
+            make.centerX.equalTo(inputTextField.snp.centerX)
             make.bottom.equalTo(inputTextField.snp.bottom)
         }
     }
     
-    //MARK: constraintsInputTextField
-    func constraintsInputTextField(){
+    private func constraintsInputTextField(){
         inputTextField.snp.makeConstraints {(make) -> Void in
             make.width.equalTo(self.snp.width)
-            make.height.equalTo(30)
+            make.height.equalTo(40)
             make.centerX.equalTo(self.snp.centerX)
             make.bottom.equalTo(self.snp.bottom)
         }
     }
     
-    
     //MARK: SUPPORT FUNC
     
-    
-    
-    
-    // MARK: makeUI
-    func makeUI() {
-        let lineLayer = drawLineFromPoint(start: CGPoint(x: 6, y: 85), toPoint: CGPoint(x: 144, y: 85), color: .lightGray, width: 2)
+    private func makeUI() {
+        let lineLayer = drawLineFromPoint(start: lineStartPoint, toPoint: lineEndPoint, color: .lightGray, width: 2)
         
         self.layer.addSublayer(lineLayer)
         
@@ -106,8 +92,7 @@ private extension WakeUpTextField {
         constraintsInputTextField()
     }
     
-    //MARK: drawLineFromPoint
-    func drawLineFromPoint(start: CGPoint, toPoint end: CGPoint, color: UIColor, width: CGFloat) ->  CAShapeLayer{
+    private func drawLineFromPoint(start: CGPoint, toPoint end: CGPoint, color: UIColor, width: CGFloat) ->  CAShapeLayer{
         let path = UIBezierPath()
         path.move(to: start)
         path.addLine(to: end)
@@ -121,9 +106,8 @@ private extension WakeUpTextField {
         return shapeLayer
     }
     
-    //MARK: activateLine
-    func activateLine(){
-        let lineLayer = drawLineFromPoint(start: CGPoint(x: 6, y: 85), toPoint: CGPoint(x: self.frame.width - 6, y: 85), color: .yellow, width: 5)
+    private func activateLine(){
+        let lineLayer = drawLineFromPoint(start: lineStartPoint, toPoint: lineEndPoint, color: .yellow, width: 5)
         
         let animation : CABasicAnimation = CABasicAnimation(keyPath: "strokeEnd")
         animation.fromValue = 0.0
@@ -133,10 +117,13 @@ private extension WakeUpTextField {
         
         self.layer.addSublayer(lineLayer)
     }
+    
 }
 
-//MARK: PRIVATE UI EXTENSION
+//MARK: UI EXTENSION
+
 private extension UITextField{
+    
     func setLeftPaddingPoints(_ amount:CGFloat){
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.size.height))
         self.leftView = paddingView
