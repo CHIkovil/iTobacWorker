@@ -57,8 +57,8 @@ class AuthorizationView: UIView{
     
     func constraintsBoardView() {
         boardView.snp.makeConstraints {(make) -> Void in
-            make.width.equalTo(315)
-            make.height.equalTo(315)
+            make.width.equalTo(300)
+            make.height.equalTo(300)
             make.center.equalTo(self.snp.center)
         }
     }
@@ -85,11 +85,10 @@ class AuthorizationView: UIView{
     
     func makeUI() {
         self.backgroundColor = #colorLiteral(red: 0.1846325099, green: 0.184974581, blue: 0.200987637, alpha: 1)
-        
         boardView.addSubview(loginTextField)
         self.addSubview(boardView)
         self.addSubview(appLabel)
-
+        
         constraintsBoardView()
         constraintsTitleAppLabel()
         constraintsLoginTextField()

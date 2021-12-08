@@ -23,6 +23,10 @@ class WorkTabBarController: UITabBarController {
         workTabBar.infoButton.addTarget(self, action: #selector(didPressInfoButton), for: .touchUpInside)
         workTabBar.searchButton.addTarget(self, action: #selector(didPressSearchButton), for: .touchUpInside)
         workTabBar.progressButton.addTarget(self, action: #selector(didPressProgressButton), for: .touchUpInside)
+        
+        self.view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(swipeViewController)))
+        
+        workTabBar.selectItem(at: selectedIndex)
     }
     
     //MARK: SUPPORT FUNC
@@ -43,6 +47,19 @@ class WorkTabBarController: UITabBarController {
         secondVC.view.backgroundColor = #colorLiteral(red: 0.1846325099, green: 0.184974581, blue: 0.200987637, alpha: 1)
         
         viewControllers = [firstVC, middleVC, secondVC]
+    }
+    
+    @objc func swipeViewController(_ sender: UIPanGestureRecognizer){
+        if sender.state == .ended {
+            let velocity = sender.velocity(in: self.view)
+            if (velocity.x < 0) {
+                selectedIndex += 1
+                
+            } else {
+                selectedIndex -= 1
+            }
+            workTabBar.selectItem(at: selectedIndex)
+        }
     }
     
     // MARK: OBJC

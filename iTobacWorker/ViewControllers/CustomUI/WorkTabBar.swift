@@ -171,6 +171,8 @@ final class WorkTabBar: UITabBar{
 //MARK: UI EXTENSION
 private extension UIView{
     
+    
+    //MARK: ANIMATION
     func animateSelect(){
         UIView.animate(withDuration: 0.2,
                        animations: {[weak self] in

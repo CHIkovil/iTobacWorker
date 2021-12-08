@@ -26,6 +26,7 @@ final class WakeUpTextField: UIView {
     
     private var lineStartPoint:CGPoint {CGPoint(x: 15, y: 85)}
     private var lineEndPoint:CGPoint {CGPoint(x: 185, y: 85)}
+    private var lineWidth: CGFloat = 2
     
     //MARK:  UI
     
@@ -43,7 +44,7 @@ final class WakeUpTextField: UIView {
     private lazy var inputTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.backgroundColor = .white
+        textField.backgroundColor = #colorLiteral(red: 0.9386559129, green: 0.9388130307, blue: 0.9386352301, alpha: 1)
         textField.font = UIFont(name: "Chalkduster", size: 16)
         textField.textColor = .black
         textField.tintColor = .clear
@@ -77,7 +78,7 @@ final class WakeUpTextField: UIView {
     //MARK: SUPPORT FUNC
     
     private func makeUI() {
-        let lineLayer = drawLineFromPoint(start: lineStartPoint, toPoint: lineEndPoint, color: .lightGray, width: 2)
+        let lineLayer = drawLineFromPoint(start: lineStartPoint, toPoint: lineEndPoint, color: .lightGray, width: lineWidth)
         
         self.layer.addSublayer(lineLayer)
         
@@ -113,12 +114,12 @@ final class WakeUpTextField: UIView {
     }
     
     private func animateLine(){
-        let lineLayer = drawLineFromPoint(start: lineStartPoint, toPoint: lineEndPoint, color: .yellow, width: 5)
+        let lineLayer = drawLineFromPoint(start: lineStartPoint, toPoint: lineEndPoint, color: #colorLiteral(red: 0.1598679423, green: 0.1648836732, blue: 0.1904173791, alpha: 1), width: lineWidth)
         
         let animation : CABasicAnimation = CABasicAnimation(keyPath: "strokeEnd")
         animation.fromValue = 0.0
         animation.toValue = 1.0
-        animation.duration = 0.8
+        animation.duration = 1
         lineLayer.add(animation, forKey: "lineAnimation")
         
         self.layer.addSublayer(lineLayer)

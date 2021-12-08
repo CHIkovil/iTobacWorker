@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import Dispatch
 
-protocol AbbreviationDelegate: NSObject{
+protocol AbbreviationDelegate: class {
     func animationDidEnd()
 }
 
@@ -31,7 +31,7 @@ final class AbbreviationLabel: UIView {
         let charLayers = charPaths.map { path -> CAShapeLayer in
             let shapeLayer = CAShapeLayer()
             shapeLayer.fillColor = UIColor.clear.cgColor
-            shapeLayer.strokeColor = UIColor.white.cgColor
+            shapeLayer.strokeColor = UIColor.lightGray.cgColor
             shapeLayer.lineWidth = 2
             shapeLayer.path = path
             return shapeLayer
@@ -44,7 +44,7 @@ final class AbbreviationLabel: UIView {
     func animateSmokeImage(){
         UIView.animate(withDuration: 2){[weak self] in
             guard let self = self else{return}
-            self.smokeImageView.alpha = 1
+            self.smokeImageView.alpha = 0.8
         }
     }
  

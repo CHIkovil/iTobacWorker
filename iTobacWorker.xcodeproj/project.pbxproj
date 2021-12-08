@@ -33,6 +33,7 @@
 		17FB367D275FFFEC0046F6E0 /* ProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB3677275FFFEC0046F6E0 /* ProgressViewController.swift */; };
 		17FB3680276003560046F6E0 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB367F276003560046F6E0 /* ProgressView.swift */; };
 		17FB36822760D9190046F6E0 /* AuthorizationModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB36812760D9190046F6E0 /* AuthorizationModels.swift */; };
+		17FB3684276149760046F6E0 /* UserImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB3683276149760046F6E0 /* UserImagePicker.swift */; };
 		688067CF4C454BF842E84131 /* Pods_iTobacWorker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10C7E1F6C4C8C067D68F6016 /* Pods_iTobacWorker.framework */; };
 		E254F0CCEC1731FCCEDE9228 /* Pods_iTobacWorker_iTobacWorkerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B62FCBEB2C148C285597BF /* Pods_iTobacWorker_iTobacWorkerUITests.framework */; };
 /* End PBXBuildFile section */
@@ -85,6 +86,7 @@
 		17FB3677275FFFEC0046F6E0 /* ProgressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewController.swift; sourceTree = "<group>"; };
 		17FB367F276003560046F6E0 /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		17FB36812760D9190046F6E0 /* AuthorizationModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationModels.swift; sourceTree = "<group>"; };
+		17FB3683276149760046F6E0 /* UserImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImagePicker.swift; sourceTree = "<group>"; };
 		27731B277CC6197EFAFC4A28 /* Pods-iTobacWorker-iTobacWorkerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iTobacWorker-iTobacWorkerUITests.debug.xcconfig"; path = "Target Support Files/Pods-iTobacWorker-iTobacWorkerUITests/Pods-iTobacWorker-iTobacWorkerUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		388C7545A4F58196245E19D0 /* Pods-iTobacWorkerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iTobacWorkerTests.release.xcconfig"; path = "Target Support Files/Pods-iTobacWorkerTests/Pods-iTobacWorkerTests.release.xcconfig"; sourceTree = "<group>"; };
 		6113D42F1E5CFF4455D37F71 /* Pods-iTobacWorker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iTobacWorker.release.xcconfig"; path = "Target Support Files/Pods-iTobacWorker/Pods-iTobacWorker.release.xcconfig"; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				17003035275D84F70093DAC3 /* AbbreviationLabel.swift */,
 				17003033275D84F70093DAC3 /* WakeUpTextField.swift */,
 				17003034275D84F70093DAC3 /* WorkTabBar.swift */,
+				17FB3683276149760046F6E0 /* UserImagePicker.swift */,
 			);
 			path = CustomUI;
 			sourceTree = "<group>";
@@ -514,6 +517,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17FB3684276149760046F6E0 /* UserImagePicker.swift in Sources */,
 				17003042275D85AB0093DAC3 /* AuthorizationPresenter.swift in Sources */,
 				17003032275D84CC0093DAC3 /* WorkTabBarController.swift in Sources */,
 				17003045275D85AB0093DAC3 /* AuthorizationView.swift in Sources */,
