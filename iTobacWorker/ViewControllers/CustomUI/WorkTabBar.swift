@@ -37,7 +37,6 @@ final class WorkTabBar: UITabBar{
             self.infoButton.animateSelect()
         case 1:
             self.searchButton.animateSelect()
-            self.searchButton.animateWakening()
         case 2:
             self.progressButton.animateSelect()
         default:break
@@ -172,10 +171,11 @@ final class WorkTabBar: UITabBar{
 //MARK: UI EXTENSION
 private extension UIView{
     
-    func animateWakening(){
+    func animateSelect(){
         UIView.animate(withDuration: 0.2,
                        animations: {[weak self] in
             guard let self = self else{return}
+            self.layer.borderColor = #colorLiteral(red: 0.7716341615, green: 0.7717649341, blue: 0.7716168761, alpha: 1).cgColor
             self.transform = CGAffineTransform(scaleX: 0.92, y: 0.92)
         },
                        completion: {  _ in
@@ -184,13 +184,6 @@ private extension UIView{
                 self.transform = CGAffineTransform.identity
             }
         })
-    }
-    
-    func animateSelect(){
-        UIView.animate(withDuration: 0.2) {[weak self] in
-            guard let self = self else{return}
-            self.layer.borderColor = #colorLiteral(red: 0.6985495687, green: 0.6986688375, blue: 0.6985339522, alpha: 1).cgColor
-        }
     }
     
     func animateDeselect(){

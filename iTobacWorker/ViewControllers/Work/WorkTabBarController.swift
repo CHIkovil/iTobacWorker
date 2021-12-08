@@ -34,14 +34,13 @@ class WorkTabBarController: UITabBarController {
         
    
         let firstVC = UIViewController()
-        firstVC.view.backgroundColor = #colorLiteral(red: 0.2118592262, green: 0.2122503817, blue: 0.2306241989, alpha: 1)
+        firstVC.view.backgroundColor = #colorLiteral(red: 0.1846325099, green: 0.184974581, blue: 0.200987637, alpha: 1)
         
         let middleVC = UIViewController()
-        middleVC.view.backgroundColor = #colorLiteral(red: 0.2118592262, green: 0.2122503817, blue: 0.2306241989, alpha: 1)
+        middleVC.view.backgroundColor = #colorLiteral(red: 0.1846325099, green: 0.184974581, blue: 0.200987637, alpha: 1)
         
         let secondVC = UIViewController()
-        secondVC.view.backgroundColor = #colorLiteral(red: 0.2118592262, green: 0.2122503817, blue: 0.2306241989, alpha: 1)
-        
+        secondVC.view.backgroundColor = #colorLiteral(red: 0.1846325099, green: 0.184974581, blue: 0.200987637, alpha: 1)
         
         viewControllers = [firstVC, middleVC, secondVC]
     }

@@ -9,29 +9,43 @@ import Foundation
 import UIKit
 import Dispatch
 
+protocol AbbreviationDelegate: NSObject{
+    func animationDidEnd()
+}
+
 final class AbbreviationLabel: UIView {
+    
+    weak var delegate: AbbreviationDelegate?
     
     // MARK: draw
     override func draw(_ rect: CGRect) {
         makeUI()
     }
     
-    //MARK: drawAbbreviation
-    func drawAbbreviation() {
-        let stringAttributes = [ NSAttributedString.Key.font: UIFont(name: "Chalkduster", size: 38.5)!]
+    //MARK: showAbbreviation
+    func showAbbreviation() {
+        let stringAttributes = [ NSAttributedString.Key.font: UIFont(name: "Chalkduster", size: 45)!]
         let attributedString = NSMutableAttributedString(string: "iTobacWorker", attributes: stringAttributes )
-        let charPaths = self.getCharacterPaths(attributedString: attributedString, position: CGPoint(x: 7, y: 60))
+        let charPaths = self.getCharacterPaths(attributedString: attributedString, position: CGPoint(x: -10, y: 60))
 
         let charLayers = charPaths.map { path -> CAShapeLayer in
             let shapeLayer = CAShapeLayer()
             shapeLayer.fillColor = UIColor.clear.cgColor
-            shapeLayer.strokeColor = UIColor.lightGray.cgColor
+            shapeLayer.strokeColor = UIColor.white.cgColor
             shapeLayer.lineWidth = 2
             shapeLayer.path = path
             return shapeLayer
         }
         
         animateToAbbreviation(charLayers)
+    }
+    
+    //MARK: animateSmokeImage
+    func animateSmokeImage(){
+        UIView.animate(withDuration: 2){[weak self] in
+            guard let self = self else{return}
+            self.smokeImageView.alpha = 1
+        }
     }
  
     //MARK: PRIVATE
@@ -62,18 +76,18 @@ final class AbbreviationLabel: UIView {
     
     private func constraintsCigaretteImageView() {
         cigaretteImageView.snp.makeConstraints {(make) -> Void in
-            make.width.equalTo(30)
-            make.height.equalTo(30)
+            make.width.equalTo(40)
+            make.height.equalTo(40)
             make.centerX.equalTo(self.snp.centerX).offset(-22)
-            make.bottom.equalTo(self.snp.bottom).offset(-9)
+            make.bottom.equalTo(self.snp.bottom).offset(-6.5)
         }
     }
     
    private func constraintsSmokeImageView() {
         smokeImageView.snp.makeConstraints {(make) -> Void in
-            make.width.equalTo(40)
-            make.height.equalTo(40)
-            make.centerX.equalTo(cigaretteImageView.snp.centerX).offset(-7)
+            make.width.equalTo(50)
+            make.height.equalTo(50)
+            make.centerX.equalTo(cigaretteImageView.snp.centerX).offset(-9)
             make.bottom.equalTo(cigaretteImageView.snp.top).offset(8)
         }
     }
@@ -122,6 +136,8 @@ final class AbbreviationLabel: UIView {
         return characterPaths
     }
 
+    //MARK: ANIMATION
+    
     private func animateToAbbreviation(_ charLayers: [CAShapeLayer]) {
         for (index,layer) in charLayers.enumerated(){
             self.layer.addSublayer(layer)
@@ -149,6 +165,17 @@ final class AbbreviationLabel: UIView {
         }
     }
     
+    private func animateCigaretteImage(){
+        UIView.animate(withDuration: 2, animations: {[weak self] in
+            guard let self = self else{return}
+            self.cigaretteImageView.alpha = 1
+        }, completion: { [weak self] _ in
+            guard let self = self else{return}
+            guard let delegate = self.delegate else{return}
+            delegate.animationDidEnd()
+        })
+    }
+    
 }
 
 //MARK: DELEGATE EXTENSION
@@ -156,14 +183,6 @@ final class AbbreviationLabel: UIView {
 extension AbbreviationLabel:CAAnimationDelegate{
     
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        UIView.animate(withDuration: 2, animations: {[weak self] in
-            guard let self = self else{return}
-            self.cigaretteImageView.alpha = 1
-        }, completion: { [weak self] _ in
-            guard let self = self else{return}
-            UIView.transition(with: self.smokeImageView, duration: 3, options: .curveEaseIn) {
-                self.smokeImageView.alpha = 1
-            }
-        })
+        animateCigaretteImage()
     }
 }

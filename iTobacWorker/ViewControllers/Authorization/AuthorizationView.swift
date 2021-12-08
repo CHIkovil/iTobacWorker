@@ -22,26 +22,9 @@ class AuthorizationView: UIView{
         super.init(coder: coder)
         makeUI()
     }
-    
-    func makeUI() {
-        self.backgroundColor = #colorLiteral(red: 0.2118592262, green: 0.2122503817, blue: 0.2306241989, alpha: 1)
-        boardView.addSubview(titleAppLabel)
-        boardView.addSubview(loginTextField)
-        self.addSubview(boardView)
-        
-        constraintsBoardView()
-        constraintsTitleAppLabel()
-        constraintsLoginTextField()
-    }
-    
+
     //MARK: UI
     
-    lazy var titleAppLabel: AbbreviationLabel = {
-        let label = AbbreviationLabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-        
     lazy var boardView:UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -53,9 +36,17 @@ class AuthorizationView: UIView{
         view.layer.shadowRadius = 10
         view.layer.borderWidth = 6
         view.layer.borderColor = #colorLiteral(red: 0.1395464242, green: 0.1398070455, blue: 0.1519106925, alpha: 1)
+        view.alpha = 0
         return view
     }()
     
+    lazy var appLabel: AbbreviationLabel = {
+        let label = AbbreviationLabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.delegate = self
+        return label
+    }()
+        
     lazy var loginTextField: WakeUpTextField = {
         let textField = WakeUpTextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -66,17 +57,17 @@ class AuthorizationView: UIView{
     
     func constraintsBoardView() {
         boardView.snp.makeConstraints {(make) -> Void in
-            make.width.equalTo(310)
-            make.height.equalTo(310)
+            make.width.equalTo(315)
+            make.height.equalTo(315)
             make.center.equalTo(self.snp.center)
         }
     }
     
     func constraintsTitleAppLabel() {
-        titleAppLabel.snp.makeConstraints {(make) -> Void in
+        appLabel.snp.makeConstraints {(make) -> Void in
             make.width.equalTo(300)
             make.height.equalTo(70)
-            make.bottom.equalTo(self.loginTextField.snp.top)
+            make.centerY.equalTo(self.snp.centerY)
             make.centerX.equalTo(self.snp.centerX)
         }
     }
@@ -88,5 +79,40 @@ class AuthorizationView: UIView{
             make.bottom.equalTo(self.snp.centerY)
             make.centerX.equalTo(self.snp.centerX)
         }
+    }
+    
+    //MARK: SUPPORT FUNC
+    
+    func makeUI() {
+        self.backgroundColor = #colorLiteral(red: 0.1846325099, green: 0.184974581, blue: 0.200987637, alpha: 1)
+        
+        boardView.addSubview(loginTextField)
+        self.addSubview(boardView)
+        self.addSubview(appLabel)
+
+        constraintsBoardView()
+        constraintsTitleAppLabel()
+        constraintsLoginTextField()
+    }
+}
+
+//MARK: DELEGATE EXTENSION
+
+extension AuthorizationView: AbbreviationDelegate{
+    func animationDidEnd() {
+        UIView.animate(withDuration: 0.5, animations: {[weak self] in
+            guard let self = self else{return}
+            self.appLabel.transform.ty = -113
+        }, completion: { [weak self] _ in
+            guard let self = self else{return}
+            UIView.animate(withDuration: 0.5,animations: {[weak self] in
+                guard let self = self else{return}
+                self.boardView.alpha = 1
+                self.loginTextField.showTextField()
+            },completion: {[weak self] _ in
+                guard let self = self else{return}
+                self.appLabel.animateSmokeImage()
+            })
+        })
     }
 }

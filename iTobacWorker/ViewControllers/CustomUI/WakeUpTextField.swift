@@ -18,12 +18,8 @@ final class WakeUpTextField: UIView {
     
     // MARK: showTextField
     func showTextField(){
-        activateLine()
-        UIView.animate(withDuration: 0.4) {[weak self] in
-            guard let self = self else{return}
-            self.titleLabel.transform.ty = -self.inputTextField.frame.height
-            self.inputTextField.alpha = 1
-        }
+        animateLabel()
+        animateLine()
     }
     
     //MARK: PRIVATE
@@ -106,7 +102,17 @@ final class WakeUpTextField: UIView {
         return shapeLayer
     }
     
-    private func activateLine(){
+    //MARK: ANIMATION
+    
+    private func animateLabel(){
+        UIView.animate(withDuration: 0.5) {[weak self] in
+            guard let self = self else{return}
+            self.titleLabel.transform.ty = -self.inputTextField.frame.height
+            self.inputTextField.alpha = 1
+        }
+    }
+    
+    private func animateLine(){
         let lineLayer = drawLineFromPoint(start: lineStartPoint, toPoint: lineEndPoint, color: .yellow, width: 5)
         
         let animation : CABasicAnimation = CABasicAnimation(keyPath: "strokeEnd")
@@ -117,7 +123,6 @@ final class WakeUpTextField: UIView {
         
         self.layer.addSublayer(lineLayer)
     }
-    
 }
 
 //MARK: UI EXTENSION
