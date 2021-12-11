@@ -18,6 +18,8 @@ private enum WakeUpTextFieldString: String {
 
 final class WakeUpTextField: UIView {
     
+    var textSize: CGFloat?
+    
     override func draw(_ rect: CGRect) {
         makeUI()
     }
@@ -30,16 +32,17 @@ final class WakeUpTextField: UIView {
     
     //MARK: PRIVATE
     
-    private var lineStartPoint:CGPoint = CGPoint(x: 15, y: 85)
-    private var lineEndPoint:CGPoint = CGPoint(x: 185, y: 85)
+    private var lineStartPoint:CGPoint {CGPoint(x: 15, y: self.frame.height + 5)}
+    private var lineEndPoint:CGPoint {CGPoint(x: self.frame.width - 15, y: self.frame.height + 5)}
     private var lineWidth: CGFloat = 2
+    private var textFieldWidth: CGFloat {self.frame.width}
+    private var textFieldHeight: CGFloat {self.frame.height}
     
     //MARK:  UI
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: WakeUpTextFieldString.fontName.rawValue, size: 13.6)
         label.text = WakeUpTextFieldString.titleText.rawValue
         label.textAlignment = .center
         label.textColor = .gray
@@ -51,7 +54,6 @@ final class WakeUpTextField: UIView {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = #colorLiteral(red: 0.9386559129, green: 0.9388130307, blue: 0.9386352301, alpha: 1)
-        textField.font = UIFont(name: WakeUpTextFieldString.fontName.rawValue, size: 16)
         textField.textColor = .black
         textField.tintColor = .clear
         textField.isUserInteractionEnabled = false
@@ -66,7 +68,7 @@ final class WakeUpTextField: UIView {
     private func constraintsTitleLabel(){
         titleLabel.snp.makeConstraints {(make) -> Void in
             make.width.equalTo(self.snp.width)
-            make.height.equalTo(32)
+            make.height.equalTo(textFieldHeight * 0.4)
             make.centerX.equalTo(inputTextField.snp.centerX)
             make.bottom.equalTo(inputTextField.snp.bottom)
         }
@@ -75,7 +77,7 @@ final class WakeUpTextField: UIView {
     private func constraintsInputTextField(){
         inputTextField.snp.makeConstraints {(make) -> Void in
             make.width.equalTo(self.snp.width)
-            make.height.equalTo(40)
+            make.height.equalTo(textFieldHeight * 0.4)
             make.centerX.equalTo(self.snp.centerX)
             make.bottom.equalTo(self.snp.bottom)
         }
@@ -85,9 +87,12 @@ final class WakeUpTextField: UIView {
     
     private func makeUI() {
         let lineLayer = drawLineFromPoint(start: lineStartPoint, toPoint: lineEndPoint, color: .lightGray, width: lineWidth)
-        
         self.layer.addSublayer(lineLayer)
         
+        
+        titleLabel.font = UIFont(name: WakeUpTextFieldString.fontName.rawValue, size: textSize ?? 13.5)
+        inputTextField.font = UIFont(name: WakeUpTextFieldString.fontName.rawValue, size: (textSize ?? 14) + 1)
+     
         self.addSubview(titleLabel)
         self.addSubview(inputTextField)
         

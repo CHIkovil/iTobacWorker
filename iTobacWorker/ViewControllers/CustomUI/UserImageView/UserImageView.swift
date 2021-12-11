@@ -19,7 +19,6 @@ class UserImageView: UIView {
         makeUI()
     }
     
-    
     // MARK: UI
     
     private lazy var backgroundView: UIView = {
@@ -81,8 +80,8 @@ class UserImageView: UIView {
     
     private func constraintsAddButton() {
         addButton.snp.makeConstraints {(make) -> Void in
-            make.height.equalTo(50)
-            make.width.equalTo(50)
+            make.height.equalTo(self.frame.width / 3)
+            make.width.equalTo(self.frame.width / 3)
             make.top.equalTo(backgroundView.snp.bottom)
             make.leading.equalTo(self.snp.trailing).offset(-25)
         }

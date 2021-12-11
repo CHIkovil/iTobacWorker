@@ -30,7 +30,7 @@ class AuthorizationView: UIView{
         view.backgroundColor = #colorLiteral(red: 0.1598679423, green: 0.1648836732, blue: 0.1904173791, alpha: 1)
         view.alpha = 0
         view.layer.cornerRadius = 25
-        view.layer.borderWidth = 6
+        view.layer.borderWidth = 3
         view.layer.borderColor = #colorLiteral(red: 0.1395464242, green: 0.1398070455, blue: 0.1519106925, alpha: 1)
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowOpacity = 1
@@ -98,7 +98,7 @@ class AuthorizationView: UIView{
 
 extension AuthorizationView: AbbreviationDelegate{
     func animationDidEnd() {
-        UIView.animate(withDuration: 0.5, animations: {[weak self] in
+        UIView.animate(withDuration: 0.3, animations: {[weak self] in
             guard let self = self else{return}
             self.appLabel.transform.ty = -113
         }, completion: { [weak self] _ in

@@ -27,6 +27,7 @@ protocol AbbreviationDelegate: AnyObject {
 final class AbbreviationLabel: UIView {
     
     weak var delegate: AbbreviationDelegate?
+    var textSize: CGFloat?
     
     override func draw(_ rect: CGRect) {
         makeUI()
@@ -34,9 +35,10 @@ final class AbbreviationLabel: UIView {
     
     //MARK: showAbbreviation
     func showAbbreviation() {
-        let stringAttributes = [ NSAttributedString.Key.font: UIFont(name: AbbreviationLabelString.fontName.rawValue, size: 45)!]
+        
+        let stringAttributes = [ NSAttributedString.Key.font: UIFont(name: AbbreviationLabelString.fontName.rawValue, size: textSize ?? 45)!]
         let attributedString = NSMutableAttributedString(string: AbbreviationLabelString.appName.rawValue, attributes: stringAttributes )
-        let charPaths = self.getCharacterPaths(attributedString: attributedString, position: CGPoint(x: -10, y: 60))
+        let charPaths = self.getCharacterPaths(attributedString: attributedString, position: CGPoint(x: -10, y: labelHeight - 10))
 
         let charLayers = charPaths.map { path -> CAShapeLayer in
             let shapeLayer = CAShapeLayer()
@@ -60,7 +62,7 @@ final class AbbreviationLabel: UIView {
  
     //MARK: PRIVATE
     
-    let imageDiameter: CGFloat = 40
+    private var labelHeight: CGFloat {self.frame.height}
     
     //MARK: UI
     
@@ -86,8 +88,8 @@ final class AbbreviationLabel: UIView {
     
     private func constraintsCigaretteImageView() {
         cigaretteImageView.snp.makeConstraints {(make) -> Void in
-            make.width.equalTo(imageDiameter)
-            make.height.equalTo(imageDiameter)
+            make.width.equalTo(labelHeight * 0.57)
+            make.height.equalTo(labelHeight * 0.57)
             make.centerX.equalTo(self.snp.centerX).offset(-22)
             make.bottom.equalTo(self.snp.bottom).offset(-6.5)
         }
@@ -95,8 +97,8 @@ final class AbbreviationLabel: UIView {
     
    private func constraintsSmokeImageView() {
         smokeImageView.snp.makeConstraints {(make) -> Void in
-            make.width.equalTo(imageDiameter + 10)
-            make.height.equalTo(imageDiameter + 10)
+            make.width.equalTo(labelHeight * 0.71)
+            make.height.equalTo(labelHeight * 0.71)
             make.centerX.equalTo(cigaretteImageView.snp.centerX).offset(-9)
             make.bottom.equalTo(cigaretteImageView.snp.top).offset(8)
         }
@@ -158,6 +160,7 @@ final class AbbreviationLabel: UIView {
             animation.isRemovedOnCompletion = false;
         
             let layersLength = charLayers.count
+            
             switch index {
             case layersLength / 2 - 1:
                 animation.delegate = self
