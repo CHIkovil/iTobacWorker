@@ -8,10 +8,8 @@
 import Foundation
 import UIKit
 
-private enum UserImagePickerString: String {
+private enum ImagePickerString: String {
     case mediaTypes = "public.image"
-    case cameraTitle = "Take photo"
-    case savedAlbumTitle = "Camera roll"
     case photoLibraryTitle =  "Photo library"
     case cancelTitle = "Cancel"
 }
@@ -20,7 +18,7 @@ public protocol ImagePickerDelegate: AnyObject {
     func didSelect(image: UIImage?)
 }
 
-class UserImagePicker: NSObject {
+class ImagePicker: NSObject {
 
     //MARK: init
     init(presentationController: UIViewController, delegate: ImagePickerDelegate) {
@@ -33,29 +31,21 @@ class UserImagePicker: NSObject {
 
         self.pickerController.delegate = self
         self.pickerController.allowsEditing = true
-        self.pickerController.mediaTypes = [UserImagePickerString.mediaTypes.rawValue]
+        self.pickerController.mediaTypes = [ImagePickerString.mediaTypes.rawValue]
     }
 
     //MARK: present
-    func present(from sourceView: UIView) {
+    func present() {
 
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
-        if let action = self.action(for: .camera, title: UserImagePickerString.cameraTitle.rawValue) {
-            alertController.addAction(action)
-        }
-        if let action = self.action(for: .savedPhotosAlbum, title: UserImagePickerString.savedAlbumTitle.rawValue) {
-            alertController.addAction(action)
-        }
-        if let action = self.action(for: .photoLibrary, title:UserImagePickerString.photoLibraryTitle.rawValue) {
+        if let action = self.action(for: .photoLibrary, title:ImagePickerString.photoLibraryTitle.rawValue) {
             alertController.addAction(action)
         }
 
-        alertController.addAction(UIAlertAction(title: UserImagePickerString.cancelTitle.rawValue, style: .cancel, handler: nil))
+        alertController.addAction(UIAlertAction(title: ImagePickerString.cancelTitle.rawValue, style: .cancel, handler: nil))
 
         if UIDevice.current.userInterfaceIdiom == .pad {
-            alertController.popoverPresentationController?.sourceView = sourceView
-            alertController.popoverPresentationController?.sourceRect = sourceView.bounds
             alertController.popoverPresentationController?.permittedArrowDirections = [.down, .up]
         }
 
@@ -91,7 +81,7 @@ class UserImagePicker: NSObject {
 
 //MARK: DELEGATE EXTENSION
 
-extension UserImagePicker: UIImagePickerControllerDelegate {
+extension ImagePicker: UIImagePickerControllerDelegate {
 
     public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.pickerController(picker, didSelect: nil)
@@ -106,5 +96,5 @@ extension UserImagePicker: UIImagePickerControllerDelegate {
     }
 }
 
-extension UserImagePicker: UINavigationControllerDelegate {
+extension ImagePicker: UINavigationControllerDelegate {
 }

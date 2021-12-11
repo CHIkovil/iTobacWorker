@@ -19,20 +19,22 @@ class UserImageView: UIView {
         makeUI()
     }
     
+    // MARK: setImage
+    func setImage(image: UIImage){
+        imageView.image = image
+    }
+    
+    // MARK: addButtonTarget
+    func addButtonTarget(_ target: Any?, action: Selector, for controlEvents: UIControl.Event){
+        addButton.addTarget(target, action: action, for: controlEvents)
+    }
+    
+    // MARK: PRIVATE
+    
+    
+    
     // MARK: UI
     
-    private lazy var backgroundView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .clear
-        view.layer.cornerRadius = self.frame.width / 2
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 1
-        view.layer.shadowOffset = .zero
-        view.layer.shadowRadius = 20
-        return view
-    }()
-   
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: UserImageViewString.startImageName.rawValue)
@@ -41,7 +43,6 @@ class UserImageView: UIView {
         imageView.clipsToBounds = true
         imageView.layer.masksToBounds = true
         imageView.backgroundColor = #colorLiteral(red: 0.9983720183, green: 0.890299499, blue: 0.4330784082, alpha: 1)
-      
         return imageView
     }()
     
@@ -55,9 +56,22 @@ class UserImageView: UIView {
         button.layer.shadowOffset = .zero
         button.layer.shadowRadius = 10
         button.alpha = 0.9
+        button.isUserInteractionEnabled = true
         return button
     }()
-
+ 
+    private lazy var backgroundView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .clear
+        view.layer.cornerRadius = self.frame.width / 2
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 1
+        view.layer.shadowOffset = .zero
+        view.layer.shadowRadius = 20
+        return view
+    }()
+   
     //MARK: CONSTRAINTS
 
     private func constraintsBackgroundView() {
@@ -82,8 +96,9 @@ class UserImageView: UIView {
         addButton.snp.makeConstraints {(make) -> Void in
             make.height.equalTo(self.frame.width / 3)
             make.width.equalTo(self.frame.width / 3)
-            make.top.equalTo(backgroundView.snp.bottom)
-            make.leading.equalTo(self.snp.trailing).offset(-25)
+//            make.top.equalTo(backgroundView.snp.bottom)
+//            make.leading.equalTo(self.snp.trailing).offset(-25)
+            make.center.equalTo(self.snp.center)
         }
     }
 
@@ -110,5 +125,6 @@ class UserImageView: UIView {
 //    private func drawFrameAnimation() -> CABasicAnimation{
 //
 //    }
-//    
+//
 }
+

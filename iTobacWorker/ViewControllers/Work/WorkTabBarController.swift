@@ -24,6 +24,12 @@ class WorkTabBarController: UITabBarController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        workTabBar.infoButton.addTarget(self, action: #selector(didPressInfoButton), for: .touchUpInside)
+        workTabBar.searchButton.addTarget(self, action: #selector(didPressSearchButton), for: .touchUpInside)
+        workTabBar.progressButton.addTarget(self, action: #selector(didPressProgressButton), for: .touchUpInside)
+        
+        self.view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(swipeViewController)))
+        
         workTabBar.selectItem(at: selectedIndex)
     }
     
@@ -34,12 +40,6 @@ class WorkTabBarController: UITabBarController {
         let tabBar = WorkTabBar()
         self.workTabBar = tabBar
         self.setValue(tabBar, forKey: WorkTabBarControllerString.valueKey.rawValue)
-        
-        workTabBar.infoButton.addTarget(self, action: #selector(didPressInfoButton), for: .touchUpInside)
-        workTabBar.searchButton.addTarget(self, action: #selector(didPressSearchButton), for: .touchUpInside)
-        workTabBar.progressButton.addTarget(self, action: #selector(didPressProgressButton), for: .touchUpInside)
-        
-        self.view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(swipeViewController)))
         
         let firstVC = UIViewController()
         firstVC.view.backgroundColor = #colorLiteral(red: 0.1846325099, green: 0.184974581, blue: 0.200987637, alpha: 1)
