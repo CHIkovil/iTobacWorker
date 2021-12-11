@@ -9,9 +9,15 @@ import Foundation
 import UIKit
 import SnapKit
 
+private enum WakeUpTextFieldString: String {
+    case titleText = "Email or Username"
+    case fontName = "Chalkduster"
+    case basicAnimationKey = "strokeEnd"
+    case animationKey = "lineAnimation"
+}
+
 final class WakeUpTextField: UIView {
     
-    // MARK: draw
     override func draw(_ rect: CGRect) {
         makeUI()
     }
@@ -24,8 +30,8 @@ final class WakeUpTextField: UIView {
     
     //MARK: PRIVATE
     
-    private var lineStartPoint:CGPoint {CGPoint(x: 15, y: 85)}
-    private var lineEndPoint:CGPoint {CGPoint(x: 185, y: 85)}
+    private var lineStartPoint:CGPoint = CGPoint(x: 15, y: 85)
+    private var lineEndPoint:CGPoint = CGPoint(x: 185, y: 85)
     private var lineWidth: CGFloat = 2
     
     //MARK:  UI
@@ -33,11 +39,11 @@ final class WakeUpTextField: UIView {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont(name: WakeUpTextFieldString.fontName.rawValue, size: 13.6)
+        label.text = WakeUpTextFieldString.titleText.rawValue
         label.textAlignment = .center
         label.textColor = .gray
         label.backgroundColor = .clear
-        label.font = UIFont(name: "Chalkduster", size: 13.6)
-        label.text = "Email or Username"
         return label
     }()
     
@@ -45,13 +51,13 @@ final class WakeUpTextField: UIView {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = #colorLiteral(red: 0.9386559129, green: 0.9388130307, blue: 0.9386352301, alpha: 1)
-        textField.font = UIFont(name: "Chalkduster", size: 16)
+        textField.font = UIFont(name: WakeUpTextFieldString.fontName.rawValue, size: 16)
         textField.textColor = .black
         textField.tintColor = .clear
-        textField.layer.cornerRadius = 15
-        textField.setLeftPaddingPoints(12)
         textField.isUserInteractionEnabled = false
         textField.alpha = 0
+        textField.setLeftPaddingPoints(12)
+        textField.layer.cornerRadius = 15
         return textField
     }()
     
@@ -116,11 +122,11 @@ final class WakeUpTextField: UIView {
     private func animateLine(){
         let lineLayer = drawLineFromPoint(start: lineStartPoint, toPoint: lineEndPoint, color: #colorLiteral(red: 0.1598679423, green: 0.1648836732, blue: 0.1904173791, alpha: 1), width: lineWidth)
         
-        let animation : CABasicAnimation = CABasicAnimation(keyPath: "strokeEnd")
+        let animation : CABasicAnimation = CABasicAnimation(keyPath: WakeUpTextFieldString.basicAnimationKey.rawValue)
         animation.fromValue = 0.0
         animation.toValue = 1.0
         animation.duration = 1
-        lineLayer.add(animation, forKey: "lineAnimation")
+        lineLayer.add(animation, forKey: WakeUpTextFieldString.animationKey.rawValue)
         
         self.layer.addSublayer(lineLayer)
     }

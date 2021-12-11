@@ -8,14 +8,22 @@
 import Foundation
 import UIKit
 
-public protocol ImagePickerDelegate: class {
+private enum UserImagePickerString: String {
+    case mediaTypes = "public.image"
+    case cameraTitle = "Take photo"
+    case savedAlbumTitle = "Camera roll"
+    case photoLibraryTitle =  "Photo library"
+    case cancelTitle = "Cancel"
+}
+
+public protocol ImagePickerDelegate: AnyObject {
     func didSelect(image: UIImage?)
 }
 
-open class UserImagePicker: NSObject {
+class UserImagePicker: NSObject {
 
     //MARK: init
-    public init(presentationController: UIViewController, delegate: ImagePickerDelegate) {
+    init(presentationController: UIViewController, delegate: ImagePickerDelegate) {
         self.pickerController = UIImagePickerController()
 
         super.init()
@@ -25,25 +33,25 @@ open class UserImagePicker: NSObject {
 
         self.pickerController.delegate = self
         self.pickerController.allowsEditing = true
-        self.pickerController.mediaTypes = ["public.image"]
+        self.pickerController.mediaTypes = [UserImagePickerString.mediaTypes.rawValue]
     }
-    
+
     //MARK: present
-    public func present(from sourceView: UIView) {
+    func present(from sourceView: UIView) {
 
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
-        if let action = self.action(for: .camera, title: "Take photo") {
+        if let action = self.action(for: .camera, title: UserImagePickerString.cameraTitle.rawValue) {
             alertController.addAction(action)
         }
-        if let action = self.action(for: .savedPhotosAlbum, title: "Camera roll") {
+        if let action = self.action(for: .savedPhotosAlbum, title: UserImagePickerString.savedAlbumTitle.rawValue) {
             alertController.addAction(action)
         }
-        if let action = self.action(for: .photoLibrary, title: "Photo library") {
+        if let action = self.action(for: .photoLibrary, title:UserImagePickerString.photoLibraryTitle.rawValue) {
             alertController.addAction(action)
         }
 
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alertController.addAction(UIAlertAction(title: UserImagePickerString.cancelTitle.rawValue, style: .cancel, handler: nil))
 
         if UIDevice.current.userInterfaceIdiom == .pad {
             alertController.popoverPresentationController?.sourceView = sourceView

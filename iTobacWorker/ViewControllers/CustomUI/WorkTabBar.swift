@@ -8,9 +8,13 @@
 import Foundation
 import UIKit
 
+private enum WorkTabBarString: String {
+    case infoImageName = "info"
+    case searchImageName = "search"
+    case progressImageName = "progress"
+}
+
 final class WorkTabBar: UITabBar{
-    
-    // MARK: draw
     override func draw(_ rect: CGRect) {
         makeUI()
     }
@@ -47,22 +51,22 @@ final class WorkTabBar: UITabBar{
     
     lazy var infoButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "info"), for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: WorkTabBarString.infoImageName.rawValue), for: .normal)
         button.backgroundColor = #colorLiteral(red: 0.2118592262, green: 0.2122503817, blue: 0.2306241989, alpha: 1)
         button.layer.cornerRadius = otherButtonDiameter / 2
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.layer.borderWidth = 4
+        button.layer.borderWidth = 2
         button.layer.borderColor = #colorLiteral(red: 0.1395464242, green: 0.1398070455, blue: 0.1519106925, alpha: 1)
         return button
     }()
     
     lazy var searchButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "search"), for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: WorkTabBarString.searchImageName.rawValue), for: .normal)
         button.backgroundColor = #colorLiteral(red: 0.2118592262, green: 0.2122503817, blue: 0.2306241989, alpha: 1)
         button.layer.cornerRadius = middleButtonDiameter / 2
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.layer.borderWidth = 5
+        button.layer.borderWidth = 3
         button.layer.borderColor = #colorLiteral(red: 0.1395464242, green: 0.1398070455, blue: 0.1519106925, alpha: 1)
         return button
     }()
@@ -70,11 +74,11 @@ final class WorkTabBar: UITabBar{
 
     lazy var progressButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "progress"), for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: WorkTabBarString.progressImageName.rawValue), for: .normal)
         button.backgroundColor = #colorLiteral(red: 0.2118592262, green: 0.2122503817, blue: 0.2306241989, alpha: 1)
         button.layer.cornerRadius = otherButtonDiameter / 2
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.layer.borderWidth = 4
+        button.layer.borderWidth = 2
         button.layer.borderColor = #colorLiteral(red: 0.1395464242, green: 0.1398070455, blue: 0.1519106925, alpha: 1)
         return button
     }()
@@ -177,7 +181,7 @@ private extension UIView{
         UIView.animate(withDuration: 0.2,
                        animations: {[weak self] in
             guard let self = self else{return}
-            self.layer.borderColor = #colorLiteral(red: 0.7716341615, green: 0.7717649341, blue: 0.7716168761, alpha: 1).cgColor
+            self.layer.borderColor = #colorLiteral(red: 0.9803120494, green: 0.980475843, blue: 0.9802904725, alpha: 1).cgColor
             self.transform = CGAffineTransform(scaleX: 0.92, y: 0.92)
         },
                        completion: {  _ in

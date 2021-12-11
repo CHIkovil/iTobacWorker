@@ -12,7 +12,6 @@ import SnapKit
 
 class AuthorizationView: UIView{
     
-    //MARK: init
     override init(frame: CGRect) {
         super.init(frame: frame)
         makeUI()
@@ -29,14 +28,14 @@ class AuthorizationView: UIView{
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = #colorLiteral(red: 0.1598679423, green: 0.1648836732, blue: 0.1904173791, alpha: 1)
+        view.alpha = 0
         view.layer.cornerRadius = 25
+        view.layer.borderWidth = 6
+        view.layer.borderColor = #colorLiteral(red: 0.1395464242, green: 0.1398070455, blue: 0.1519106925, alpha: 1)
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowOpacity = 1
         view.layer.shadowOffset = .zero
         view.layer.shadowRadius = 10
-        view.layer.borderWidth = 6
-        view.layer.borderColor = #colorLiteral(red: 0.1395464242, green: 0.1398070455, blue: 0.1519106925, alpha: 1)
-        view.alpha = 0
         return view
     }()
     
@@ -110,7 +109,7 @@ extension AuthorizationView: AbbreviationDelegate{
                 self.loginTextField.showTextField()
             },completion: {[weak self] _ in
                 guard let self = self else{return}
-                self.appLabel.animateSmokeImage()
+                self.appLabel.showSmoke()
             })
         })
     }
