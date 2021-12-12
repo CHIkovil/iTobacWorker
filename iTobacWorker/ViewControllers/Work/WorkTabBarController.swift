@@ -47,9 +47,9 @@ class WorkTabBarController: UITabBarController {
         let middleVC = UIViewController()
         middleVC.view.backgroundColor = #colorLiteral(red: 0.1846325099, green: 0.184974581, blue: 0.200987637, alpha: 1)
         
-        let secondVC = ProgressViewController()
+        let progressViewController = ProgressViewController()
         
-        viewControllers = [firstVC, middleVC, secondVC]
+        viewControllers = [firstVC, middleVC, progressViewController]
     }
     
     // MARK: OBJC

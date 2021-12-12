@@ -8,6 +8,11 @@
 import Foundation
 import UIKit
 
+private enum ProgressViewString: String {
+    case moneyBankImageName = "safe-box"
+    case cigaretteBankImageName = "ashtray"
+}
+
 class ProgressView: UIView {
     
     override init(frame: CGRect) {
@@ -25,15 +30,35 @@ class ProgressView: UIView {
     lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.contentSize.height = 900
         scrollView.showsVerticalScrollIndicator = false
         scrollView.bounces = false
+        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height+300)
         return scrollView
     }()
     
     lazy var userImageView: UserImageView = {
         let imageView = UserImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false        
+        return imageView
+    }()
+    
+    lazy var moneyBankImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: ProgressViewString.moneyBankImageName.rawValue)
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.clipsToBounds = true
+        imageView.layer.masksToBounds = true
+        imageView.backgroundColor = .clear
+        return imageView
+    }()
+    
+    lazy var cigaretteBankImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: ProgressViewString.cigaretteBankImageName.rawValue)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.clipsToBounds = true
+        imageView.layer.masksToBounds = true
+        imageView.backgroundColor = .clear
         return imageView
     }()
     
@@ -41,11 +66,17 @@ class ProgressView: UIView {
     
     func makeUI() {
         self.backgroundColor = #colorLiteral(red: 0.1846325099, green: 0.184974581, blue: 0.200987637, alpha: 1)
+ 
+        
         scrollView.addSubview(userImageView)
+        scrollView.addSubview(moneyBankImageView)
+        scrollView.addSubview(cigaretteBankImageView)
         self.addSubview(scrollView)
         
         constraintsScrollView()
         constraintsUserImageView()
+        constraintsMoneyBankImageView()
+        constraintsCigaretteBankImageView()
     }
     
     //MARK: CONSTRAINTS
@@ -67,5 +98,22 @@ class ProgressView: UIView {
             make.width.equalTo(240)
         }
     }
-
+    
+    func constraintsMoneyBankImageView() {
+        moneyBankImageView.snp.makeConstraints {(make) -> Void in
+            make.top.equalTo(userImageView.snp.bottom).offset(30)
+            make.trailing.equalTo(scrollView.snp.centerX).offset(-30)
+            make.height.equalTo(80)
+            make.width.equalTo(80)
+        }
+    }
+    
+    func constraintsCigaretteBankImageView() {
+        cigaretteBankImageView.snp.makeConstraints {(make) -> Void in
+            make.top.equalTo(moneyBankImageView.snp.top)
+            make.leading.equalTo(scrollView.snp.centerX).offset(30)
+            make.height.equalTo(90)
+            make.width.equalTo(90)
+        }
+    }
 }

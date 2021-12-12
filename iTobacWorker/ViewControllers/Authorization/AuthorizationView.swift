@@ -42,7 +42,6 @@ class AuthorizationView: UIView{
     lazy var appLabel: AbbreviationLabel = {
         let label = AbbreviationLabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.delegate = self
         return label
     }()
         
@@ -73,9 +72,9 @@ class AuthorizationView: UIView{
     
     func constraintsLoginTextField() {
         loginTextField.snp.makeConstraints {(make) -> Void in
-            make.width.equalTo(200)
-            make.height.equalTo(80)
-            make.bottom.equalTo(self.snp.centerY)
+            make.width.equalTo(220)
+            make.height.equalTo(100)
+            make.bottom.equalTo(self.snp.centerY).offset(10)
             make.centerX.equalTo(self.snp.centerX)
         }
     }
@@ -91,26 +90,5 @@ class AuthorizationView: UIView{
         constraintsBoardView()
         constraintsTitleAppLabel()
         constraintsLoginTextField()
-    }
-}
-
-//MARK: DELEGATE EXTENSION
-
-extension AuthorizationView: AbbreviationDelegate{
-    func animationDidEnd() {
-        UIView.animate(withDuration: 0.3, animations: {[weak self] in
-            guard let self = self else{return}
-            self.appLabel.transform.ty = -113
-        }, completion: { [weak self] _ in
-            guard let self = self else{return}
-            UIView.animate(withDuration: 0.5,animations: {[weak self] in
-                guard let self = self else{return}
-                self.boardView.alpha = 1
-                self.loginTextField.showTextField()
-            },completion: {[weak self] _ in
-                guard let self = self else{return}
-                self.appLabel.showSmoke()
-            })
-        })
     }
 }

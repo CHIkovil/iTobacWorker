@@ -39,17 +39,17 @@ final class AbbreviationLabel: UIView {
         let stringAttributes = [ NSAttributedString.Key.font: UIFont(name: AbbreviationLabelString.fontName.rawValue, size: textSize ?? 45)!]
         let attributedString = NSMutableAttributedString(string: AbbreviationLabelString.appName.rawValue, attributes: stringAttributes )
         let charPaths = self.getCharacterPaths(attributedString: attributedString, position: CGPoint(x: -10, y: labelHeight - 10))
-
-        let upperCharacteCase = NSCharacterSet.uppercaseLetters
         
         let charLayers = charPaths.map { path -> CAShapeLayer in
             let shapeLayer = CAShapeLayer()
             shapeLayer.fillColor = UIColor.clear.cgColor
-            shapeLayer.strokeColor = UIColor.lightGray.cgColor
+            shapeLayer.strokeColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).cgColor
             shapeLayer.lineWidth = 2
             shapeLayer.path = path
             return shapeLayer
         }
+        charLayers[6].strokeColor = UIColor.lightGray.cgColor
+        
         
         animateToAbbreviation(charLayers)
     }

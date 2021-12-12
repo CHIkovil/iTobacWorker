@@ -12,8 +12,13 @@ private enum UserImageViewString: String {
     case startImageName = "question"
     case addImageName = "add"
     case arcAnimationKey = "arcAnimation"
-    case basicAnimationKey = "transform.rotation"
     case arcLayerName = "arcLayer"
+    case imageViewAnimationKey = "pulseAnimation"
+    
+    enum basicAnimationKey: String{
+        case rotation = "transform.rotation"
+        case scale = "transform.scale"
+    }
 }
 
 class UserImageView: UIView {
@@ -38,14 +43,25 @@ class UserImageView: UIView {
         }
     }
     
+    // MARK: addButtonTarget
+    func addButtonTarget(_ target: Any?, action: Selector, for controlEvents: UIControl.Event){
+        addButton.addTarget(target, action: action, for: controlEvents)
+    }
+    
+    // MARK: addButtonTarget
+    func addButtonGestureRecognizer(gestureRecognizer: UIGestureRecognizer){
+        addButton.addGestureRecognizer(gestureRecognizer)
+    }
+    
     // MARK: setImage
     func setImage(image: UIImage){
         imageView.image = image
     }
     
-    // MARK: addButtonTarget
-    func addButtonTarget(_ target: Any?, action: Selector, for controlEvents: UIControl.Event){
-        addButton.addTarget(target, action: action, for: controlEvents)
+    // MARK: animateImage
+    func animateImage(){
+        let animationGroup = getImageViewAnimation()
+        imageView.layer.add(animationGroup, forKey: UserImageViewString.imageViewAnimationKey.rawValue)
     }
     
     // MARK: PRIVATE
@@ -73,7 +89,6 @@ class UserImageView: UIView {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: UserImageViewString.addImageName.rawValue), for: .normal)
-        button.layer.cornerRadius = 0.09
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOpacity = 1
         button.layer.shadowOffset = .zero
@@ -125,15 +140,22 @@ class UserImageView: UIView {
     // MARK: SUPPORT FUNC
     
     private func makeUI(){
+        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowOpacity = 1
+        self.layer.shadowOffset = .zero
+        self.layer.shadowRadius = 10
+        self.layer.drawBlockLayer()
+        
         backgroundView.addSubview(imageView)
         self.addSubview(backgroundView)
         self.addSubview(addButton)
+        
+     
         
         constraintsBackgroundView()
         constraintsImageView()
         constraintsAddButton()
     }
-    
     
     private func drawArcShapeLayer(name: String, offset: CGFloat) -> CAShapeLayer{
         let shapeLayer = CAShapeLayer()
@@ -146,7 +168,6 @@ class UserImageView: UIView {
                                           startAngle: startAngle,
                                           endAngle: startAngle * CGFloat.random(in: 0...100) / 100,
                                           clockwise: true).cgPath
-//        shapeLayer.strokeColor = #colorLiteral(red: 0.8816937208, green: 0.9067572951, blue: 0.9233501554, alpha: 1).cgColor
         shapeLayer.strokeColor = #colorLiteral(red: 0.7908198833, green: 0.8205971718, blue: 0.8312640786, alpha: 1).cgColor
         shapeLayer.lineWidth = offset
         shapeLayer.fillColor = UIColor.clear.cgColor
@@ -160,11 +181,29 @@ class UserImageView: UIView {
     // MARK: ANIMATION
     
     private func getArcAnimation() -> CABasicAnimation{
-        let animation = CABasicAnimation(keyPath: UserImageViewString.basicAnimationKey.rawValue)
+        let animation = CABasicAnimation(keyPath: UserImageViewString.basicAnimationKey.rotation.rawValue)
         animation.byValue = NSNumber(floatLiteral: Double(CGFloat.pi * 2))
         animation.duration = 10
         animation.repeatCount = .infinity
         return animation
+    }
+    
+    private func getImageViewAnimation() -> CAAnimationGroup{
+        let animation = CASpringAnimation(keyPath: UserImageViewString.basicAnimationKey.scale.rawValue)
+        animation.duration = 0.6
+        animation.fromValue = 1.0
+        animation.toValue = 1.01
+        animation.autoreverses = true
+        animation.repeatCount = 1
+        animation.initialVelocity = 0.5
+        animation.damping = 0.8
+
+        let animationGroup = CAAnimationGroup()
+        animationGroup.duration = 2.7
+        animationGroup.repeatCount = 2
+        animationGroup.animations = [animation]
+
+        return animationGroup
     }
 }
 

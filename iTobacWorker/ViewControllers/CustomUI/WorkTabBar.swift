@@ -55,7 +55,7 @@ final class WorkTabBar: UITabBar{
         button.setImage(UIImage(named: WorkTabBarString.infoImageName.rawValue), for: .normal)
         button.backgroundColor = #colorLiteral(red: 0.2118592262, green: 0.2122503817, blue: 0.2306241989, alpha: 1)
         button.layer.cornerRadius = otherButtonDiameter / 2
-        button.layer.borderWidth = 2
+        button.layer.borderWidth = 3
         button.layer.borderColor = #colorLiteral(red: 0.1395464242, green: 0.1398070455, blue: 0.1519106925, alpha: 1)
         return button
     }()
@@ -66,7 +66,7 @@ final class WorkTabBar: UITabBar{
         button.setImage(UIImage(named: WorkTabBarString.searchImageName.rawValue), for: .normal)
         button.backgroundColor = #colorLiteral(red: 0.2118592262, green: 0.2122503817, blue: 0.2306241989, alpha: 1)
         button.layer.cornerRadius = middleButtonDiameter / 2
-        button.layer.borderWidth = 3
+        button.layer.borderWidth = 4
         button.layer.borderColor = #colorLiteral(red: 0.1395464242, green: 0.1398070455, blue: 0.1519106925, alpha: 1)
         return button
     }()
@@ -78,7 +78,7 @@ final class WorkTabBar: UITabBar{
         button.setImage(UIImage(named: WorkTabBarString.progressImageName.rawValue), for: .normal)
         button.backgroundColor = #colorLiteral(red: 0.2118592262, green: 0.2122503817, blue: 0.2306241989, alpha: 1)
         button.layer.cornerRadius = otherButtonDiameter / 2
-        button.layer.borderWidth = 2
+        button.layer.borderWidth = 3
         button.layer.borderColor = #colorLiteral(red: 0.1395464242, green: 0.1398070455, blue: 0.1519106925, alpha: 1)
         return button
     }()
@@ -181,7 +181,7 @@ private extension UIView{
         UIView.animate(withDuration: 0.2,
                        animations: {[weak self] in
             guard let self = self else{return}
-            self.layer.borderColor = #colorLiteral(red: 0.9803120494, green: 0.980475843, blue: 0.9802904725, alpha: 1).cgColor
+            self.layer.borderColor = #colorLiteral(red: 0.8736050725, green: 0.8737519383, blue: 0.8735856414, alpha: 1).cgColor
             self.transform = CGAffineTransform(scaleX: 0.92, y: 0.92)
         },
                        completion: {  _ in

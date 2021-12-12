@@ -11,6 +11,7 @@ import UIKit
 
 class ProgressViewController: UIViewController
 {
+    
     var progressView: ProgressView!
     var imagePicker: ImagePicker!
     
@@ -40,21 +41,30 @@ class ProgressViewController: UIViewController
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        self.imagePicker = ImagePicker(presentationController: self, delegate: self)
         let progressView = ProgressView()
         self.progressView = progressView
+        self.imagePicker = ImagePicker(presentationController: self, delegate: self)
         view = progressView
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        progressView.userImageView.addButtonTarget(self, action: #selector(didPressAddButton), for: .touchUpInside)
+        progressView.userImageView.addButtonTarget(self, action: #selector(didPressAddPhotoButton), for: .touchUpInside)
+        
+        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(didLongPressAddPhotoButton))
+        progressView.userImageView.addButtonGestureRecognizer(gestureRecognizer: longGesture)
+        
         progressView.userImageView.showFrame()
     }
     
     // MARK: OBJC
     
-    @objc func didPressAddButton() {
+    @objc func didPressAddPhotoButton() {
+        self.imagePicker.present()
+    }
+    
+    @objc func didLongPressAddPhotoButton() {
+        progressView.userImageView.animateImage()
         self.imagePicker.present()
     }
 }
