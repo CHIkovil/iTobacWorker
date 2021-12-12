@@ -49,6 +49,7 @@ class ProgressViewController: UIViewController
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         progressView.userImageView.addButtonTarget(self, action: #selector(didPressAddButton), for: .touchUpInside)
+        progressView.userImageView.showFrame()
     }
     
     // MARK: OBJC

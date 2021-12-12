@@ -61,10 +61,10 @@ class ProgressView: UIView {
     
     func constraintsUserImageView() {
         userImageView.snp.makeConstraints {(make) -> Void in
-            make.top.equalTo(scrollView.snp.top).offset(100)
+            make.top.equalTo(scrollView.snp.top).offset(80)
             make.centerX.equalTo(scrollView.snp.centerX)
-            make.height.equalTo(150)
-            make.width.equalTo(150)
+            make.height.equalTo(240)
+            make.width.equalTo(240)
         }
     }
 

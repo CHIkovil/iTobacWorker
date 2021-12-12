@@ -40,6 +40,8 @@ final class AbbreviationLabel: UIView {
         let attributedString = NSMutableAttributedString(string: AbbreviationLabelString.appName.rawValue, attributes: stringAttributes )
         let charPaths = self.getCharacterPaths(attributedString: attributedString, position: CGPoint(x: -10, y: labelHeight - 10))
 
+        let upperCharacteCase = NSCharacterSet.uppercaseLetters
+        
         let charLayers = charPaths.map { path -> CAShapeLayer in
             let shapeLayer = CAShapeLayer()
             shapeLayer.fillColor = UIColor.clear.cgColor
