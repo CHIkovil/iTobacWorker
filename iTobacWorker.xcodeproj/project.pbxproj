@@ -17,7 +17,7 @@
 		17003045275D85AB0093DAC3 /* AuthorizationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1700303E275D85AB0093DAC3 /* AuthorizationView.swift */; };
 		17F1D193276698F200C76A01 /* BankImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F1D192276698F200C76A01 /* BankImageView.swift */; };
 		17F1D19627669B0300C76A01 /* BlockLayerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F1D19527669B0300C76A01 /* BlockLayerExtension.swift */; };
-		17F1D1982767F5FD00C76A01 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 17F1D1972767F5FD00C76A01 /* plus.png */; };
+		17F1D19A2768009100C76A01 /* PulseAnimationLayerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F1D1992768009100C76A01 /* PulseAnimationLayerExtension.swift */; };
 		17F90ED9275D8050002D03CD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F90ED8275D8050002D03CD /* AppDelegate.swift */; };
 		17F90EDB275D8050002D03CD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F90EDA275D8050002D03CD /* SceneDelegate.swift */; };
 		17F90EE3275D8050002D03CD /* iTobacWorker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 17F90EE1275D8050002D03CD /* iTobacWorker.xcdatamodeld */; };
@@ -74,7 +74,7 @@
 		1700303E275D85AB0093DAC3 /* AuthorizationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationView.swift; sourceTree = "<group>"; };
 		17F1D192276698F200C76A01 /* BankImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankImageView.swift; sourceTree = "<group>"; };
 		17F1D19527669B0300C76A01 /* BlockLayerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockLayerExtension.swift; sourceTree = "<group>"; };
-		17F1D1972767F5FD00C76A01 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
+		17F1D1992768009100C76A01 /* PulseAnimationLayerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseAnimationLayerExtension.swift; sourceTree = "<group>"; };
 		17F90ED5275D8050002D03CD /* iTobacWorker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTobacWorker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17F90ED8275D8050002D03CD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		17F90EDA275D8050002D03CD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -188,6 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				17F1D19527669B0300C76A01 /* BlockLayerExtension.swift */,
+				17F1D1992768009100C76A01 /* PulseAnimationLayerExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -257,7 +258,6 @@
 		17FB3667275E5B020046F6E0 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				17F1D1972767F5FD00C76A01 /* plus.png */,
 				17FB36942766759D0046F6E0 /* ashtray.png */,
 				17FB36932766759D0046F6E0 /* safe-box.png */,
 				17FB36912765169D0046F6E0 /* add.png */,
@@ -434,7 +434,6 @@
 				17FB3670275E5B1A0046F6E0 /* cigarette.png in Resources */,
 				17FB366F275E5B1A0046F6E0 /* progress.png in Resources */,
 				17FB368A27622BE30046F6E0 /* question.png in Resources */,
-				17F1D1982767F5FD00C76A01 /* plus.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -578,6 +577,7 @@
 				17FB36822760D9190046F6E0 /* AuthorizationModels.swift in Sources */,
 				17FB367C275FFFEC0046F6E0 /* ProgressModels.swift in Sources */,
 				17F1D193276698F200C76A01 /* BankImageView.swift in Sources */,
+				17F1D19A2768009100C76A01 /* PulseAnimationLayerExtension.swift in Sources */,
 				17FB3679275FFFEC0046F6E0 /* ProgressPresenter.swift in Sources */,
 				17003043275D85AB0093DAC3 /* AuthorizationViewController.swift in Sources */,
 				17F90EDB275D8050002D03CD /* SceneDelegate.swift in Sources */,

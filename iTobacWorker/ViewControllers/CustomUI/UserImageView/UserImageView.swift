@@ -13,12 +13,7 @@ private enum UserImageViewString: String {
     case buttonImageName = "add"
     case arcAnimationKey = "arcAnimation"
     case arcLayerName = "arcLayer"
-    case imageViewAnimationKey = "pulseAnimation"
-    
-    enum basicAnimationKey: String{
-        case rotation = "transform.rotation"
-        case scale = "transform.scale"
-    }
+    case basicAnimationKey = "transform.rotation"
 }
 
 class UserImageView: UIView {
@@ -60,8 +55,7 @@ class UserImageView: UIView {
     
     // MARK: animateImage
     func animateImage(){
-        let animationGroup = getImageViewAnimation()
-        imageView.layer.add(animationGroup, forKey: UserImageViewString.imageViewAnimationKey.rawValue)
+        imageView.layer.animatePulse()
     }
     
     // MARK: PRIVATE
@@ -176,29 +170,11 @@ class UserImageView: UIView {
     // MARK: ANIMATION
     
     private func getArcAnimation() -> CABasicAnimation{
-        let animation = CABasicAnimation(keyPath: UserImageViewString.basicAnimationKey.rotation.rawValue)
+        let animation = CABasicAnimation(keyPath: UserImageViewString.basicAnimationKey.rawValue)
         animation.byValue = NSNumber(floatLiteral: Double(CGFloat.pi * 2))
         animation.duration = 10
         animation.repeatCount = .infinity
         return animation
-    }
-    
-    private func getImageViewAnimation() -> CAAnimationGroup{
-        let animation = CASpringAnimation(keyPath: UserImageViewString.basicAnimationKey.scale.rawValue)
-        animation.duration = 0.6
-        animation.fromValue = 1.0
-        animation.toValue = 1.008
-        animation.autoreverses = true
-        animation.repeatCount = 1
-        animation.initialVelocity = 0.5
-        animation.damping = 0.8
-
-        let animationGroup = CAAnimationGroup()
-        animationGroup.duration = 2.7
-        animationGroup.repeatCount = 2
-        animationGroup.animations = [animation]
-
-        return animationGroup
     }
 }
 
