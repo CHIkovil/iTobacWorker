@@ -42,23 +42,17 @@ class ProgressView: UIView {
         return imageView
     }()
     
-    lazy var moneyBankImageView: UIImageView = {
-        let imageView = UIImageView()
+    lazy var moneyBankImageView: BankImageView = {
+        let imageView = BankImageView()
         imageView.image = UIImage(named: ProgressViewString.moneyBankImageName.rawValue)
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.clipsToBounds = true
-        imageView.layer.masksToBounds = true
-        imageView.backgroundColor = .clear
         return imageView
     }()
     
-    lazy var cigaretteBankImageView: UIImageView = {
-        let imageView = UIImageView()
+    lazy var cigaretteBankImageView: BankImageView = {
+        let imageView = BankImageView()
         imageView.image = UIImage(named: ProgressViewString.cigaretteBankImageName.rawValue)
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.clipsToBounds = true
-        imageView.layer.masksToBounds = true
-        imageView.backgroundColor = .clear
         return imageView
     }()
     
@@ -92,7 +86,7 @@ class ProgressView: UIView {
     
     func constraintsUserImageView() {
         userImageView.snp.makeConstraints {(make) -> Void in
-            make.top.equalTo(scrollView.snp.top).offset(80)
+            make.top.equalTo(scrollView.snp.top).offset(50)
             make.centerX.equalTo(scrollView.snp.centerX)
             make.height.equalTo(240)
             make.width.equalTo(240)
@@ -101,19 +95,19 @@ class ProgressView: UIView {
     
     func constraintsMoneyBankImageView() {
         moneyBankImageView.snp.makeConstraints {(make) -> Void in
-            make.top.equalTo(userImageView.snp.bottom).offset(30)
-            make.trailing.equalTo(scrollView.snp.centerX).offset(-30)
-            make.height.equalTo(80)
-            make.width.equalTo(80)
+            make.top.equalTo(userImageView.snp.bottom).offset(15)
+            make.trailing.equalTo(scrollView.snp.centerX).offset(-5)
+            make.height.equalTo(150)
+            make.width.equalTo(150)
         }
     }
     
     func constraintsCigaretteBankImageView() {
         cigaretteBankImageView.snp.makeConstraints {(make) -> Void in
-            make.top.equalTo(moneyBankImageView.snp.top)
-            make.leading.equalTo(scrollView.snp.centerX).offset(30)
-            make.height.equalTo(90)
-            make.width.equalTo(90)
+            make.top.equalTo(userImageView.snp.bottom).offset(15)
+            make.leading.equalTo(scrollView.snp.centerX).offset(5)
+            make.height.equalTo(150)
+            make.width.equalTo(150)
         }
     }
 }

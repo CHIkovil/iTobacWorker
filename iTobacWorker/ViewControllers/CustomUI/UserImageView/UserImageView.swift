@@ -9,8 +9,8 @@ import Foundation
 import UIKit
 
 private enum UserImageViewString: String {
-    case startImageName = "question"
-    case addImageName = "add"
+    case defImageName = "question"
+    case buttonImageName = "add"
     case arcAnimationKey = "arcAnimation"
     case arcLayerName = "arcLayer"
     case imageViewAnimationKey = "pulseAnimation"
@@ -45,12 +45,12 @@ class UserImageView: UIView {
     
     // MARK: addButtonTarget
     func addButtonTarget(_ target: Any?, action: Selector, for controlEvents: UIControl.Event){
-        addButton.addTarget(target, action: action, for: controlEvents)
+        button.addTarget(target, action: action, for: controlEvents)
     }
     
     // MARK: addButtonTarget
     func addButtonGestureRecognizer(gestureRecognizer: UIGestureRecognizer){
-        addButton.addGestureRecognizer(gestureRecognizer)
+        button.addGestureRecognizer(gestureRecognizer)
     }
     
     // MARK: setImage
@@ -74,7 +74,7 @@ class UserImageView: UIView {
     
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: UserImageViewString.startImageName.rawValue)
+        imageView.image = UIImage(named: UserImageViewString.defImageName.rawValue)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = (viewWidth + viewHeight) * 0.15
         imageView.clipsToBounds = true
@@ -85,16 +85,15 @@ class UserImageView: UIView {
         return imageView
     }()
     
-    private lazy var addButton: UIButton = {
+    private lazy var button: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: UserImageViewString.addImageName.rawValue), for: .normal)
+        button.setImage(UIImage(named: UserImageViewString.buttonImageName.rawValue), for: .normal)
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOpacity = 1
         button.layer.shadowOffset = .zero
         button.layer.shadowRadius = 10
         button.alpha = 0.9
-        button.isUserInteractionEnabled = true
         return button
     }()
     
@@ -128,33 +127,29 @@ class UserImageView: UIView {
         }
     }
     
-    private func constraintsAddButton() {
-        addButton.snp.makeConstraints {(make) -> Void in
+    private func constraintsButton() {
+        button.snp.makeConstraints {(make) -> Void in
             make.height.equalTo(viewHeight * 0.18)
             make.width.equalTo(viewWidth * 0.18)
-            make.top.equalTo(imageView.snp.bottom)
-            make.leading.equalTo(imageView.snp.trailing).offset(-15)
+            make.top.equalTo(imageView.snp.bottom).offset(-10)
+            make.leading.equalTo(imageView.snp.trailing).offset(-10)
         }
     }
     
     // MARK: SUPPORT FUNC
     
     private func makeUI(){
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOpacity = 1
-        self.layer.shadowOffset = .zero
-        self.layer.shadowRadius = 10
-        self.layer.drawBlockLayer()
+        self.layer.drawBlockLayer(cornerWidth: 35)
         
         backgroundView.addSubview(imageView)
         self.addSubview(backgroundView)
-        self.addSubview(addButton)
+        self.addSubview(button)
         
      
         
         constraintsBackgroundView()
         constraintsImageView()
-        constraintsAddButton()
+        constraintsButton()
     }
     
     private func drawArcShapeLayer(name: String, offset: CGFloat) -> CAShapeLayer{
@@ -192,7 +187,7 @@ class UserImageView: UIView {
         let animation = CASpringAnimation(keyPath: UserImageViewString.basicAnimationKey.scale.rawValue)
         animation.duration = 0.6
         animation.fromValue = 1.0
-        animation.toValue = 1.01
+        animation.toValue = 1.008
         animation.autoreverses = true
         animation.repeatCount = 1
         animation.initialVelocity = 0.5
