@@ -1,5 +1,5 @@
 //
-//  PulseAnimationLayerExtension.swift
+//  AnimationLayerExtension.swift
 //  iTobacWorker
 //
 //  Created by Nikolas on 14.12.2021.
