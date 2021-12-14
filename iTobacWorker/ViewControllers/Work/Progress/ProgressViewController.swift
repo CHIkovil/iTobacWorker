@@ -13,7 +13,6 @@ class ProgressViewController: UIViewController
 {
     
     var progressView: ProgressView!
-    var imagePicker: ImagePicker!
     
     // MARK: Object lifecycle
     
@@ -43,7 +42,7 @@ class ProgressViewController: UIViewController
         super.viewDidLoad()
         let progressView = ProgressView()
         self.progressView = progressView
-        self.imagePicker = ImagePicker(presentationController: self, delegate: self)
+        self.progressView.imagePicker = ImagePicker(presentationController: self, delegate: self)
         view = progressView
     }
     
@@ -60,12 +59,12 @@ class ProgressViewController: UIViewController
     // MARK: OBJC
     
     @objc func didPressAddPhotoButton() {
-        self.imagePicker.present()
+        self.progressView.imagePicker.present()
     }
     
     @objc func didLongPressAddPhotoButton() {
         progressView.userImageView.animateImage()
-        self.imagePicker.present()
+        self.progressView.imagePicker.present()
     }
 }
 

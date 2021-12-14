@@ -14,8 +14,7 @@ private enum AbbreviationLabelString: String {
     case fontName = "Chalkduster"
     case cigaretteImageName = "cigarette"
     case smokeImageName = "smoke"
-    case basicAnimationKey = "opacity"
-    case animationKey = "charAnimation"
+    case animationKey = "opacity"
 }
 
 //MARK: PROTOCOL
@@ -155,7 +154,7 @@ final class AbbreviationLabel: UIView {
     private func animateToAbbreviation(_ charLayers: [CAShapeLayer]) {
         for (index,layer) in charLayers.enumerated(){
             self.layer.addSublayer(layer)
-            let animation = CABasicAnimation(keyPath: AbbreviationLabelString.basicAnimationKey.rawValue)
+            let animation = CABasicAnimation(keyPath: AbbreviationLabelString.animationKey.rawValue)
             animation.fromValue = 1
             animation.toValue = 0
             animation.fillMode = .forwards;

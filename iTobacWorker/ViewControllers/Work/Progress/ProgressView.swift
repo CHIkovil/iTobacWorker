@@ -14,6 +14,7 @@ private enum ProgressViewString: String {
 }
 
 class ProgressView: UIView {
+ 
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -26,7 +27,8 @@ class ProgressView: UIView {
     }
 
     //MARK: UI
-
+    var imagePicker: ImagePicker!
+    
     lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false

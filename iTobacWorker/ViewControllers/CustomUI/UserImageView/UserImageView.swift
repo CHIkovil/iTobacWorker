@@ -11,9 +11,8 @@ import UIKit
 private enum UserImageViewString: String {
     case defImageName = "question"
     case buttonImageName = "add"
-    case arcAnimationKey = "arcAnimation"
-    case arcLayerName = "arcLayer"
-    case basicAnimationKey = "transform.rotation"
+    case frameLayerName = "arcLayer"
+    case animationKey = "transform.rotation"
 }
 
 class UserImageView: UIView {
@@ -26,14 +25,14 @@ class UserImageView: UIView {
     func showFrame(){
         self.layer.sublayers?.forEach {
             guard let name = $0.name else{return}
-            if (name.starts(with: UserImageViewString.arcLayerName.rawValue)){
+            if (name.starts(with: UserImageViewString.frameLayerName.rawValue)){
                 $0.removeFromSuperlayer()
             }
         }
         let animation = getArcAnimation()
         for index in 1...3 {
-            let shapeLayer = drawArcShapeLayer(name:UserImageViewString.arcLayerName.rawValue + "\(index)", offset: CGFloat(index))
-            shapeLayer.add(animation, forKey: UserImageViewString.arcAnimationKey.rawValue)
+            let shapeLayer = drawArcShapeLayer(name:UserImageViewString.frameLayerName.rawValue + "\(index)", offset: CGFloat(index))
+            shapeLayer.add(animation, forKey: UserImageViewString.animationKey.rawValue)
             self.layer.addSublayer(shapeLayer)
         }
     }
@@ -170,7 +169,7 @@ class UserImageView: UIView {
     // MARK: ANIMATION
     
     private func getArcAnimation() -> CABasicAnimation{
-        let animation = CABasicAnimation(keyPath: UserImageViewString.basicAnimationKey.rawValue)
+        let animation = CABasicAnimation(keyPath: UserImageViewString.animationKey.rawValue)
         animation.byValue = NSNumber(floatLiteral: Double(CGFloat.pi * 2))
         animation.duration = 10
         animation.repeatCount = .infinity

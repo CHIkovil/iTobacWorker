@@ -12,8 +12,7 @@ import SnapKit
 private enum WakeUpTextFieldString: String {
     case titleText = "Email or Username"
     case fontName = "Chalkduster"
-    case basicAnimationKey = "strokeEnd"
-    case animationKey = "lineAnimation"
+    case animationKey = "strokeEnd"
 }
 
 final class WakeUpTextField: UIView {
@@ -127,7 +126,7 @@ final class WakeUpTextField: UIView {
     private func animateLine(){
         let lineLayer = drawLineFromPoint(start: lineStartPoint, toPoint: lineEndPoint, color: #colorLiteral(red: 0.1598679423, green: 0.1648836732, blue: 0.1904173791, alpha: 1), width: lineWidth)
         
-        let animation : CABasicAnimation = CABasicAnimation(keyPath: WakeUpTextFieldString.basicAnimationKey.rawValue)
+        let animation : CABasicAnimation = CABasicAnimation(keyPath: WakeUpTextFieldString.animationKey.rawValue)
         animation.fromValue = 0.0
         animation.toValue = 1.0
         animation.duration = 1
