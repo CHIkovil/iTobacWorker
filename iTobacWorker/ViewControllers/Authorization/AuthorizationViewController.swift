@@ -59,7 +59,7 @@ extension AuthorizationViewController: AbbreviationDelegate{
             UIView.animate(withDuration: 0.5,animations: {[weak self] in
                 guard let self = self else{return}
                 self.authorizationView.boardView.alpha = 1
-                self.authorizationView.loginTextField.showTextField()
+                self.authorizationView.loginTextField.showInputTextField()
             },completion: {[weak self] _ in
                 guard let self = self else{return}
                 self.authorizationView.appLabel.showSmoke()

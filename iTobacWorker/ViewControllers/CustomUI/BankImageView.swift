@@ -11,6 +11,7 @@ import UIKit
 private enum BankImageViewString:String{
     case fontName = "Chalkduster"
     case buttonImageName = "plus"
+    case animationKey =  "position"
 }
 
 final class BankImageView: UIView{
@@ -19,6 +20,11 @@ final class BankImageView: UIView{
     
     override func draw(_ rect: CGRect) {
         makeUI()
+    }
+    
+    //MARK: startAttentionAnimation
+    func startAttentionAnimation(){
+        imageView.animateShake()
     }
     
     //MARK: PRIVATE
@@ -62,7 +68,7 @@ final class BankImageView: UIView{
         label.snp.makeConstraints {(make) -> Void in
             make.height.equalTo(viewHeight * 0.2)
             make.width.equalTo(viewWidth * 0.9)
-            make.top.equalTo(imageView.snp.bottom).offset(7)
+            make.top.equalTo(imageView.snp.bottom)
             make.centerX.equalTo(imageView.snp.centerX)
         }
     }
@@ -79,5 +85,22 @@ final class BankImageView: UIView{
         
         guard let image = image else{return}
         imageView.image = image
+    }
+}
+
+//MARK: UI ANIMATION EXTENSION
+
+private extension UIImageView {
+    
+    func animateShake(){
+        let animation = CABasicAnimation(keyPath: BankImageViewString.animationKey.rawValue)
+        animation.duration = 0.07
+        animation.repeatCount = 4
+        animation.autoreverses = true
+        animation.fromValue = NSValue(cgPoint: CGPoint(x: self.center.x - 1.5, y: self.center.y))
+        animation.toValue = NSValue(cgPoint: CGPoint(x: self.center.x + 1.5, y: self.center.y))
+
+
+        self.layer.add(animation, forKey: BankImageViewString.animationKey.rawValue)
     }
 }

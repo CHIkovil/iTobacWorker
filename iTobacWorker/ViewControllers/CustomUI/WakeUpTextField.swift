@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 private enum WakeUpTextFieldString: String {
-    case titleText = "Email or Username"
+    case titleLabelText = "Email or Username"
     case fontName = "Chalkduster"
     case animationKey = "strokeEnd"
 }
@@ -23,10 +23,14 @@ final class WakeUpTextField: UIView {
         makeUI()
     }
     
-    // MARK: showTextField
-    func showTextField(){
-        animateLabel()
-        animateLine()
+    // MARK: showInputTextField
+    func showInputTextField(){
+        titleLabel.animateUp(to: self.inputTextField.frame.height)
+        inputTextField.animateOpacity()
+        
+        let lineLayer = drawLineFromPoint(start: lineStartPoint, toPoint: lineEndPoint, color: #colorLiteral(red: 0.1598679423, green: 0.1648836732, blue: 0.1904173791, alpha: 1), width: lineWidth)
+        lineLayer.addMoveAnimation()
+        self.layer.addSublayer(lineLayer)
     }
     
     //MARK: PRIVATE
@@ -42,7 +46,7 @@ final class WakeUpTextField: UIView {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = WakeUpTextFieldString.titleText.rawValue
+        label.text = WakeUpTextFieldString.titleLabelText.rawValue
         label.textAlignment = .center
         label.textColor = .gray
         label.backgroundColor = .clear
@@ -76,7 +80,7 @@ final class WakeUpTextField: UIView {
     private func constraintsInputTextField(){
         inputTextField.snp.makeConstraints {(make) -> Void in
             make.width.equalTo(self.snp.width)
-            make.height.equalTo(textFieldHeight * 0.4)
+            make.height.equalTo(textFieldHeight * 0.44)
             make.centerX.equalTo(self.snp.centerX)
             make.bottom.equalTo(self.snp.bottom)
         }
@@ -112,28 +116,6 @@ final class WakeUpTextField: UIView {
         
         return shapeLayer
     }
-    
-    //MARK: ANIMATION
-    
-    private func animateLabel(){
-        UIView.animate(withDuration: 0.5) {[weak self] in
-            guard let self = self else{return}
-            self.titleLabel.transform.ty = -self.inputTextField.frame.height
-            self.inputTextField.alpha = 1
-        }
-    }
-    
-    private func animateLine(){
-        let lineLayer = drawLineFromPoint(start: lineStartPoint, toPoint: lineEndPoint, color: #colorLiteral(red: 0.1598679423, green: 0.1648836732, blue: 0.1904173791, alpha: 1), width: lineWidth)
-        
-        let animation : CABasicAnimation = CABasicAnimation(keyPath: WakeUpTextFieldString.animationKey.rawValue)
-        animation.fromValue = 0.0
-        animation.toValue = 1.0
-        animation.duration = 1
-        lineLayer.add(animation, forKey: WakeUpTextFieldString.animationKey.rawValue)
-        
-        self.layer.addSublayer(lineLayer)
-    }
 }
 
 //MARK: UI EXTENSION
@@ -144,5 +126,36 @@ private extension UITextField{
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.size.height))
         self.leftView = paddingView
         self.leftViewMode = .always
+    }
+}
+
+//MARK: UI ANIMATION EXTENSION
+
+private extension CAShapeLayer {
+
+    func addMoveAnimation(){
+        let animation : CABasicAnimation = CABasicAnimation(keyPath: WakeUpTextFieldString.animationKey.rawValue)
+        animation.fromValue = 0.0
+        animation.toValue = 1.0
+        animation.duration = 1
+        self.add(animation, forKey: WakeUpTextFieldString.animationKey.rawValue)
+    }
+}
+
+private extension UILabel {
+    func animateUp(to amount: CGFloat){
+        UIView.animate(withDuration: 0.5) {[weak self] in
+            guard let self = self else{return}
+            self.transform.ty = -abs(amount)
+        }
+    }
+}
+
+private extension UITextField{
+    func animateOpacity(){
+        UIView.animate(withDuration: 0.5) {[weak self] in
+            guard let self = self else{return}
+            self.alpha = 1
+        }
     }
 }

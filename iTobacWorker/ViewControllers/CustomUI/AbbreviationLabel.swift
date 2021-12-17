@@ -49,16 +49,12 @@ final class AbbreviationLabel: UIView {
         }
         charLayers[6].strokeColor = UIColor.lightGray.cgColor
         
-        
-        animateToAbbreviation(charLayers)
+        layer.addAbbreviationAnimation(delegate: self, charLayers)
     }
     
     //MARK: showSmoke
     func showSmoke(){
-        UIView.animate(withDuration: 2){[weak self] in
-            guard let self = self else{return}
-            self.smokeImageView.alpha = 0.8
-        }
+        smokeImageView.animateOpacity(delegate: nil)
     }
  
     //MARK: PRIVATE
@@ -148,12 +144,16 @@ final class AbbreviationLabel: UIView {
         }
         return characterPaths
     }
-
-    //MARK: ANIMATION
     
-    private func animateToAbbreviation(_ charLayers: [CAShapeLayer]) {
-        for (index,layer) in charLayers.enumerated(){
-            self.layer.addSublayer(layer)
+}
+
+//MARK: UI ANIMATION EXTENSION
+
+private extension CALayer {
+
+    func addAbbreviationAnimation(delegate: CAAnimationDelegate,_ charLayers: [CAShapeLayer]) {
+        for (index,shapeLayer) in charLayers.enumerated(){
+            self.addSublayer(shapeLayer)
             let animation = CABasicAnimation(keyPath: AbbreviationLabelString.animationKey.rawValue)
             animation.fromValue = 1
             animation.toValue = 0
@@ -164,7 +164,7 @@ final class AbbreviationLabel: UIView {
             
             switch index {
             case layersLength / 2 - 1:
-                animation.delegate = self
+                animation.delegate = delegate
                 fallthrough
             case 0...layersLength / 2 - 2:
                 animation.duration = CFTimeInterval(index + 1)
@@ -175,21 +175,22 @@ final class AbbreviationLabel: UIView {
             default:
                 break
             }
-            layer.add(animation, forKey: AbbreviationLabelString.animationKey.rawValue)
+            
+            shapeLayer.add(animation, forKey: AbbreviationLabelString.animationKey.rawValue)
         }
     }
-    
-    private func animateCigarette(){
+}
+
+private extension UIImageView {
+    func animateOpacity(delegate: AbbreviationDelegate?){
         UIView.animate(withDuration: 2, animations: {[weak self] in
             guard let self = self else{return}
-            self.cigaretteImageView.alpha = 1
-        }, completion: { [weak self] _ in
-            guard let self = self else{return}
-            guard let delegate = self.delegate else{return}
+            self.alpha = 0.8
+        }, completion: { _ in
+            guard let delegate = delegate else {return}
             delegate.animationDidEnd()
         })
     }
-    
 }
 
 //MARK: DELEGATE EXTENSION
@@ -197,6 +198,6 @@ final class AbbreviationLabel: UIView {
 extension AbbreviationLabel:CAAnimationDelegate{
 
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        animateCigarette()
+        cigaretteImageView.animateOpacity(delegate: delegate)
     }
 }

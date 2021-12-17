@@ -29,10 +29,10 @@ class UserImageView: UIView {
                 $0.removeFromSuperlayer()
             }
         }
-        let animation = getArcAnimation()
+        
         for index in 1...3 {
             let shapeLayer = drawArcShapeLayer(name:UserImageViewString.frameLayerName.rawValue + "\(index)", offset: CGFloat(index))
-            shapeLayer.add(animation, forKey: UserImageViewString.animationKey.rawValue)
+            shapeLayer.addInfinityRotationAnimation()
             self.layer.addSublayer(shapeLayer)
         }
     }
@@ -52,8 +52,8 @@ class UserImageView: UIView {
         imageView.image = image
     }
     
-    // MARK: animateImage
-    func animateImage(){
+    // MARK: animateImagePulse
+    func animateImagePulse(){
         imageView.layer.animatePulse()
     }
     
@@ -166,14 +166,19 @@ class UserImageView: UIView {
         return shapeLayer
     }
     
-    // MARK: ANIMATION
+ 
+}
+
+//MARK: UI ANIMATION EXTENSION
+
+private extension CAShapeLayer {
     
-    private func getArcAnimation() -> CABasicAnimation{
+    func addInfinityRotationAnimation() {
         let animation = CABasicAnimation(keyPath: UserImageViewString.animationKey.rawValue)
         animation.byValue = NSNumber(floatLiteral: Double(CGFloat.pi * 2))
         animation.duration = 10
         animation.repeatCount = .infinity
-        return animation
+        self.add(animation, forKey: UserImageViewString.animationKey.rawValue)
     }
 }
 

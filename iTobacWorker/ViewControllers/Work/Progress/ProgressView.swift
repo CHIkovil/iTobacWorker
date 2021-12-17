@@ -27,7 +27,6 @@ class ProgressView: UIView {
     }
 
     //MARK: UI
-    var imagePicker: ImagePicker!
     
     lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
