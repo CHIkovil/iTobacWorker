@@ -34,10 +34,10 @@ final class WakeUpTextField: UIView {
     }
     
     //MARK: PRIVATE
+    private let lineWidth: CGFloat = 2
     
     private var lineStartPoint:CGPoint {CGPoint(x: 15, y: self.frame.height + 5)}
     private var lineEndPoint:CGPoint {CGPoint(x: self.frame.width - 15, y: self.frame.height + 5)}
-    private var lineWidth: CGFloat = 2
     private var textFieldWidth: CGFloat {self.frame.width}
     private var textFieldHeight: CGFloat {self.frame.height}
     
@@ -118,21 +118,9 @@ final class WakeUpTextField: UIView {
     }
 }
 
-//MARK: UI EXTENSION
-
-private extension UITextField{
-    
-    func setLeftPaddingPoints(_ amount:CGFloat){
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.size.height))
-        self.leftView = paddingView
-        self.leftViewMode = .always
-    }
-}
-
 //MARK: UI ANIMATION EXTENSION
 
-private extension CAShapeLayer {
-
+private extension CALayer {
     func addMoveAnimation(){
         let animation : CABasicAnimation = CABasicAnimation(keyPath: WakeUpTextFieldString.animationKey.rawValue)
         animation.fromValue = 0.0
@@ -142,16 +130,14 @@ private extension CAShapeLayer {
     }
 }
 
-private extension UILabel {
+private extension UIView {
     func animateUp(to amount: CGFloat){
         UIView.animate(withDuration: 0.5) {[weak self] in
             guard let self = self else{return}
             self.transform.ty = -abs(amount)
         }
     }
-}
-
-private extension UITextField{
+    
     func animateOpacity(){
         UIView.animate(withDuration: 0.5) {[weak self] in
             guard let self = self else{return}

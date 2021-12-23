@@ -12,7 +12,7 @@ private enum UserImageViewString: String {
     case defImageName = "question"
     case buttonImageName = "add"
     case frameLayerName = "arcLayer"
-    case animationKey = "transform.rotation"
+    case arcAnimationKey = "transform.rotation"
 }
 
 class UserImageView: UIView {
@@ -37,12 +37,7 @@ class UserImageView: UIView {
         }
     }
     
-    // MARK: addButtonTarget
-    func addButtonTarget(_ target: Any?, action: Selector, for controlEvents: UIControl.Event){
-        button.addTarget(target, action: action, for: controlEvents)
-    }
-    
-    // MARK: addButtonTarget
+    // MARK: addButtonGestureRecognizer
     func addButtonGestureRecognizer(gestureRecognizer: UIGestureRecognizer){
         button.addGestureRecognizer(gestureRecognizer)
     }
@@ -54,7 +49,7 @@ class UserImageView: UIView {
     
     // MARK: animateImagePulse
     func animateImagePulse(){
-        imageView.layer.animatePulse()
+        imageView.layer.addPulseAnimation()
     }
     
     // MARK: PRIVATE
@@ -137,9 +132,7 @@ class UserImageView: UIView {
         backgroundView.addSubview(imageView)
         self.addSubview(backgroundView)
         self.addSubview(button)
-        
-     
-        
+      
         constraintsBackgroundView()
         constraintsImageView()
         constraintsButton()
@@ -165,20 +158,16 @@ class UserImageView: UIView {
         shapeLayer.bounds = bounds
         return shapeLayer
     }
-    
- 
 }
 
 //MARK: UI ANIMATION EXTENSION
 
-private extension CAShapeLayer {
-    
+private extension CALayer {
     func addInfinityRotationAnimation() {
-        let animation = CABasicAnimation(keyPath: UserImageViewString.animationKey.rawValue)
+        let animation = CABasicAnimation(keyPath: UserImageViewString.arcAnimationKey.rawValue)
         animation.byValue = NSNumber(floatLiteral: Double(CGFloat.pi * 2))
         animation.duration = 10
         animation.repeatCount = .infinity
-        self.add(animation, forKey: UserImageViewString.animationKey.rawValue)
+        self.add(animation, forKey: UserImageViewString.arcAnimationKey.rawValue)
     }
 }
-

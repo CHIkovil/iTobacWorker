@@ -14,13 +14,13 @@ private enum AbbreviationLabelString: String {
     case fontName = "Chalkduster"
     case cigaretteImageName = "cigarette"
     case smokeImageName = "smoke"
-    case animationKey = "opacity"
+    case charAnimationKey = "opacity"
 }
 
 //MARK: PROTOCOL
 
 protocol AbbreviationDelegate: AnyObject {
-    func animationDidEnd()
+    func animateEnd()
 }
 
 final class AbbreviationLabel: UIView {
@@ -34,7 +34,6 @@ final class AbbreviationLabel: UIView {
     
     //MARK: showAbbreviation
     func showAbbreviation() {
-        
         let stringAttributes = [ NSAttributedString.Key.font: UIFont(name: AbbreviationLabelString.fontName.rawValue, size: textSize ?? 45)!]
         let attributedString = NSMutableAttributedString(string: AbbreviationLabelString.appName.rawValue, attributes: stringAttributes )
         let charPaths = self.getCharacterPaths(attributedString: attributedString, position: CGPoint(x: -10, y: labelHeight - 10))
@@ -49,12 +48,12 @@ final class AbbreviationLabel: UIView {
         }
         charLayers[6].strokeColor = UIColor.lightGray.cgColor
         
-        layer.addAbbreviationAnimation(delegate: self, charLayers)
+        self.layer.addAbbreviationAnimation(delegate: self, charLayers)
     }
     
     //MARK: showSmoke
     func showSmoke(){
-        smokeImageView.animateOpacity(delegate: nil)
+        smokeImageView.animateOpacityWithEnding(delegate: nil)
     }
  
     //MARK: PRIVATE
@@ -62,8 +61,6 @@ final class AbbreviationLabel: UIView {
     private var labelHeight: CGFloat {self.frame.height}
     
     //MARK: UI
-    
-    
     
     private lazy var cigaretteImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: AbbreviationLabelString.cigaretteImageName.rawValue))
@@ -144,7 +141,6 @@ final class AbbreviationLabel: UIView {
         }
         return characterPaths
     }
-    
 }
 
 //MARK: UI ANIMATION EXTENSION
@@ -154,7 +150,7 @@ private extension CALayer {
     func addAbbreviationAnimation(delegate: CAAnimationDelegate,_ charLayers: [CAShapeLayer]) {
         for (index,shapeLayer) in charLayers.enumerated(){
             self.addSublayer(shapeLayer)
-            let animation = CABasicAnimation(keyPath: AbbreviationLabelString.animationKey.rawValue)
+            let animation = CABasicAnimation(keyPath: AbbreviationLabelString.charAnimationKey.rawValue)
             animation.fromValue = 1
             animation.toValue = 0
             animation.fillMode = .forwards;
@@ -176,19 +172,19 @@ private extension CALayer {
                 break
             }
             
-            shapeLayer.add(animation, forKey: AbbreviationLabelString.animationKey.rawValue)
+            shapeLayer.add(animation, forKey: AbbreviationLabelString.charAnimationKey.rawValue)
         }
     }
 }
 
-private extension UIImageView {
-    func animateOpacity(delegate: AbbreviationDelegate?){
+private extension UIView {
+    func animateOpacityWithEnding(delegate: AbbreviationDelegate?){
         UIView.animate(withDuration: 2, animations: {[weak self] in
             guard let self = self else{return}
             self.alpha = 0.8
         }, completion: { _ in
             guard let delegate = delegate else {return}
-            delegate.animationDidEnd()
+            delegate.animateEnd()
         })
     }
 }
@@ -198,6 +194,6 @@ private extension UIImageView {
 extension AbbreviationLabel:CAAnimationDelegate{
 
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        cigaretteImageView.animateOpacity(delegate: delegate)
+        cigaretteImageView.animateOpacityWithEnding(delegate: delegate)
     }
 }

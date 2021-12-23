@@ -43,15 +43,15 @@ class ProgressView: UIView {
         return imageView
     }()
     
-    lazy var moneyBankImageView: BankImageView = {
-        let imageView = BankImageView()
+    lazy var moneyBankPicker: BankPicker = {
+        let imageView = BankPicker()
         imageView.image = UIImage(named: ProgressViewString.moneyBankImageName.rawValue)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
-    lazy var cigaretteBankImageView: BankImageView = {
-        let imageView = BankImageView()
+    lazy var cigaretteBankPicker: BankPicker = {
+        let imageView = BankPicker()
         imageView.image = UIImage(named: ProgressViewString.cigaretteBankImageName.rawValue)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -64,14 +64,14 @@ class ProgressView: UIView {
  
         
         scrollView.addSubview(userImageView)
-        scrollView.addSubview(moneyBankImageView)
-        scrollView.addSubview(cigaretteBankImageView)
+        scrollView.addSubview(moneyBankPicker)
+        scrollView.addSubview(cigaretteBankPicker)
         self.addSubview(scrollView)
         
         constraintsScrollView()
         constraintsUserImageView()
-        constraintsMoneyBankImageView()
-        constraintsCigaretteBankImageView()
+        constraintsMoneyBankPicker()
+        constraintsCigaretteBankPicker()
     }
     
     //MARK: CONSTRAINTS
@@ -94,8 +94,8 @@ class ProgressView: UIView {
         }
     }
     
-    func constraintsMoneyBankImageView() {
-        moneyBankImageView.snp.makeConstraints {(make) -> Void in
+    func constraintsMoneyBankPicker() {
+        moneyBankPicker.snp.makeConstraints {(make) -> Void in
             make.top.equalTo(userImageView.snp.bottom).offset(15)
             make.trailing.equalTo(scrollView.snp.centerX).offset(-5)
             make.height.equalTo(150)
@@ -103,8 +103,8 @@ class ProgressView: UIView {
         }
     }
     
-    func constraintsCigaretteBankImageView() {
-        cigaretteBankImageView.snp.makeConstraints {(make) -> Void in
+    func constraintsCigaretteBankPicker() {
+        cigaretteBankPicker.snp.makeConstraints {(make) -> Void in
             make.top.equalTo(userImageView.snp.bottom).offset(15)
             make.leading.equalTo(scrollView.snp.centerX).offset(5)
             make.height.equalTo(150)

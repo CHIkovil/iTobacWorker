@@ -34,11 +34,9 @@ class AuthorizationViewController: UIViewController
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        let view = AuthorizationView()
-        view.appLabel.delegate = self
-        
-        authorizationView = view
-        self.view = view
+        authorizationView = AuthorizationView()
+        authorizationView.appLabel.delegate = self
+        self.view = authorizationView
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -50,7 +48,7 @@ class AuthorizationViewController: UIViewController
 //MARK: DELEGATE EXTENSION
 
 extension AuthorizationViewController: AbbreviationDelegate{
-    func animationDidEnd() {
+    func animateEnd() {
         UIView.animate(withDuration: 0.3, animations: {[weak self] in
             guard let self = self else{return}
             self.authorizationView.appLabel.transform.ty = -113

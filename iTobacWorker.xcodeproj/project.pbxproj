@@ -15,9 +15,10 @@
 		17003042275D85AB0093DAC3 /* AuthorizationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1700303B275D85AB0093DAC3 /* AuthorizationPresenter.swift */; };
 		17003043275D85AB0093DAC3 /* AuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1700303C275D85AB0093DAC3 /* AuthorizationViewController.swift */; };
 		17003045275D85AB0093DAC3 /* AuthorizationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1700303E275D85AB0093DAC3 /* AuthorizationView.swift */; };
-		17F1D193276698F200C76A01 /* BankImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F1D192276698F200C76A01 /* BankImageView.swift */; };
-		17F1D19627669B0300C76A01 /* BlockLayerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F1D19527669B0300C76A01 /* BlockLayerExtension.swift */; };
-		17F1D19A2768009100C76A01 /* AnimationLayerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F1D1992768009100C76A01 /* AnimationLayerExtension.swift */; };
+		176E82802775325100B73B0A /* enter.png in Resources */ = {isa = PBXBuildFile; fileRef = 176E827F2775325100B73B0A /* enter.png */; };
+		176E82822775361100B73B0A /* TextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176E82812775361100B73B0A /* TextFieldExtension.swift */; };
+		17F1D193276698F200C76A01 /* BankPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F1D192276698F200C76A01 /* BankPicker.swift */; };
+		17F1D19627669B0300C76A01 /* LayerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F1D19527669B0300C76A01 /* LayerExtension.swift */; };
 		17F90ED9275D8050002D03CD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F90ED8275D8050002D03CD /* AppDelegate.swift */; };
 		17F90EDB275D8050002D03CD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F90EDA275D8050002D03CD /* SceneDelegate.swift */; };
 		17F90EE3275D8050002D03CD /* iTobacWorker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 17F90EE1275D8050002D03CD /* iTobacWorker.xcdatamodeld */; };
@@ -72,9 +73,10 @@
 		1700303B275D85AB0093DAC3 /* AuthorizationPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationPresenter.swift; sourceTree = "<group>"; };
 		1700303C275D85AB0093DAC3 /* AuthorizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationViewController.swift; sourceTree = "<group>"; };
 		1700303E275D85AB0093DAC3 /* AuthorizationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationView.swift; sourceTree = "<group>"; };
-		17F1D192276698F200C76A01 /* BankImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankImageView.swift; sourceTree = "<group>"; };
-		17F1D19527669B0300C76A01 /* BlockLayerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockLayerExtension.swift; sourceTree = "<group>"; };
-		17F1D1992768009100C76A01 /* AnimationLayerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationLayerExtension.swift; sourceTree = "<group>"; };
+		176E827F2775325100B73B0A /* enter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = enter.png; sourceTree = "<group>"; };
+		176E82812775361100B73B0A /* TextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldExtension.swift; sourceTree = "<group>"; };
+		17F1D192276698F200C76A01 /* BankPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankPicker.swift; sourceTree = "<group>"; };
+		17F1D19527669B0300C76A01 /* LayerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerExtension.swift; sourceTree = "<group>"; };
 		17F90ED5275D8050002D03CD /* iTobacWorker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTobacWorker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17F90ED8275D8050002D03CD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		17F90EDA275D8050002D03CD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 		1700302E275D84720093DAC3 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				176E827E2775267900B73B0A /* SupportVC */,
 				17003030275D849A0093DAC3 /* CustomUI */,
 				17003039275D854A0093DAC3 /* Authorization */,
 				1700302F275D84910093DAC3 /* Work */,
@@ -164,11 +167,11 @@
 			isa = PBXGroup;
 			children = (
 				17F1D19427669AA100C76A01 /* Extension */,
-				17FB368B27626EFA0046F6E0 /* UserImageView */,
+				17FB368C27626F3A0046F6E0 /* UserImageView.swift */,
 				17003035275D84F70093DAC3 /* AbbreviationLabel.swift */,
 				17003033275D84F70093DAC3 /* WakeUpTextField.swift */,
 				17003034275D84F70093DAC3 /* WorkTabBar.swift */,
-				17F1D192276698F200C76A01 /* BankImageView.swift */,
+				17F1D192276698F200C76A01 /* BankPicker.swift */,
 			);
 			path = CustomUI;
 			sourceTree = "<group>";
@@ -184,11 +187,19 @@
 			path = Authorization;
 			sourceTree = "<group>";
 		};
+		176E827E2775267900B73B0A /* SupportVC */ = {
+			isa = PBXGroup;
+			children = (
+				17FB3683276149760046F6E0 /* ImagePicker.swift */,
+			);
+			path = SupportVC;
+			sourceTree = "<group>";
+		};
 		17F1D19427669AA100C76A01 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				17F1D19527669B0300C76A01 /* BlockLayerExtension.swift */,
-				17F1D1992768009100C76A01 /* AnimationLayerExtension.swift */,
+				17F1D19527669B0300C76A01 /* LayerExtension.swift */,
+				176E82812775361100B73B0A /* TextFieldExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -258,6 +269,7 @@
 		17FB3667275E5B020046F6E0 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				176E827F2775325100B73B0A /* enter.png */,
 				17FB36942766759D0046F6E0 /* ashtray.png */,
 				17FB36932766759D0046F6E0 /* safe-box.png */,
 				17FB36912765169D0046F6E0 /* add.png */,
@@ -280,15 +292,6 @@
 				17FB3673275FFFEC0046F6E0 /* ProgressPresenter.swift */,
 			);
 			path = Progress;
-			sourceTree = "<group>";
-		};
-		17FB368B27626EFA0046F6E0 /* UserImageView */ = {
-			isa = PBXGroup;
-			children = (
-				17FB368C27626F3A0046F6E0 /* UserImageView.swift */,
-				17FB3683276149760046F6E0 /* ImagePicker.swift */,
-			);
-			path = UserImageView;
 			sourceTree = "<group>";
 		};
 		6440D1556584387EA3F319AD /* Frameworks */ = {
@@ -425,6 +428,7 @@
 			files = (
 				17FB36922765169D0046F6E0 /* add.png in Resources */,
 				17F90EE8275D8050002D03CD /* LaunchScreen.storyboard in Resources */,
+				176E82802775325100B73B0A /* enter.png in Resources */,
 				17FB36952766759D0046F6E0 /* safe-box.png in Resources */,
 				17F90EE5275D8050002D03CD /* Assets.xcassets in Resources */,
 				17FB36962766759D0046F6E0 /* ashtray.png in Resources */,
@@ -561,7 +565,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				17F1D19627669B0300C76A01 /* BlockLayerExtension.swift in Sources */,
+				17F1D19627669B0300C76A01 /* LayerExtension.swift in Sources */,
 				17FB3684276149760046F6E0 /* ImagePicker.swift in Sources */,
 				17003042275D85AB0093DAC3 /* AuthorizationPresenter.swift in Sources */,
 				17003032275D84CC0093DAC3 /* WorkTabBarController.swift in Sources */,
@@ -574,10 +578,10 @@
 				17FB3680276003560046F6E0 /* ProgressView.swift in Sources */,
 				17FB367D275FFFEC0046F6E0 /* ProgressViewController.swift in Sources */,
 				17F90ED9275D8050002D03CD /* AppDelegate.swift in Sources */,
+				176E82822775361100B73B0A /* TextFieldExtension.swift in Sources */,
 				17FB36822760D9190046F6E0 /* AuthorizationModels.swift in Sources */,
 				17FB367C275FFFEC0046F6E0 /* ProgressModels.swift in Sources */,
-				17F1D193276698F200C76A01 /* BankImageView.swift in Sources */,
-				17F1D19A2768009100C76A01 /* AnimationLayerExtension.swift in Sources */,
+				17F1D193276698F200C76A01 /* BankPicker.swift in Sources */,
 				17FB3679275FFFEC0046F6E0 /* ProgressPresenter.swift in Sources */,
 				17003043275D85AB0093DAC3 /* AuthorizationViewController.swift in Sources */,
 				17F90EDB275D8050002D03CD /* SceneDelegate.swift in Sources */,

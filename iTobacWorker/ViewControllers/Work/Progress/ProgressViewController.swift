@@ -41,30 +41,23 @@ class ProgressViewController: UIViewController
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        let progressView = ProgressView()
-        self.progressView = progressView
+        self.progressView = ProgressView()
         self.imagePicker = ImagePicker(presentationController: self, delegate: self)
         view = progressView
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        progressView.userImageView.addButtonTarget(self, action: #selector(didPressAddPhotoButton), for: .touchUpInside)
-        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(didLongPressAddPhotoButton))
-        progressView.userImageView.addButtonGestureRecognizer(gestureRecognizer: longGesture)
+        progressView.userImageView.addButtonGestureRecognizer(gestureRecognizer: UITapGestureRecognizer(target: self, action: #selector(didPressAddPhotoButton)))
         
         progressView.userImageView.showFrame()
-        progressView.moneyBankImageView.startAttentionAnimation()
-        progressView.cigaretteBankImageView.startAttentionAnimation()
+        progressView.moneyBankPicker.showAttention()
+        progressView.cigaretteBankPicker.showAttention()
     }
     
     // MARK: OBJC
     
     @objc func didPressAddPhotoButton() {
-        self.imagePicker.present()
-    }
-    
-    @objc func didLongPressAddPhotoButton() {
         progressView.userImageView.animateImagePulse()
         self.imagePicker.present()
     }
