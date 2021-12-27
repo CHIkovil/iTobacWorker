@@ -9,10 +9,18 @@ import Foundation
 import UIKit
 import SnapKit
 
+//MARK: STRING
+
 private enum WakeUpTextFieldString: String {
     case titleLabelText = "Email or Username"
-    case fontName = "Chalkduster"
-    case animationKey = "strokeEnd"
+    case lineAnimationKey = "strokeEnd"
+}
+
+//MARK: CONSTANTS
+
+private enum WakeUpTextFieldConstants{
+    static let defTextSize: CGFloat = 13.5
+    static let lineWidth: CGFloat = 2
 }
 
 final class WakeUpTextField: UIView {
@@ -25,17 +33,15 @@ final class WakeUpTextField: UIView {
     
     // MARK: showInputTextField
     func showInputTextField(){
-        titleLabel.animateUp(to: self.inputTextField.frame.height)
-        inputTextField.animateOpacity()
+        animateTitleUp()
+        animateShowInputField()
         
-        let lineLayer = drawLineFromPoint(start: lineStartPoint, toPoint: lineEndPoint, color: #colorLiteral(red: 0.1598679423, green: 0.1648836732, blue: 0.1904173791, alpha: 1), width: lineWidth)
-        lineLayer.addMoveAnimation()
+        let lineLayer = drawLineFromPoint(start: lineStartPoint, toPoint: lineEndPoint, color: #colorLiteral(red: 0.1598679423, green: 0.1648836732, blue: 0.1904173791, alpha: 1), width: WakeUpTextFieldConstants.lineWidth)
+        lineLayer.addActivationAnimation()
         self.layer.addSublayer(lineLayer)
     }
     
     //MARK: PRIVATE
-    private let lineWidth: CGFloat = 2
-    
     private var lineStartPoint:CGPoint {CGPoint(x: 15, y: self.frame.height + 5)}
     private var lineEndPoint:CGPoint {CGPoint(x: self.frame.width - 15, y: self.frame.height + 5)}
     private var textFieldWidth: CGFloat {self.frame.width}
@@ -89,12 +95,12 @@ final class WakeUpTextField: UIView {
     //MARK: SUPPORT FUNC
     
     private func makeUI() {
-        let lineLayer = drawLineFromPoint(start: lineStartPoint, toPoint: lineEndPoint, color: .lightGray, width: lineWidth)
+        let lineLayer = drawLineFromPoint(start: lineStartPoint, toPoint: lineEndPoint, color: .lightGray, width: WakeUpTextFieldConstants.lineWidth)
         self.layer.addSublayer(lineLayer)
         
         
-        titleLabel.font = UIFont(name: WakeUpTextFieldString.fontName.rawValue, size: textSize ?? 13.5)
-        inputTextField.font = UIFont(name: WakeUpTextFieldString.fontName.rawValue, size: (textSize ?? 14) + 1)
+        titleLabel.font = UIFont(name: GlobalString.fontName.rawValue, size: textSize ?? WakeUpTextFieldConstants.defTextSize)
+        inputTextField.font = UIFont(name: GlobalString.fontName.rawValue, size: textSize ?? (WakeUpTextFieldConstants.defTextSize + 1.5))
      
         self.addSubview(titleLabel)
         self.addSubview(inputTextField)
@@ -120,28 +126,28 @@ final class WakeUpTextField: UIView {
 
 //MARK: UI ANIMATION EXTENSION
 
-private extension CALayer {
-    func addMoveAnimation(){
-        let animation : CABasicAnimation = CABasicAnimation(keyPath: WakeUpTextFieldString.animationKey.rawValue)
-        animation.fromValue = 0.0
-        animation.toValue = 1.0
-        animation.duration = 1
-        self.add(animation, forKey: WakeUpTextFieldString.animationKey.rawValue)
-    }
-}
-
-private extension UIView {
-    func animateUp(to amount: CGFloat){
+private extension WakeUpTextField {
+    func animateTitleUp(){
         UIView.animate(withDuration: 0.5) {[weak self] in
             guard let self = self else{return}
-            self.transform.ty = -abs(amount)
+            self.titleLabel.transform.ty = -abs(self.inputTextField.frame.height)
         }
     }
     
-    func animateOpacity(){
+    func animateShowInputField(){
         UIView.animate(withDuration: 0.5) {[weak self] in
             guard let self = self else{return}
-            self.alpha = 1
+            self.inputTextField.alpha = 1
         }
+    }
+}
+
+private extension CALayer {
+    func addActivationAnimation(){
+        let animation : CABasicAnimation = CABasicAnimation(keyPath: WakeUpTextFieldString.lineAnimationKey.rawValue)
+        animation.fromValue = 0.0
+        animation.toValue = 1.0
+        animation.duration = 1
+        self.add(animation, forKey: WakeUpTextFieldString.lineAnimationKey.rawValue)
     }
 }

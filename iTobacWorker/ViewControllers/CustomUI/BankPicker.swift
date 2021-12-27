@@ -8,10 +8,17 @@
 import Foundation
 import UIKit
 
+//MARK: STRING
+
 private enum BankPickerString:String{
-    case fontName = "Chalkduster"
     case animationKey =  "position"
-    case buttonImageName = "enter"
+    case buttonImageName = "plus"
+}
+
+//MARK: CONSTANTS
+
+private enum BankPickerConstants{
+    static let defTextSize: CGFloat = 28
 }
 
 final class BankPicker: UIView{
@@ -31,7 +38,6 @@ final class BankPicker: UIView{
     private var viewWidth: CGFloat {self.frame.width}
     private var viewHeight: CGFloat {self.frame.height}
     
-    
     //MARK: UI
     
     
@@ -50,7 +56,6 @@ final class BankPicker: UIView{
         let label = UILabel()
         label.text = "\(0)"
         label.textColor = .lightGray
-        label.font = UIFont(name: BankPickerString.fontName.rawValue, size: textSize ?? 25)
         label.textAlignment = .center
         label.backgroundColor = .clear
         return label
@@ -60,7 +65,6 @@ final class BankPicker: UIView{
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.isUserInteractionEnabled = false
-        textField.font = UIFont(name: BankPickerString.fontName.rawValue, size: textSize ?? 25)
         textField.setLeftPaddingPoints(12)
         textField.backgroundColor = #colorLiteral(red: 0.1412108243, green: 0.1412418485, blue: 0.1412067413, alpha: 1)
         textField.alpha = 0
@@ -78,6 +82,10 @@ final class BankPicker: UIView{
         button.setImage(UIImage(named: BankPickerString.buttonImageName.rawValue), for: .normal)
         button.layer.cornerRadius = button.frame.width / 2
         button.alpha = 0
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 1
+        button.layer.shadowOffset = .zero
+        button.layer.shadowRadius = 10
         button.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didPressInputButton)))
         return button
     }()
@@ -96,9 +104,9 @@ final class BankPicker: UIView{
     
     private func constraintsLabel() {
         label.snp.makeConstraints {(make) -> Void in
-            make.height.equalTo(viewHeight * 0.19)
+            make.height.equalTo(viewHeight * 0.21)
             make.width.equalTo(viewWidth * 0.9)
-            make.top.equalTo(imageView.snp.bottom).offset(5)
+            make.top.equalTo(imageView.snp.bottom).offset(2)
             make.centerX.equalTo(imageView.snp.centerX)
         }
     }
@@ -107,7 +115,8 @@ final class BankPicker: UIView{
         inputTextField.snp.makeConstraints {(make) -> Void in
             make.height.equalTo(viewHeight * 0.19)
             make.width.equalTo(viewWidth * 0.55)
-            make.center.equalTo(label.snp.center)
+            make.centerX.equalTo(label.snp.centerX).offset(-5)
+            make.centerY.equalTo(label.snp.centerY)
         }
     }
 
@@ -116,7 +125,7 @@ final class BankPicker: UIView{
             make.height.equalTo(viewHeight * 0.17)
             make.width.equalTo(viewWidth * 0.17)
             make.centerY.equalTo(inputTextField.snp.centerY)
-            make.leading.equalTo(inputTextField.snp.trailing).offset(2)
+            make.leading.equalTo(inputTextField.snp.trailing).offset(5)
         }
     }
 
@@ -135,6 +144,9 @@ final class BankPicker: UIView{
         constraintsInputTextField()
         constraintsInputButton()
         
+        label.font = UIFont(name: GlobalString.fontName.rawValue, size: textSize ?? BankPickerConstants.defTextSize)
+        inputTextField.font = UIFont(name: GlobalString.fontName.rawValue, size: textSize ?? (BankPickerConstants.defTextSize - 5))
+        
         guard let image = image else{return}
         imageView.image = image
     }
@@ -144,7 +156,14 @@ final class BankPicker: UIView{
             let oldValue = Int(truncating: number)
             label.text = "\(oldValue + newValue)"
         }
-        label.animateDropDown()
+        label.animateDrop()
+        imageView.animateShake()
+    }
+    
+    private func switchInputField(at isEnabled: Bool){
+        inputTextField.isUserInteractionEnabled = isEnabled
+        inputButton.isUserInteractionEnabled = isEnabled
+        label.alpha = isEnabled ? 0 : 1
     }
     
     // MARK: OBJC
@@ -153,24 +172,31 @@ final class BankPicker: UIView{
     }
     
     @objc func didLongPressImage() {
-        label.alpha = 0
-        inputTextField.animateStepOpacity(next: inputButton, newAlpha: 1)
-        inputTextField.isUserInteractionEnabled = true
-        inputButton.isUserInteractionEnabled = true
+        animateStateInputField(newAlpha: 1, isInputEnabled: true)
     }
     
     @objc func didPressInputButton() {
         guard let text = inputTextField.text else {return}
-        inputTextField.animateStepOpacity(next: inputButton, newAlpha: 0)
-        inputButton.isUserInteractionEnabled = false
-        inputTextField.isUserInteractionEnabled = false
-        label.alpha = 1
+        animateStateInputField(newAlpha: 0, isInputEnabled: false)
         guard let value = Int(text) else {return}
         addBankValue(at: value)
     }
 }
 
 //MARK: UI ANIMATION EXTENSION
+
+private extension BankPicker {
+    func animateStateInputField(newAlpha: CGFloat, isInputEnabled: Bool){
+        inputTextField.text = String()
+        UIView.animate(withDuration: 0.1, animations: {[weak self] in
+            guard let self = self else{return}
+            self.inputTextField.alpha = newAlpha
+        }, completion: { _ in
+            self.inputButton.alpha = newAlpha - 0.1
+        })
+        switchInputField(at: isInputEnabled)
+    }
+}
 
 private extension UIView {
     func animateShake(){
@@ -183,19 +209,10 @@ private extension UIView {
         self.layer.add(animation, forKey: BankPickerString.animationKey.rawValue)
     }
     
-    func animateStepOpacity(next: UIView, newAlpha: CGFloat){
-        UIView.animate(withDuration: 0.3, animations: {[weak self] in
-            guard let self = self else{return}
-            self.alpha = newAlpha
-        }, completion: { _ in
-            next.alpha = newAlpha
-        })
-    }
-    
-    func animateDropDown(){
+    func animateDrop(){
         let animation = CABasicAnimation(keyPath: BankPickerString.animationKey.rawValue)
         animation.duration = 0.7
-        animation.fromValue = NSValue(cgPoint: CGPoint(x: self.center.x, y: self.center.y - 5))
+        animation.fromValue = NSValue(cgPoint: CGPoint(x: self.center.x, y: self.center.y - 4))
         animation.toValue = NSValue(cgPoint: CGPoint(x: self.center.x, y: self.center.y))
         self.layer.add(animation, forKey: BankPickerString.animationKey.rawValue)
     }
@@ -205,8 +222,10 @@ private extension UIView {
 
 extension BankPicker: UITextFieldDelegate{
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let text = textField.text else { return true }
         let allowedCharacters = CharacterSet.decimalDigits
         let characterSet = CharacterSet(charactersIn: string)
-        return allowedCharacters.isSuperset(of: characterSet)
+        let newLength = text.count + string.count - range.length
+        return allowedCharacters.isSuperset(of: characterSet) && newLength <= 4
     }
 }

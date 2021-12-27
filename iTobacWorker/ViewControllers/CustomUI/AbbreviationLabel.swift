@@ -9,12 +9,18 @@ import Foundation
 import UIKit
 import Dispatch
 
+//MARK: STRING
+
 private enum AbbreviationLabelString: String {
-    case appName = "iTobacWorker"
-    case fontName = "Chalkduster"
     case cigaretteImageName = "cigarette"
     case smokeImageName = "smoke"
     case charAnimationKey = "opacity"
+}
+
+//MARK: CONSTANTS
+
+private enum AbbreviationLabelConstants{
+    static let defTextSize: CGFloat = 45
 }
 
 //MARK: PROTOCOL
@@ -34,8 +40,8 @@ final class AbbreviationLabel: UIView {
     
     //MARK: showAbbreviation
     func showAbbreviation() {
-        let stringAttributes = [ NSAttributedString.Key.font: UIFont(name: AbbreviationLabelString.fontName.rawValue, size: textSize ?? 45)!]
-        let attributedString = NSMutableAttributedString(string: AbbreviationLabelString.appName.rawValue, attributes: stringAttributes )
+        let stringAttributes = [ NSAttributedString.Key.font: UIFont(name: GlobalString.fontName.rawValue, size: textSize ?? AbbreviationLabelConstants.defTextSize)!]
+        let attributedString = NSMutableAttributedString(string: GlobalString.appName.rawValue, attributes: stringAttributes )
         let charPaths = self.getCharacterPaths(attributedString: attributedString, position: CGPoint(x: -10, y: labelHeight - 10))
         
         let charLayers = charPaths.map { path -> CAShapeLayer in
@@ -53,7 +59,7 @@ final class AbbreviationLabel: UIView {
     
     //MARK: showSmoke
     func showSmoke(){
-        smokeImageView.animateOpacityWithEnding(delegate: nil)
+        animateSmoke()
     }
  
     //MARK: PRIVATE
@@ -145,9 +151,28 @@ final class AbbreviationLabel: UIView {
 
 //MARK: UI ANIMATION EXTENSION
 
-private extension CALayer {
+private extension AbbreviationLabel {
+    
+    func animateCigaretteWithEnding(delegate: AbbreviationDelegate?){
+        UIView.animate(withDuration: 2, animations: {[weak self] in
+            guard let self = self else{return}
+            self.cigaretteImageView.alpha = 0.9
+        }, completion: { _ in
+            guard let delegate = delegate else {return}
+            delegate.animateEnd()
+        })
+    }
+    
+    func animateSmoke(){
+        UIView.animate(withDuration: 2) {[weak self] in
+            guard let self = self else{return}
+            self.smokeImageView.alpha = 0.8
+        }
+    }
+}
 
-    func addAbbreviationAnimation(delegate: CAAnimationDelegate,_ charLayers: [CAShapeLayer]) {
+private extension CALayer {
+    func addAbbreviationAnimation(delegate: CAAnimationDelegate, _ charLayers: [CAShapeLayer]) {
         for (index,shapeLayer) in charLayers.enumerated(){
             self.addSublayer(shapeLayer)
             let animation = CABasicAnimation(keyPath: AbbreviationLabelString.charAnimationKey.rawValue)
@@ -177,23 +202,11 @@ private extension CALayer {
     }
 }
 
-private extension UIView {
-    func animateOpacityWithEnding(delegate: AbbreviationDelegate?){
-        UIView.animate(withDuration: 2, animations: {[weak self] in
-            guard let self = self else{return}
-            self.alpha = 0.8
-        }, completion: { _ in
-            guard let delegate = delegate else {return}
-            delegate.animateEnd()
-        })
-    }
-}
-
 //MARK: DELEGATE EXTENSION
 
 extension AbbreviationLabel:CAAnimationDelegate{
 
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        cigaretteImageView.animateOpacityWithEnding(delegate: delegate)
+        animateCigaretteWithEnding(delegate: delegate)
     }
 }

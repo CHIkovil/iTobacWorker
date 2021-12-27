@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+//MARK: STRING
+
 private enum UserImageViewString: String {
     case defImageName = "question"
     case buttonImageName = "add"
@@ -16,7 +18,7 @@ private enum UserImageViewString: String {
 }
 
 class UserImageView: UIView {
-    
+
     override func draw(_ rect: CGRect) {
         makeUI()
     }
@@ -163,7 +165,7 @@ class UserImageView: UIView {
 //MARK: UI ANIMATION EXTENSION
 
 private extension CALayer {
-    func addInfinityRotationAnimation() {
+    func addInfinityRotationAnimation(){
         let animation = CABasicAnimation(keyPath: UserImageViewString.arcAnimationKey.rawValue)
         animation.byValue = NSNumber(floatLiteral: Double(CGFloat.pi * 2))
         animation.duration = 10

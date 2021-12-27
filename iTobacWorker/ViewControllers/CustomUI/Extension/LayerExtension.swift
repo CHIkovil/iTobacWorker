@@ -18,7 +18,7 @@ extension CALayer{
             cornerRadii: CGSize(width: cornerWidth, height: 0.0))
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = path.cgPath
-        shapeLayer.fillColor = #colorLiteral(red: 0.2052714825, green: 0.205650717, blue: 0.2234534323, alpha: 1).cgColor
+        shapeLayer.fillColor = #colorLiteral(red: 0.1531058252, green: 0.1786891222, blue: 0.2617320716, alpha: 1).cgColor
        
         self.shadowColor = UIColor.black.cgColor
         self.shadowOpacity = 1
