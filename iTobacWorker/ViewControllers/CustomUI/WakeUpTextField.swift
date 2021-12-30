@@ -31,10 +31,10 @@ final class WakeUpTextField: UIView {
         makeUI()
     }
     
-    // MARK: showInputTextField
-    func showInputTextField(){
+    // MARK: animateInputField
+    func animateInputField(){
         animateTitleUp()
-        animateShowInputField()
+        animateShowTextField()
         
         let lineLayer = drawLineFromPoint(start: lineStartPoint, toPoint: lineEndPoint, color: #colorLiteral(red: 0.1598679423, green: 0.1648836732, blue: 0.1904173791, alpha: 1), width: WakeUpTextFieldConstants.lineWidth)
         lineLayer.addActivationAnimation()
@@ -59,7 +59,7 @@ final class WakeUpTextField: UIView {
         return label
     }()
     
-    private lazy var inputTextField: UITextField = {
+    private lazy var textField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = #colorLiteral(red: 0.9386559129, green: 0.9388130307, blue: 0.9386352301, alpha: 1)
@@ -78,13 +78,13 @@ final class WakeUpTextField: UIView {
         titleLabel.snp.makeConstraints {(make) -> Void in
             make.width.equalTo(self.snp.width)
             make.height.equalTo(textFieldHeight * 0.4)
-            make.centerX.equalTo(inputTextField.snp.centerX)
-            make.bottom.equalTo(inputTextField.snp.bottom)
+            make.centerX.equalTo(textField.snp.centerX)
+            make.bottom.equalTo(textField.snp.bottom)
         }
     }
     
-    private func constraintsInputTextField(){
-        inputTextField.snp.makeConstraints {(make) -> Void in
+    private func constraintsTextField(){
+        textField.snp.makeConstraints {(make) -> Void in
             make.width.equalTo(self.snp.width)
             make.height.equalTo(textFieldHeight * 0.44)
             make.centerX.equalTo(self.snp.centerX)
@@ -100,13 +100,13 @@ final class WakeUpTextField: UIView {
         
         
         titleLabel.font = UIFont(name: GlobalString.fontName.rawValue, size: textSize ?? WakeUpTextFieldConstants.defTextSize)
-        inputTextField.font = UIFont(name: GlobalString.fontName.rawValue, size: textSize ?? (WakeUpTextFieldConstants.defTextSize + 1.5))
+        textField.font = UIFont(name: GlobalString.fontName.rawValue, size: textSize ?? (WakeUpTextFieldConstants.defTextSize + 1.5))
      
         self.addSubview(titleLabel)
-        self.addSubview(inputTextField)
+        self.addSubview(textField)
         
         constraintsTitleLabel()
-        constraintsInputTextField()
+        constraintsTextField()
     }
     
     private func drawLineFromPoint(start: CGPoint, toPoint end: CGPoint, color: UIColor, width: CGFloat) ->  CAShapeLayer{
@@ -130,14 +130,14 @@ private extension WakeUpTextField {
     func animateTitleUp(){
         UIView.animate(withDuration: 0.5) {[weak self] in
             guard let self = self else{return}
-            self.titleLabel.transform.ty = -abs(self.inputTextField.frame.height)
+            self.titleLabel.transform.ty = -abs(self.textField.frame.height)
         }
     }
     
-    func animateShowInputField(){
+    func animateShowTextField(){
         UIView.animate(withDuration: 0.5) {[weak self] in
             guard let self = self else{return}
-            self.inputTextField.alpha = 1
+            self.textField.alpha = 1
         }
     }
 }

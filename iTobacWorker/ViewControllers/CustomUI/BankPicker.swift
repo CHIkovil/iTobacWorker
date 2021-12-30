@@ -29,8 +29,8 @@ final class BankPicker: UIView{
         makeUI()
     }
         
-    //MARK: showAttention
-    func showAttention(){
+    //MARK: animateAttention
+    func animateAttention(){
         imageView.animateShake()
     }
     
@@ -52,7 +52,7 @@ final class BankPicker: UIView{
         return imageView
     }()
     
-    private lazy var label: UILabel = {
+    private lazy var countLabel: UILabel = {
         let label = UILabel()
         label.text = "\(0)"
         label.textColor = .lightGray
@@ -102,8 +102,8 @@ final class BankPicker: UIView{
         }
     }
     
-    private func constraintsLabel() {
-        label.snp.makeConstraints {(make) -> Void in
+    private func constraintsCountLabel() {
+        countLabel.snp.makeConstraints {(make) -> Void in
             make.height.equalTo(viewHeight * 0.21)
             make.width.equalTo(viewWidth * 0.9)
             make.top.equalTo(imageView.snp.bottom).offset(2)
@@ -115,8 +115,8 @@ final class BankPicker: UIView{
         inputTextField.snp.makeConstraints {(make) -> Void in
             make.height.equalTo(viewHeight * 0.19)
             make.width.equalTo(viewWidth * 0.55)
-            make.centerX.equalTo(label.snp.centerX).offset(-5)
-            make.centerY.equalTo(label.snp.centerY)
+            make.centerX.equalTo(countLabel.snp.centerX).offset(-5)
+            make.centerY.equalTo(countLabel.snp.centerY)
         }
     }
 
@@ -133,18 +133,19 @@ final class BankPicker: UIView{
     //MARK: SUPPORT FUNC
     
     private func makeUI(){
-        self.layer.drawBlockLayer(cornerWidth: 25)
+        let color = #colorLiteral(red: 0.1531058252, green: 0.1786891222, blue: 0.2617320716, alpha: 1)
+        self.layer.drawBlockLayer(cornerWidth: 25,color: color)
         
         self.addSubview(imageView)
-        self.addSubview(label)
+        self.addSubview(countLabel)
         self.addSubview(inputTextField)
         self.addSubview(inputButton)
         constraintsImageView()
-        constraintsLabel()
+        constraintsCountLabel()
         constraintsInputTextField()
         constraintsInputButton()
         
-        label.font = UIFont(name: GlobalString.fontName.rawValue, size: textSize ?? BankPickerConstants.defTextSize)
+        countLabel.font = UIFont(name: GlobalString.fontName.rawValue, size: textSize ?? BankPickerConstants.defTextSize)
         inputTextField.font = UIFont(name: GlobalString.fontName.rawValue, size: textSize ?? (BankPickerConstants.defTextSize - 5))
         
         guard let image = image else{return}
@@ -152,18 +153,18 @@ final class BankPicker: UIView{
     }
     
     private func addBankValue(at newValue: Int){
-        if let number = NumberFormatter().number(from: label.text!) {
+        if let number = NumberFormatter().number(from: countLabel.text!) {
             let oldValue = Int(truncating: number)
-            label.text = "\(oldValue + newValue)"
+            countLabel.text = "\(oldValue + newValue)"
         }
-        label.animateDrop()
+        countLabel.animateDrop()
         imageView.animateShake()
     }
     
     private func switchInputField(at isEnabled: Bool){
         inputTextField.isUserInteractionEnabled = isEnabled
         inputButton.isUserInteractionEnabled = isEnabled
-        label.alpha = isEnabled ? 0 : 1
+        countLabel.alpha = isEnabled ? 0 : 1
     }
     
     // MARK: OBJC

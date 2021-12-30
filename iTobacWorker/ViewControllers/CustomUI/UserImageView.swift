@@ -23,8 +23,8 @@ class UserImageView: UIView {
         makeUI()
     }
     
-    // MARK: showFrame
-    func showFrame(){
+    // MARK: animateFrame
+    func animateFrame(){
         self.layer.sublayers?.forEach {
             guard let name = $0.name else{return}
             if (name.starts(with: UserImageViewString.frameLayerName.rawValue)){
@@ -33,7 +33,7 @@ class UserImageView: UIView {
         }
         
         for index in 1...3 {
-            let shapeLayer = drawArcShapeLayer(name:UserImageViewString.frameLayerName.rawValue + "\(index)", offset: CGFloat(index))
+            let shapeLayer = drawArc(name:UserImageViewString.frameLayerName.rawValue + "\(index)", offset: CGFloat(index))
             shapeLayer.addInfinityRotationAnimation()
             self.layer.addSublayer(shapeLayer)
         }
@@ -129,7 +129,8 @@ class UserImageView: UIView {
     // MARK: SUPPORT FUNC
     
     private func makeUI(){
-        self.layer.drawBlockLayer(cornerWidth: 35)
+        let color = #colorLiteral(red: 0.1531058252, green: 0.1786891222, blue: 0.2617320716, alpha: 1)
+        self.layer.drawBlockLayer(cornerWidth: 35, color: color)
         
         backgroundView.addSubview(imageView)
         self.addSubview(backgroundView)
@@ -140,7 +141,7 @@ class UserImageView: UIView {
         constraintsButton()
     }
     
-    private func drawArcShapeLayer(name: String, offset: CGFloat) -> CAShapeLayer{
+    private func drawArc(name: String, offset: CGFloat) -> CAShapeLayer{
         let shapeLayer = CAShapeLayer()
         let center = CGPoint(x: viewWidth / 2, y: viewHeight / 2)
         let bounds = CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight)

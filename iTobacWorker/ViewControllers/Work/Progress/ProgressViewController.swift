@@ -50,9 +50,11 @@ class ProgressViewController: UIViewController
         super.viewDidAppear(animated)
         progressView.userImageView.addButtonGestureRecognizer(gestureRecognizer: UITapGestureRecognizer(target: self, action: #selector(didPressAddPhotoButton)))
         
-        progressView.userImageView.showFrame()
-        progressView.moneyBankPicker.showAttention()
-        progressView.cigaretteBankPicker.showAttention()
+        progressView.userImageView.animateFrame()
+        progressView.moneyBankPicker.animateAttention()
+        progressView.cigaretteBankPicker.animateAttention()
+        progressView.graphView.animateGraph(gPoints: [4, 2, 6, 4, 5, 8, 3],color: .white, isAnimate: true)
+        progressView.graphView.animateGraph(gPoints: [1, 3, 4, 4, 7, 8, 3], color: .green, isAnimate: true)
     }
     
     // MARK: OBJC

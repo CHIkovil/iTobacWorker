@@ -57,6 +57,13 @@ class ProgressView: UIView {
         return imageView
     }()
     
+    lazy var graphView: GraphView = {
+        let view = GraphView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+
+        return view
+    }()
+    
     //MARK: SUPPORT FUNC
     
     func makeUI() {
@@ -66,12 +73,14 @@ class ProgressView: UIView {
         scrollView.addSubview(userImageView)
         scrollView.addSubview(moneyBankPicker)
         scrollView.addSubview(cigaretteBankPicker)
+        scrollView.addSubview(graphView)
         self.addSubview(scrollView)
         
         constraintsScrollView()
         constraintsUserImageView()
         constraintsMoneyBankPicker()
         constraintsCigaretteBankPicker()
+        constraintsGraphView()
     }
     
     //MARK: CONSTRAINTS
@@ -109,6 +118,15 @@ class ProgressView: UIView {
             make.leading.equalTo(scrollView.snp.centerX).offset(5)
             make.height.equalTo(150)
             make.width.equalTo(150)
+        }
+    }
+    
+    func constraintsGraphView() {
+        graphView.snp.makeConstraints {(make) -> Void in
+            make.centerX.equalTo(scrollView.snp.centerX)
+            make.top.equalTo(moneyBankPicker.snp.bottom).offset(15)
+            make.height.equalTo(280)
+            make.width.equalTo(280)
         }
     }
 }
