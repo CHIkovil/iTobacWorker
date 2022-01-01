@@ -133,9 +133,9 @@ final class BankPicker: UIView{
     //MARK: SUPPORT FUNC
     
     private func makeUI(){
-        let color = #colorLiteral(red: 0.1531058252, green: 0.1786891222, blue: 0.2617320716, alpha: 1)
-        self.layer.drawBlockLayer(cornerWidth: 25,color: color)
+        let color = #colorLiteral(red: 0.1261322796, green: 0.1471925974, blue: 0.2156360745, alpha: 1)
         
+        self.layer.drawBlockLayer(cornerWidth: 25,color: color)
         self.addSubview(imageView)
         self.addSubview(countLabel)
         self.addSubview(inputTextField)
@@ -147,7 +147,6 @@ final class BankPicker: UIView{
         
         countLabel.font = UIFont(name: GlobalString.fontName.rawValue, size: textSize ?? BankPickerConstants.defTextSize)
         inputTextField.font = UIFont(name: GlobalString.fontName.rawValue, size: textSize ?? (BankPickerConstants.defTextSize - 5))
-        
         guard let image = image else{return}
         imageView.image = image
     }

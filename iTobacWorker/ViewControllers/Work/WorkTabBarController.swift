@@ -42,10 +42,10 @@ class WorkTabBarController: UITabBarController {
         self.setValue(tabBar, forKey: WorkTabBarControllerString.valueKey.rawValue)
         
         let firstVC = UIViewController()
-        firstVC.view.backgroundColor = #colorLiteral(red: 0.1846325099, green: 0.184974581, blue: 0.200987637, alpha: 1)
+        firstVC.view.backgroundColor = #colorLiteral(red: 0.1126094386, green: 0.1120074913, blue: 0.1353533268, alpha: 1)
         
         let middleVC = UIViewController()
-        middleVC.view.backgroundColor = #colorLiteral(red: 0.1846325099, green: 0.184974581, blue: 0.200987637, alpha: 1)
+        middleVC.view.backgroundColor = #colorLiteral(red: 0.1126094386, green: 0.1120074913, blue: 0.1353533268, alpha: 1)
         
         let progressViewController = ProgressViewController()
         

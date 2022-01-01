@@ -31,8 +31,8 @@ final class WakeUpTextField: UIView {
         makeUI()
     }
     
-    // MARK: animateInputField
-    func animateInputField(){
+    // MARK: showInputField
+    func showInputField(){
         animateTitleUp()
         animateShowTextField()
         
@@ -98,15 +98,14 @@ final class WakeUpTextField: UIView {
         let lineLayer = drawLineFromPoint(start: lineStartPoint, toPoint: lineEndPoint, color: .lightGray, width: WakeUpTextFieldConstants.lineWidth)
         self.layer.addSublayer(lineLayer)
         
-        
-        titleLabel.font = UIFont(name: GlobalString.fontName.rawValue, size: textSize ?? WakeUpTextFieldConstants.defTextSize)
-        textField.font = UIFont(name: GlobalString.fontName.rawValue, size: textSize ?? (WakeUpTextFieldConstants.defTextSize + 1.5))
-     
         self.addSubview(titleLabel)
         self.addSubview(textField)
         
         constraintsTitleLabel()
         constraintsTextField()
+        
+        titleLabel.font = UIFont(name: GlobalString.fontName.rawValue, size: textSize ?? WakeUpTextFieldConstants.defTextSize)
+        textField.font = UIFont(name: GlobalString.fontName.rawValue, size: textSize ?? (WakeUpTextFieldConstants.defTextSize + 1.5))
     }
     
     private func drawLineFromPoint(start: CGPoint, toPoint end: CGPoint, color: UIColor, width: CGFloat) ->  CAShapeLayer{
@@ -124,7 +123,7 @@ final class WakeUpTextField: UIView {
     }
 }
 
-//MARK: UI ANIMATION EXTENSION
+//MARK: ANIMATION EXTENSION
 
 private extension WakeUpTextField {
     func animateTitleUp(){

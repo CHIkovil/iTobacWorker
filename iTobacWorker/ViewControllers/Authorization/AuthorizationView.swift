@@ -82,7 +82,7 @@ class AuthorizationView: UIView{
     //MARK: SUPPORT FUNC
     
     func makeUI() {
-        self.backgroundColor = #colorLiteral(red: 0.1846325099, green: 0.184974581, blue: 0.200987637, alpha: 1)
+        self.backgroundColor = #colorLiteral(red: 0.1126094386, green: 0.1120074913, blue: 0.1353533268, alpha: 1)
         boardView.addSubview(loginTextField)
         self.addSubview(boardView)
         self.addSubview(appLabel)

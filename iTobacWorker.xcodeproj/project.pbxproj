@@ -15,6 +15,7 @@
 		17003042275D85AB0093DAC3 /* AuthorizationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1700303B275D85AB0093DAC3 /* AuthorizationPresenter.swift */; };
 		17003043275D85AB0093DAC3 /* AuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1700303C275D85AB0093DAC3 /* AuthorizationViewController.swift */; };
 		17003045275D85AB0093DAC3 /* AuthorizationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1700303E275D85AB0093DAC3 /* AuthorizationView.swift */; };
+		1711EF3E2780E2620089E07D /* GraphModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1711EF3D2780E2620089E07D /* GraphModel.swift */; };
 		176E82822775361100B73B0A /* TextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176E82812775361100B73B0A /* TextFieldExtension.swift */; };
 		176E82842779F7FD00B73B0A /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 176E82832779F7FD00B73B0A /* plus.png */; };
 		17ECA681277A183100A1ADD5 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ECA680277A183100A1ADD5 /* GraphView.swift */; };
@@ -75,6 +76,7 @@
 		1700303B275D85AB0093DAC3 /* AuthorizationPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationPresenter.swift; sourceTree = "<group>"; };
 		1700303C275D85AB0093DAC3 /* AuthorizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationViewController.swift; sourceTree = "<group>"; };
 		1700303E275D85AB0093DAC3 /* AuthorizationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationView.swift; sourceTree = "<group>"; };
+		1711EF3D2780E2620089E07D /* GraphModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphModel.swift; sourceTree = "<group>"; };
 		176E82812775361100B73B0A /* TextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldExtension.swift; sourceTree = "<group>"; };
 		176E82832779F7FD00B73B0A /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
 		17ECA680277A183100A1ADD5 /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
@@ -170,14 +172,14 @@
 		17003030275D849A0093DAC3 /* CustomUI */ = {
 			isa = PBXGroup;
 			children = (
-				17ECA682277A1DCE00A1ADD5 /* String */,
-				17F1D19427669AA100C76A01 /* Extension */,
+				17ECA682277A1DCE00A1ADD5 /* GlobalString */,
+				17F1D19427669AA100C76A01 /* GlobalExtension */,
 				17FB368C27626F3A0046F6E0 /* UserImageView.swift */,
 				17003035275D84F70093DAC3 /* AbbreviationLabel.swift */,
 				17003033275D84F70093DAC3 /* WakeUpTextField.swift */,
 				17003034275D84F70093DAC3 /* WorkTabBar.swift */,
 				17F1D192276698F200C76A01 /* BankPicker.swift */,
-				17ECA680277A183100A1ADD5 /* GraphView.swift */,
+				1711EF3C2780E2330089E07D /* GraphView */,
 			);
 			path = CustomUI;
 			sourceTree = "<group>";
@@ -193,6 +195,15 @@
 			path = Authorization;
 			sourceTree = "<group>";
 		};
+		1711EF3C2780E2330089E07D /* GraphView */ = {
+			isa = PBXGroup;
+			children = (
+				17ECA680277A183100A1ADD5 /* GraphView.swift */,
+				1711EF3D2780E2620089E07D /* GraphModel.swift */,
+			);
+			path = GraphView;
+			sourceTree = "<group>";
+		};
 		176E827E2775267900B73B0A /* SupportVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -201,21 +212,21 @@
 			path = SupportVC;
 			sourceTree = "<group>";
 		};
-		17ECA682277A1DCE00A1ADD5 /* String */ = {
+		17ECA682277A1DCE00A1ADD5 /* GlobalString */ = {
 			isa = PBXGroup;
 			children = (
 				17ECA683277A1DFB00A1ADD5 /* GlobalString.swift */,
 			);
-			path = String;
+			path = GlobalString;
 			sourceTree = "<group>";
 		};
-		17F1D19427669AA100C76A01 /* Extension */ = {
+		17F1D19427669AA100C76A01 /* GlobalExtension */ = {
 			isa = PBXGroup;
 			children = (
 				17F1D19527669B0300C76A01 /* LayerExtension.swift */,
 				176E82812775361100B73B0A /* TextFieldExtension.swift */,
 			);
-			path = Extension;
+			path = GlobalExtension;
 			sourceTree = "<group>";
 		};
 		17F90ECC275D8050002D03CD = {
@@ -591,6 +602,7 @@
 				17FB368D27626F3A0046F6E0 /* UserImageView.swift in Sources */,
 				17003036275D84F70093DAC3 /* WakeUpTextField.swift in Sources */,
 				17FB3680276003560046F6E0 /* ProgressView.swift in Sources */,
+				1711EF3E2780E2620089E07D /* GraphModel.swift in Sources */,
 				17FB367D275FFFEC0046F6E0 /* ProgressViewController.swift in Sources */,
 				17ECA684277A1DFB00A1ADD5 /* GlobalString.swift in Sources */,
 				17F90ED9275D8050002D03CD /* AppDelegate.swift in Sources */,

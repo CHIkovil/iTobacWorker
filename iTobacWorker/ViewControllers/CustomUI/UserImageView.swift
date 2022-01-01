@@ -23,8 +23,8 @@ class UserImageView: UIView {
         makeUI()
     }
     
-    // MARK: animateFrame
-    func animateFrame(){
+    // MARK: showFrame
+    func showFrame(){
         self.layer.sublayers?.forEach {
             guard let name = $0.name else{return}
             if (name.starts(with: UserImageViewString.frameLayerName.rawValue)){
@@ -72,6 +72,7 @@ class UserImageView: UIView {
         imageView.backgroundColor = #colorLiteral(red: 0.9983720183, green: 0.890299499, blue: 0.4330784082, alpha: 1)
         imageView.layer.borderWidth = 3
         imageView.layer.borderColor = #colorLiteral(red: 0.1395464242, green: 0.1398070455, blue: 0.1519106925, alpha: 1)
+        imageView.alpha = 0.9
         return imageView
     }()
     
@@ -129,7 +130,7 @@ class UserImageView: UIView {
     // MARK: SUPPORT FUNC
     
     private func makeUI(){
-        let color = #colorLiteral(red: 0.1531058252, green: 0.1786891222, blue: 0.2617320716, alpha: 1)
+        let color = #colorLiteral(red: 0.1261322796, green: 0.1471925974, blue: 0.2156360745, alpha: 1)
         self.layer.drawBlockLayer(cornerWidth: 35, color: color)
         
         backgroundView.addSubview(imageView)
@@ -163,7 +164,7 @@ class UserImageView: UIView {
     }
 }
 
-//MARK: UI ANIMATION EXTENSION
+//MARK: ANIMATION EXTENSION
 
 private extension CALayer {
     func addInfinityRotationAnimation(){

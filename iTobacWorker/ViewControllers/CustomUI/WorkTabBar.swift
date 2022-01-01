@@ -141,6 +141,7 @@ final class WorkTabBar: UITabBar{
         self.addSubview(searchButton)
         self.addSubview(infoButton)
         self.addSubview(progressButton)
+        
         constraintsSearchButton()
         constraintsInfoButton()
         constraintsProgressButton()
@@ -177,7 +178,7 @@ final class WorkTabBar: UITabBar{
     }
 }
 
-//MARK: UI ANIMATION EXTENSION
+//MARK: ANIMATION EXTENSION
 
 private extension UIView{
     func animateSelect(){

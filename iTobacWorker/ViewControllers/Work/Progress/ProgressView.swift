@@ -67,8 +67,7 @@ class ProgressView: UIView {
     //MARK: SUPPORT FUNC
     
     func makeUI() {
-        self.backgroundColor = #colorLiteral(red: 0.1846325099, green: 0.184974581, blue: 0.200987637, alpha: 1)
- 
+        self.backgroundColor = #colorLiteral(red: 0.1126094386, green: 0.1120074913, blue: 0.1353533268, alpha: 1)
         
         scrollView.addSubview(userImageView)
         scrollView.addSubview(moneyBankPicker)
@@ -125,7 +124,7 @@ class ProgressView: UIView {
         graphView.snp.makeConstraints {(make) -> Void in
             make.centerX.equalTo(scrollView.snp.centerX)
             make.top.equalTo(moneyBankPicker.snp.bottom).offset(15)
-            make.height.equalTo(280)
+            make.height.equalTo(250)
             make.width.equalTo(280)
         }
     }

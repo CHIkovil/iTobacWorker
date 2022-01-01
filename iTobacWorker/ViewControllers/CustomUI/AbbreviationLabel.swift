@@ -149,7 +149,7 @@ final class AbbreviationLabel: UIView {
     }
 }
 
-//MARK: UI ANIMATION EXTENSION
+//MARK: ANIMATION EXTENSION
 
 private extension AbbreviationLabel {
     
