@@ -32,10 +32,10 @@ final class GraphView: UIView {
     }
     
     //MARK: showGraphs
-    func showGraphs(_ graphs: [Graph], isAnimate: Bool) {
+    func showGraphs(_ setups: [GraphSetup], isAnimate: Bool) {
         var allMaxValue:[Int] = []
-        for graph in graphs {
-            guard let maxValue = graph.points.max() else{continue}
+        for setup in setups {
+            guard let maxValue = setup.points.max() else{continue}
             allMaxValue.append(maxValue)
         }
         
@@ -49,14 +49,18 @@ final class GraphView: UIView {
             }
         }
         
-        for graph in graphs {
-            let lines = drawGraphLines(graph, maxValue: maxValue)
-            self.layer.addSublayer(lines)
-            
-            let points = drawGraphPoints(graph, maxValue: maxValue)
-            for point in points {
-                self.layer.addSublayer(point)
+        for setup in setups {
+            drawGraphLines(setup, maxValue: maxValue) {graph in
+                self.layer.addSublayer(graph.lines)
+                self.layer.addSublayer(graph.clipping)
             }
+            
+            drawGraphPoints(setup, maxValue: maxValue) {points in
+                for point in points {
+                    self.layer.addSublayer(point)
+                }
+            }
+       
         }
     }
     
@@ -103,8 +107,9 @@ final class GraphView: UIView {
     }
     
     private func setupGraphDisplay(){
-        let markup = drawHorizontalMarkup()
-        self.layer.addSublayer(markup)
+        drawHorizontalMarkup { markup in
+            self.layer.addSublayer(markup)
+        }
         
         let weekdays = DateFormatter().shortWeekdaySymbols.shift()
         for weekday in weekdays {
@@ -119,30 +124,49 @@ final class GraphView: UIView {
         }
     }
     
-    private func drawGraphLines(_ graph: Graph, maxValue: Int) -> CAShapeLayer{
+    private func drawGraphLines(_ setup: GraphSetup, maxValue: Int, callback: @escaping(Graph) -> Void){
         let linePath = UIBezierPath()
         
-        linePath.move(to: CGPoint(x: calculateX(0), y: calculateY(graph.points[0],maxValue)))
+        linePath.move(to: CGPoint(x: calculateX(0), y: calculateY(setup.points[0],maxValue)))
         
-        for i in 1..<graph.points.count{
-            let nextPoint = CGPoint(x: calculateX(i), y: calculateY(graph.points[i], maxValue))
+        for i in 1..<setup.points.count{
+            let nextPoint = CGPoint(x: calculateX(i), y: calculateY(setup.points[i], maxValue))
             linePath.addLine(to: nextPoint)
         }
         
+        let lines = CAShapeLayer()
+        lines.path = linePath.cgPath
+        lines.strokeColor = setup.color.cgColor
+        lines.fillColor = UIColor.clear.cgColor
+        lines.lineWidth = 3
+        lines.lineCap = .round
+        lines.name = GraphViewString.graphLayerName.rawValue
+        
+        let clipping = drawGraphClipping(linePath, color: setup.color)
+        
+        callback(Graph(lines: lines, clipping: clipping))
+    }
+    
+    private func drawGraphClipping(_ path: UIBezierPath, color: UIColor) -> CAShapeLayer{
+        let clippingPath = path.copy() as! UIBezierPath
+        
+        clippingPath.addLine(to: CGPoint(x: calculateX(6),y: viewHeight - GraphViewConstants.bottomBorder))
+        clippingPath.addLine(to: CGPoint(x: calculateX(0), y: viewHeight - GraphViewConstants.bottomBorder))
+        clippingPath.addClip()
+        
         let shapeLayer = CAShapeLayer()
-        shapeLayer.path = linePath.cgPath
-        shapeLayer.strokeColor = graph.color.cgColor
-        shapeLayer.fillColor = UIColor.clear.cgColor
-        shapeLayer.lineWidth = 3
-        shapeLayer.lineCap = .round
+        shapeLayer.path = clippingPath.cgPath
+        shapeLayer.fillColor = color.cgColor
         shapeLayer.name = GraphViewString.graphLayerName.rawValue
+        shapeLayer.opacity = 0.3
+        
         return shapeLayer
     }
     
-    private func drawGraphPoints(_ graph: Graph, maxValue: Int) -> [CAShapeLayer]{
-        var result:[CAShapeLayer] = []
-        for i in 0..<graph.points.count {
-            var point = CGPoint(x: calculateX(i), y: calculateY(graph.points[i], maxValue))
+    private func drawGraphPoints(_ setup: GraphSetup, maxValue: Int, callback: @escaping([CAShapeLayer]) -> Void) {
+        var pointLayers:[CAShapeLayer] = []
+        for i in 0..<setup.points.count {
+            var point = CGPoint(x: calculateX(i), y: calculateY(setup.points[i], maxValue))
             point.x -= GraphViewConstants.circleDiameter / 2
             point.y -= GraphViewConstants.circleDiameter / 2
             
@@ -150,14 +174,15 @@ final class GraphView: UIView {
             
             let shapeLayer = CAShapeLayer()
             shapeLayer.path = circlePath.cgPath
-            shapeLayer.fillColor = graph.color.cgColor
+            shapeLayer.fillColor = setup.color.cgColor
             shapeLayer.name = GraphViewString.graphLayerName.rawValue
-            result.append(shapeLayer)
+            pointLayers.append(shapeLayer)
         }
-        return result
+        
+        callback(pointLayers)
     }
     
-    private func drawHorizontalMarkup() -> CAShapeLayer{
+    private func drawHorizontalMarkup(callback: @escaping(CAShapeLayer) -> Void) {
         let linePath = UIBezierPath()
         
         linePath.move(to: CGPoint(x:GraphViewConstants.margin, y: GraphViewConstants.topBorder))
@@ -175,7 +200,7 @@ final class GraphView: UIView {
         shapeLayer.path = linePath.cgPath
         shapeLayer.strokeColor = color.cgColor
         shapeLayer.lineWidth = 2
-        return shapeLayer
+        callback(shapeLayer)
     }
     
     private func calculateX(_ column: Int) -> CGFloat{

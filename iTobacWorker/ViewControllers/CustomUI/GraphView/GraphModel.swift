@@ -8,9 +8,18 @@
 import Foundation
 import UIKit
 
-struct GraphModel{
-    let points: [Int]
-    let color: UIColor
+enum GraphModel {
+    struct GraphSetup{
+        let points: [Int]
+        let color: UIColor
+    }
+    
+    struct Graph{
+        let lines: CAShapeLayer
+        let clipping: CAShapeLayer
+    }
 }
 
-typealias Graph = GraphModel
+
+typealias GraphSetup = GraphModel.GraphSetup
+typealias Graph = GraphModel.Graph
