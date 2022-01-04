@@ -31,7 +31,7 @@ final class GraphView: UIView {
     func showGraphs(_ setups: [GraphSetup], isAnimate: Bool) {
         guard let maxValue = getGraphsMaxValue(setups) else {return}
         self.maxValueLabel.text = "\(maxValue)"
-        
+    
         for setup in setups {
             showGraph(setup, maxValue: maxValue) {graph in
                 self.layer.addSublayer(graph.lines)
@@ -41,6 +41,7 @@ final class GraphView: UIView {
                 }
             }
         }
+        showGraphAnnotations(setups)
     }
     
     //MARK: PRIVATE
@@ -71,6 +72,12 @@ final class GraphView: UIView {
         return view
     }()
     
+    private lazy var annotationStackView: UIStackView = {
+        let view = UIStackView(frame: CGRect(x: GraphViewConstants.margin, y: GraphViewConstants.topBorder - viewHeight * 0.1 - 10, width: viewWidth - 2 * GraphViewConstants.margin, height: viewHeight * 0.1))
+        view.backgroundColor = .clear
+        return view
+    }()
+    
     //MARK: SUPPORT FUNC
     
     private func makeUI(){
@@ -80,6 +87,7 @@ final class GraphView: UIView {
         self.addSubview(minValueLabel)
         self.addSubview(maxValueLabel)
         self.addSubview(weekStackView)
+        self.addSubview(annotationStackView)
         
         showWeekdays()
         drawMarkup()
@@ -154,8 +162,42 @@ final class GraphView: UIView {
         }
     }
     
-    private func showGraphAnnotation(_ setup: GraphSetup){
+    private func showGraphAnnotations(_ setups: [GraphSetup]){
+        self.annotationStackView.arrangedSubviews.forEach {
+            $0.removeFromSuperview()
+        }
+        for setup in setups {
+            let label = UILabel()
+            let labelWidth = (viewWidth - 2 * GraphViewConstants.margin) / CGFloat(setups.count)
+         
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.safeAreaLayoutGuide.widthAnchor.constraint(equalToConstant: labelWidth).isActive = true
+            label.textAlignment = .center
+            label.font = UIFont(name: GlobalString.fontName.rawValue, size: GraphViewConstants.defTextSize - 2)
+            label.textColor = .lightGray
+            label.text = setup.annotation
+            
+            drawAnnotationLine(labelWidth: labelWidth, color: setup.color) { line in
+                label.layer.addSublayer(line)
+            }
+            
+            annotationStackView.addArrangedSubview(label)
+        }
+    }
+    
+    private func drawAnnotationLine(labelWidth: CGFloat, color: UIColor, callback: @escaping(CAShapeLayer) -> Void){
+        let linePath = UIBezierPath()
         
+        linePath.move(to: CGPoint(x: 20, y: annotationStackView.frame.height))
+        linePath.addLine(to: CGPoint(x: labelWidth - 20, y: annotationStackView.frame.height))
+        
+        let line = CAShapeLayer()
+        line.path = linePath.cgPath
+        line.strokeColor = color.cgColor
+        line.fillColor = UIColor.clear.cgColor
+        line.lineWidth = 4
+        line.lineCap = .round
+        callback(line)
     }
     
     private func showGraph(_ setup: GraphSetup, maxValue: Int, callback: @escaping(Graph) -> Void){
@@ -245,6 +287,10 @@ final class GraphView: UIView {
         return graphHeight + topBorder - yPoint
     }
 }
+
+//MARK: ANIMATION EXTENSION
+
+
 
 //MARK: EXTENSION
 
