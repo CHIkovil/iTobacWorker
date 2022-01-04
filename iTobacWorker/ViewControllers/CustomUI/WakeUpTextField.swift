@@ -25,20 +25,19 @@ private enum WakeUpTextFieldConstants{
 
 final class WakeUpTextField: UIView {
     
-    var textSize: CGFloat?
-    
     override func draw(_ rect: CGRect) {
+        self.layer.sublayers?.removeAll()
         makeUI()
     }
     
     // MARK: showInputField
     func showInputField(){
-        animateTitleUp()
-        animateShowTextField()
-        
         let lineLayer = drawLineFromPoint(start: lineStartPoint, toPoint: lineEndPoint, color: #colorLiteral(red: 0.1598679423, green: 0.1648836732, blue: 0.1904173791, alpha: 1), width: WakeUpTextFieldConstants.lineWidth)
         lineLayer.addActivationAnimation()
+    
         self.layer.addSublayer(lineLayer)
+        
+        animateInputField()
     }
     
     //MARK: PRIVATE
@@ -51,6 +50,7 @@ final class WakeUpTextField: UIView {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
+        label.font = UIFont(name: GlobalString.fontName.rawValue, size: WakeUpTextFieldConstants.defTextSize)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = WakeUpTextFieldString.titleLabelText.rawValue
         label.textAlignment = .center
@@ -61,6 +61,7 @@ final class WakeUpTextField: UIView {
     
     private lazy var textField: UITextField = {
         let textField = UITextField()
+        textField.font = UIFont(name: GlobalString.fontName.rawValue, size: WakeUpTextFieldConstants.defTextSize + 1.5)
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = #colorLiteral(red: 0.9386559129, green: 0.9388130307, blue: 0.9386352301, alpha: 1)
         textField.textColor = .black
@@ -103,9 +104,6 @@ final class WakeUpTextField: UIView {
         
         constraintsTitleLabel()
         constraintsTextField()
-        
-        titleLabel.font = UIFont(name: GlobalString.fontName.rawValue, size: textSize ?? WakeUpTextFieldConstants.defTextSize)
-        textField.font = UIFont(name: GlobalString.fontName.rawValue, size: textSize ?? (WakeUpTextFieldConstants.defTextSize + 1.5))
     }
     
     private func drawLineFromPoint(start: CGPoint, toPoint end: CGPoint, color: UIColor, width: CGFloat) ->  CAShapeLayer{
@@ -126,19 +124,18 @@ final class WakeUpTextField: UIView {
 //MARK: ANIMATION EXTENSION
 
 private extension WakeUpTextField {
-    func animateTitleUp(){
-        UIView.animate(withDuration: 0.5) {[weak self] in
+    func animateInputField(){
+        UIView.animate(withDuration: 0.2, animations: {[weak self] in
             guard let self = self else{return}
             self.titleLabel.transform.ty = -abs(self.textField.frame.height)
-        }
+        },completion: {_ in
+            UIView.animate(withDuration: 0.5) {[weak self] in
+                guard let self = self else{return}
+                self.textField.alpha = 1
+            }
+        })
     }
-    
-    func animateShowTextField(){
-        UIView.animate(withDuration: 0.5) {[weak self] in
-            guard let self = self else{return}
-            self.textField.alpha = 1
-        }
-    }
+   
 }
 
 private extension CALayer {
@@ -147,6 +144,7 @@ private extension CALayer {
         animation.fromValue = 0.0
         animation.toValue = 1.0
         animation.duration = 1
+    
         self.add(animation, forKey: WakeUpTextFieldString.lineAnimationKey.rawValue)
     }
 }

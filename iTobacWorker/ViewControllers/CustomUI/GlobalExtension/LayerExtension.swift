@@ -10,7 +10,9 @@ import QuartzCore
 import UIKit
 
 extension CALayer{
+    
     //MARK: DRAW
+    
     func drawBlockLayer(cornerWidth: CGFloat, color: UIColor) {
         let path = UIBezierPath(
             roundedRect: bounds,
@@ -29,6 +31,7 @@ extension CALayer{
     }
     
     //MARK: ANIMATION
+    
     func addPulseAnimation(){
         let animation = CASpringAnimation(keyPath: "transform.scale")
         animation.duration = 0.6

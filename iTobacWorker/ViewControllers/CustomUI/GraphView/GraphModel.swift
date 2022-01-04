@@ -12,11 +12,13 @@ enum GraphModel {
     struct GraphSetup{
         let points: [Int]
         let color: UIColor
+        let annotation: String
     }
     
     struct Graph{
         let lines: CAShapeLayer
         let clipping: CAShapeLayer
+        let points: [CAShapeLayer]
     }
 }
 

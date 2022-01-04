@@ -23,12 +23,12 @@ private enum BankPickerConstants{
 
 final class BankPicker: UIView{
     var image: UIImage?
-    var textSize: CGFloat?
     
     override func draw(_ rect: CGRect) {
+        self.layer.sublayers?.removeAll()
         makeUI()
     }
-        
+    
     //MARK: animateAttention
     func animateAttention(){
         imageView.animateShake()
@@ -54,6 +54,7 @@ final class BankPicker: UIView{
     
     private lazy var countLabel: UILabel = {
         let label = UILabel()
+        label.font = UIFont(name: GlobalString.fontName.rawValue, size: BankPickerConstants.defTextSize)
         label.text = "\(0)"
         label.textColor = .lightGray
         label.textAlignment = .center
@@ -63,10 +64,11 @@ final class BankPicker: UIView{
     
     private lazy var inputTextField: UITextField = {
         let textField = UITextField()
+        textField.font = UIFont(name: GlobalString.fontName.rawValue, size: BankPickerConstants.defTextSize - 5)
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.isUserInteractionEnabled = false
         textField.setLeftPaddingPoints(12)
-        textField.backgroundColor = #colorLiteral(red: 0.1412108243, green: 0.1412418485, blue: 0.1412067413, alpha: 1)
+        textField.backgroundColor = #colorLiteral(red: 0.2277443409, green: 0.227789104, blue: 0.2277384698, alpha: 1)
         textField.alpha = 0
         textField.delegate = self
         textField.textColor = .lightGray
@@ -119,7 +121,7 @@ final class BankPicker: UIView{
             make.centerY.equalTo(countLabel.snp.centerY)
         }
     }
-
+    
     private func constraintsInputButton() {
         inputButton.snp.makeConstraints {(make) -> Void in
             make.height.equalTo(viewHeight * 0.17)
@@ -128,14 +130,14 @@ final class BankPicker: UIView{
             make.leading.equalTo(inputTextField.snp.trailing).offset(5)
         }
     }
-
+    
     
     //MARK: SUPPORT FUNC
     
     private func makeUI(){
         let color = #colorLiteral(red: 0.1261322796, green: 0.1471925974, blue: 0.2156360745, alpha: 1)
-        
         self.layer.drawBlockLayer(cornerWidth: 25,color: color)
+        
         self.addSubview(imageView)
         self.addSubview(countLabel)
         self.addSubview(inputTextField)
@@ -145,9 +147,7 @@ final class BankPicker: UIView{
         constraintsInputTextField()
         constraintsInputButton()
         
-        countLabel.font = UIFont(name: GlobalString.fontName.rawValue, size: textSize ?? BankPickerConstants.defTextSize)
-        inputTextField.font = UIFont(name: GlobalString.fontName.rawValue, size: textSize ?? (BankPickerConstants.defTextSize - 5))
-        guard let image = image else{return}
+        guard let image = image else {return}
         imageView.image = image
     }
     
@@ -156,14 +156,16 @@ final class BankPicker: UIView{
             let oldValue = Int(truncating: number)
             countLabel.text = "\(oldValue + newValue)"
         }
-        countLabel.animateDrop()
+        
         imageView.animateShake()
+        countLabel.animateDrop()
     }
     
-    private func switchInputField(at isEnabled: Bool){
-        inputTextField.isUserInteractionEnabled = isEnabled
-        inputButton.isUserInteractionEnabled = isEnabled
-        countLabel.alpha = isEnabled ? 0 : 1
+    private func switchInputState(_ isEnabled: Bool){
+        self.countLabel.alpha = isEnabled ? 0 : 1
+        self.inputTextField.isUserInteractionEnabled = isEnabled
+        self.inputButton.isUserInteractionEnabled = isEnabled
+        animateInputState(alpha: isEnabled ? 1 : 0)
     }
     
     // MARK: OBJC
@@ -172,33 +174,32 @@ final class BankPicker: UIView{
     }
     
     @objc func didLongPressImage() {
-        animateStateInputField(newAlpha: 1, isInputEnabled: true)
+        imageView.layer.addPulseAnimation()
+        switchInputState(true)
     }
     
     @objc func didPressInputButton() {
         guard let text = inputTextField.text else {return}
-        animateStateInputField(newAlpha: 0, isInputEnabled: false)
+        switchInputState(false)
         guard let value = Int(text) else {return}
         addBankValue(at: value)
     }
 }
 
-//MARK: UI ANIMATION EXTENSION
+//MARK: ANIMATION EXTENSION
 
 private extension BankPicker {
-    func animateStateInputField(newAlpha: CGFloat, isInputEnabled: Bool){
-        inputTextField.text = String()
+    func animateInputState(alpha: CGFloat){
         UIView.animate(withDuration: 0.1, animations: {[weak self] in
             guard let self = self else{return}
-            self.inputTextField.alpha = newAlpha
+            self.inputTextField.alpha = alpha
         }, completion: { _ in
-            self.inputButton.alpha = newAlpha - 0.1
+            self.inputButton.alpha = alpha - 0.1
         })
-        switchInputField(at: isInputEnabled)
     }
 }
 
-private extension UIView {
+private extension UIView{
     func animateShake(){
         let animation = CABasicAnimation(keyPath: BankPickerString.animationKey.rawValue)
         animation.duration = 0.07
@@ -206,6 +207,7 @@ private extension UIView {
         animation.autoreverses = true
         animation.fromValue = NSValue(cgPoint: CGPoint(x: self.center.x - 1.5, y: self.center.y))
         animation.toValue = NSValue(cgPoint: CGPoint(x: self.center.x + 1.5, y: self.center.y))
+    
         self.layer.add(animation, forKey: BankPickerString.animationKey.rawValue)
     }
     
@@ -214,8 +216,10 @@ private extension UIView {
         animation.duration = 0.7
         animation.fromValue = NSValue(cgPoint: CGPoint(x: self.center.x, y: self.center.y - 4))
         animation.toValue = NSValue(cgPoint: CGPoint(x: self.center.x, y: self.center.y))
+        
         self.layer.add(animation, forKey: BankPickerString.animationKey.rawValue)
     }
+    
 }
 
 //MARK: DELEGATE EXTENSION

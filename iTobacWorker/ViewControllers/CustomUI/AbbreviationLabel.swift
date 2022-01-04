@@ -32,15 +32,15 @@ protocol AbbreviationDelegate: AnyObject {
 final class AbbreviationLabel: UIView {
     
     weak var delegate: AbbreviationDelegate?
-    var textSize: CGFloat?
     
     override func draw(_ rect: CGRect) {
+        self.layer.sublayers?.removeAll()
         makeUI()
     }
     
     //MARK: showAbbreviation
     func showAbbreviation() {
-        let stringAttributes = [ NSAttributedString.Key.font: UIFont(name: GlobalString.fontName.rawValue, size: textSize ?? AbbreviationLabelConstants.defTextSize)!]
+        let stringAttributes = [ NSAttributedString.Key.font: UIFont(name: GlobalString.fontName.rawValue, size: AbbreviationLabelConstants.defTextSize)!]
         let attributedString = NSMutableAttributedString(string: GlobalString.appName.rawValue, attributes: stringAttributes )
         let charPaths = self.getCharacterPaths(attributedString: attributedString, position: CGPoint(x: -10, y: labelHeight - 10))
         

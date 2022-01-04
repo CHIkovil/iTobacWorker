@@ -25,6 +25,7 @@ private enum WorkTabBarConstants{
 }
 
 final class WorkTabBar: UITabBar{
+    
     override func draw(_ rect: CGRect) {
         makeUI()
     }

@@ -20,23 +20,8 @@ private enum UserImageViewString: String {
 class UserImageView: UIView {
 
     override func draw(_ rect: CGRect) {
+        self.layer.sublayers?.removeAll()
         makeUI()
-    }
-    
-    // MARK: showFrame
-    func showFrame(){
-        self.layer.sublayers?.forEach {
-            guard let name = $0.name else{return}
-            if (name.starts(with: UserImageViewString.frameLayerName.rawValue)){
-                $0.removeFromSuperlayer()
-            }
-        }
-        
-        for index in 1...3 {
-            let shapeLayer = drawArc(name:UserImageViewString.frameLayerName.rawValue + "\(index)", offset: CGFloat(index))
-            shapeLayer.addInfinityRotationAnimation()
-            self.layer.addSublayer(shapeLayer)
-        }
     }
     
     // MARK: addButtonGestureRecognizer
@@ -132,7 +117,7 @@ class UserImageView: UIView {
     private func makeUI(){
         let color = #colorLiteral(red: 0.1261322796, green: 0.1471925974, blue: 0.2156360745, alpha: 1)
         self.layer.drawBlockLayer(cornerWidth: 35, color: color)
-        
+       
         backgroundView.addSubview(imageView)
         self.addSubview(backgroundView)
         self.addSubview(button)
@@ -140,6 +125,16 @@ class UserImageView: UIView {
         constraintsBackgroundView()
         constraintsImageView()
         constraintsButton()
+        
+        showImageFrame()
+    }
+    
+    private func showImageFrame(){        
+        for index in 1...3 {
+            let shapeLayer = drawArc(name:UserImageViewString.frameLayerName.rawValue + "\(index)", offset: CGFloat(index))
+            shapeLayer.addInfinityRotationAnimation()
+            self.layer.addSublayer(shapeLayer)
+        }
     }
     
     private func drawArc(name: String, offset: CGFloat) -> CAShapeLayer{
