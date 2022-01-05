@@ -14,6 +14,7 @@ import SnapKit
 private enum WakeUpTextFieldString: String {
     case titleLabelText = "Email or Username"
     case lineAnimationKey = "strokeEnd"
+    case lineLayerName = "line"
 }
 
 //MARK: CONSTANTS
@@ -26,7 +27,6 @@ private enum WakeUpTextFieldConstants{
 final class WakeUpTextField: UIView {
     
     override func draw(_ rect: CGRect) {
-        self.layer.sublayers?.removeAll()
         makeUI()
     }
     
@@ -96,14 +96,24 @@ final class WakeUpTextField: UIView {
     //MARK: SUPPORT FUNC
     
     private func makeUI() {
-        let lineLayer = drawLineFromPoint(start: lineStartPoint, toPoint: lineEndPoint, color: .lightGray, width: WakeUpTextFieldConstants.lineWidth)
-        self.layer.addSublayer(lineLayer)
-        
         self.addSubview(titleLabel)
         self.addSubview(textField)
         
         constraintsTitleLabel()
         constraintsTextField()
+        
+        showLine()
+    }
+    
+    private func showLine(){
+        if let layers = self.layer.sublayers?.filter({$0.name == WakeUpTextFieldString.lineLayerName.rawValue}) {
+            if (!layers.isEmpty){
+                return
+            }
+        }
+        
+        let lineLayer = drawLineFromPoint(start: lineStartPoint, toPoint: lineEndPoint, color: .lightGray, width: WakeUpTextFieldConstants.lineWidth)
+        self.layer.addSublayer(lineLayer)
     }
     
     private func drawLineFromPoint(start: CGPoint, toPoint end: CGPoint, color: UIColor, width: CGFloat) ->  CAShapeLayer{
@@ -116,6 +126,7 @@ final class WakeUpTextField: UIView {
         shapeLayer.strokeColor = color.cgColor
         shapeLayer.lineWidth = width
         shapeLayer.lineCap = .round
+        shapeLayer.name = WakeUpTextFieldString.lineLayerName.rawValue
         
         return shapeLayer
     }

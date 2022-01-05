@@ -20,7 +20,6 @@ private enum UserImageViewString: String {
 class UserImageView: UIView {
 
     override func draw(_ rect: CGRect) {
-        self.layer.sublayers?.removeAll()
         makeUI()
     }
     
@@ -115,9 +114,6 @@ class UserImageView: UIView {
     // MARK: SUPPORT FUNC
     
     private func makeUI(){
-        let color = #colorLiteral(red: 0.1261322796, green: 0.1471925974, blue: 0.2156360745, alpha: 1)
-        self.layer.drawBlockLayer(cornerWidth: 35, color: color)
-       
         backgroundView.addSubview(imageView)
         self.addSubview(backgroundView)
         self.addSubview(button)
@@ -126,18 +122,27 @@ class UserImageView: UIView {
         constraintsImageView()
         constraintsButton()
         
+        let color = #colorLiteral(red: 0.1261322796, green: 0.1471925974, blue: 0.2156360745, alpha: 1)
+        self.layer.drawBlockLayer(cornerWidth: 35, color: color)
         showImageFrame()
     }
     
-    private func showImageFrame(){        
+    // MARK: showImageFrame
+    func showImageFrame(){
+        self.layer.sublayers?.forEach {
+            if ($0.name == UserImageViewString.frameLayerName.rawValue){
+                $0.removeFromSuperlayer()
+            }
+        }
+        
         for index in 1...3 {
-            let shapeLayer = drawArc(name:UserImageViewString.frameLayerName.rawValue + "\(index)", offset: CGFloat(index))
+            let shapeLayer = drawArc(offset: CGFloat(index))
             shapeLayer.addInfinityRotationAnimation()
             self.layer.addSublayer(shapeLayer)
         }
     }
     
-    private func drawArc(name: String, offset: CGFloat) -> CAShapeLayer{
+    private func drawArc(offset: CGFloat) -> CAShapeLayer{
         let shapeLayer = CAShapeLayer()
         let center = CGPoint(x: viewWidth / 2, y: viewHeight / 2)
         let bounds = CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight)
@@ -151,7 +156,7 @@ class UserImageView: UIView {
         shapeLayer.strokeColor = #colorLiteral(red: 0.7908198833, green: 0.8205971718, blue: 0.8312640786, alpha: 1).cgColor
         shapeLayer.lineWidth = offset
         shapeLayer.fillColor = UIColor.clear.cgColor
-        shapeLayer.name = name
+        shapeLayer.name = UserImageViewString.frameLayerName.rawValue
         
         shapeLayer.position = center
         shapeLayer.bounds = bounds

@@ -9,7 +9,9 @@ import Foundation
 import UIKit
 
 //MARK: STRING
-
+private enum GraphViewString: String{
+    case markupLayerName = "markup"
+}
 //MARK: CONSTANTS
 private enum GraphViewConstants {
     static let margin: CGFloat = 20.0
@@ -23,30 +25,36 @@ private enum GraphViewConstants {
 final class GraphView: UIView {
     
     override func draw(_ rect: CGRect) {
-        self.layer.sublayers?.removeAll()
         makeUI()
+    }
+    
+    //MARK: reloadGraph
+    func reloadGraph(_ setup: GraphSetup, isAnimate: Bool){
+        if (!checkGraphsMaxValue([setup])) {return}
+        if (self.annotationWidth == nil) {return}
+        removeGraphs(annotations: [setup.annotation])
+        addGraph(setup, isAnimate: isAnimate)
     }
     
     //MARK: showGraphs
     func showGraphs(_ setups: [GraphSetup], isAnimate: Bool) {
-        guard let maxValue = getGraphsMaxValue(setups) else {return}
-        self.maxValueLabel.text = "\(maxValue)"
-    
+        if (setups.isEmpty) {return}
+        if (!checkGraphsMaxValue(setups)) {return}
+        self.annotationWidth = (self.viewWidth - 2 * GraphViewConstants.margin) / CGFloat(setups.count)
+        
+        let annotations = setups.map {$0.annotation}
+        removeGraphs(annotations: annotations)
+        
         for setup in setups {
-            showGraph(setup, maxValue: maxValue) {graph in
-                self.layer.addSublayer(graph.lines)
-                self.layer.addSublayer(graph.clipping)
-                for point in graph.points {
-                    self.layer.addSublayer(point)
-                }
-            }
+            addGraph(setup, isAnimate: isAnimate)
         }
-        showGraphAnnotations(setups)
     }
     
     //MARK: PRIVATE
     private var viewWidth: CGFloat {self.frame.width}
     private var viewHeight: CGFloat {self.frame.height}
+    private var maxValue: Int!
+    private var annotationWidth: CGFloat!
     
     //MARK: UI
     private lazy var minValueLabel: UILabel = {
@@ -90,18 +98,138 @@ final class GraphView: UIView {
         self.addSubview(annotationStackView)
         
         showWeekdays()
-        drawMarkup()
+        showMarkup()
     }
     
-    private func drawMarkup(){
+    private func showMarkup(){
+        if let markupLayers = self.layer.sublayers?.filter({$0.name == GraphViewString.markupLayerName.rawValue}) {
+            if (!markupLayers.isEmpty){
+                return
+            }
+        }
+        
         drawHorizontalMarkup { markup in
             self.layer.addSublayer(markup)
         }
-        
+     
         drawVerticalMarkup{ markup in
             self.layer.addSublayer(markup)
         }
+       
     }
+    
+    private func showWeekdays(){
+        if (!self.weekStackView.arrangedSubviews.isEmpty){return}
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US")
+        let weekdays = dateFormatter.shortWeekdaySymbols.shift()
+        for weekday in weekdays {
+            let label = UILabel()
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.safeAreaLayoutGuide.widthAnchor.constraint(equalToConstant: (viewWidth - 2 * GraphViewConstants.margin) / 7).isActive = true
+            label.textAlignment = .center
+            label.font = UIFont(name: GlobalString.fontName.rawValue, size: GraphViewConstants.defTextSize - 2)
+            label.textColor = .lightGray
+            label.text = weekday
+            weekStackView.addArrangedSubview(label)
+        }
+    }
+    
+    private func addGraphAnnotation(_ setup: GraphSetup, isAnimate: Bool){
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.safeAreaLayoutGuide.widthAnchor.constraint(equalToConstant: self.annotationWidth).isActive = true
+        label.textAlignment = .center
+        label.font = UIFont(name: GlobalString.fontName.rawValue, size: GraphViewConstants.defTextSize - 2)
+        label.textColor = .lightGray
+        label.text = setup.annotation
+        
+        drawAnnotationLine(color: setup.color) { line in
+            label.layer.addSublayer(line)
+        }
+        
+        annotationStackView.addArrangedSubview(label)
+    }
+    
+    private func addGraph(_ setup: GraphSetup, isAnimate: Bool){
+        addGraphAnnotation(setup, isAnimate: isAnimate)
+        
+        let lines = drawGraphLines(setup)
+        let points = drawGraphPoints(setup)
+        let clipping = drawGraphClipping(setup, path: UIBezierPath(cgPath: lines.path!))
+        
+        self.layer.addSublayer(lines)
+        self.layer.addSublayer(clipping)
+        for point in points {
+            self.layer.addSublayer(point)
+        }
+    }
+    
+    private func removeGraphs(annotations: [String]) {
+        
+        self.layer.sublayers?.forEach {layer in
+            guard let name = layer.name else{return}
+            if (annotations.contains(name)){
+                layer.removeFromSuperlayer()
+            }
+        }
+        
+        self.annotationStackView.arrangedSubviews.forEach {view in
+            guard let label = view as? UILabel else{return}
+            guard let name = label.text else{return}
+            if (annotations.contains(name)) {
+                view.removeFromSuperview()
+            }
+        }
+        
+    }
+    
+    private func checkGraphsMaxValue(_ setups: [GraphSetup]) -> Bool {
+        if setups.count == 1{
+            guard let newMaxValue = setups.first?.points.max() else{return false}
+            switch self.maxValue{
+            case (let maxValue?):
+                if (newMaxValue > maxValue){
+                    fallthrough
+                }
+            default:
+                self.maxValue = newMaxValue
+            }
+        }else{
+            var allMaxValue:[Int] = []
+            for setup in setups {
+                guard let maxValue = setup.points.max() else{continue}
+                allMaxValue.append(maxValue)
+            }
+            guard let maxValue = allMaxValue.max() else{return false}
+            self.maxValue = maxValue
+        }
+        
+        self.maxValueLabel.text = "\(self.maxValue!)"
+        return true
+    }
+    
+    private func calculateX(_ column: Int) -> CGFloat{
+        let margin = GraphViewConstants.margin
+        let graphWidth = self.viewWidth - margin * 2 - 10
+        let spacing = graphWidth / CGFloat(6)
+        
+        return CGFloat(column) * spacing + margin + 5
+    }
+    
+    private func calculateY(_ graphPoint: Int) -> CGFloat {
+        let topBorder = GraphViewConstants.topBorder
+        let bottomBorder = GraphViewConstants.bottomBorder
+        let graphHeight = self.viewHeight - topBorder - bottomBorder
+        
+        let yPoint =  CGFloat(graphPoint) / CGFloat(self.maxValue!) * graphHeight
+        
+        return graphHeight + topBorder - yPoint
+    }
+    
+    //MARK: DRAW
+    
     private func drawHorizontalMarkup(callback: @escaping(CAShapeLayer) -> Void) {
         let linePath = UIBezierPath()
         
@@ -120,13 +248,14 @@ final class GraphView: UIView {
         shapeLayer.path = linePath.cgPath
         shapeLayer.strokeColor = color.cgColor
         shapeLayer.lineWidth = 2
+        shapeLayer.name = GraphViewString.markupLayerName.rawValue
         
         callback(shapeLayer)
     }
     
     private func drawVerticalMarkup(callback: @escaping(CAShapeLayer) -> Void) {
         let linePath = UIBezierPath()
-    
+        
         for column in 0...6{
             linePath.move(to: CGPoint(x: calculateX(column), y: viewHeight - GraphViewConstants.bottomBorder))
             linePath.addLine(to: CGPoint(x: calculateX(column), y: viewHeight - GraphViewConstants.bottomBorder - 5))
@@ -138,82 +267,17 @@ final class GraphView: UIView {
         shapeLayer.path = linePath.cgPath
         shapeLayer.strokeColor = color.cgColor
         shapeLayer.lineWidth = 2
+        shapeLayer.name = GraphViewString.markupLayerName.rawValue
         
         callback(shapeLayer)
     }
     
-    private func showWeekdays(){
-        self.weekStackView.arrangedSubviews.forEach {
-            $0.removeFromSuperview()
-        }
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US")
-        let weekdays = dateFormatter.shortWeekdaySymbols.shift()
-        for weekday in weekdays {
-            let label = UILabel()
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.safeAreaLayoutGuide.widthAnchor.constraint(equalToConstant: (viewWidth - 2 * GraphViewConstants.margin) / 7).isActive = true
-            label.textAlignment = .center
-            label.font = UIFont(name: GlobalString.fontName.rawValue, size: GraphViewConstants.defTextSize - 2)
-            label.textColor = .lightGray
-            label.text = weekday
-            weekStackView.addArrangedSubview(label)
-        }
-    }
-    
-    private func showGraphAnnotations(_ setups: [GraphSetup]){
-        self.annotationStackView.arrangedSubviews.forEach {
-            $0.removeFromSuperview()
-        }
-        for setup in setups {
-            let label = UILabel()
-            let labelWidth = (viewWidth - 2 * GraphViewConstants.margin) / CGFloat(setups.count)
-         
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.safeAreaLayoutGuide.widthAnchor.constraint(equalToConstant: labelWidth).isActive = true
-            label.textAlignment = .center
-            label.font = UIFont(name: GlobalString.fontName.rawValue, size: GraphViewConstants.defTextSize - 2)
-            label.textColor = .lightGray
-            label.text = setup.annotation
-            
-            drawAnnotationLine(labelWidth: labelWidth, color: setup.color) { line in
-                label.layer.addSublayer(line)
-            }
-            
-            annotationStackView.addArrangedSubview(label)
-        }
-    }
-    
-    private func drawAnnotationLine(labelWidth: CGFloat, color: UIColor, callback: @escaping(CAShapeLayer) -> Void){
+    private func drawGraphLines(_ setup: GraphSetup) -> CAShapeLayer{
         let linePath = UIBezierPath()
         
-        linePath.move(to: CGPoint(x: 20, y: annotationStackView.frame.height))
-        linePath.addLine(to: CGPoint(x: labelWidth - 20, y: annotationStackView.frame.height))
-        
-        let line = CAShapeLayer()
-        line.path = linePath.cgPath
-        line.strokeColor = color.cgColor
-        line.fillColor = UIColor.clear.cgColor
-        line.lineWidth = 4
-        line.lineCap = .round
-        callback(line)
-    }
-    
-    private func showGraph(_ setup: GraphSetup, maxValue: Int, callback: @escaping(Graph) -> Void){
-        let lines = drawGraphLines(setup, maxValue: maxValue)
-        let clipping = drawGraphClipping(UIBezierPath(cgPath: lines.path!), color: setup.color)
-        let points = drawGraphPoints(setup, maxValue: maxValue)
-        
-        callback(Graph(lines: lines, clipping: clipping, points: points))
-    }
-    
-    private func drawGraphLines(_ setup: GraphSetup, maxValue: Int) -> CAShapeLayer{
-        let linePath = UIBezierPath()
-        
-        linePath.move(to: CGPoint(x: calculateX(0), y: calculateY(setup.points[0],maxValue)))
+        linePath.move(to: CGPoint(x: calculateX(0), y: calculateY(setup.points[0])))
         for i in 0..<setup.points.count{
-            let nextPoint = CGPoint(x: calculateX(i), y: calculateY(setup.points[i], maxValue))
+            let nextPoint = CGPoint(x: calculateX(i), y: calculateY(setup.points[i]))
             linePath.addLine(to: nextPoint)
         }
         
@@ -223,10 +287,11 @@ final class GraphView: UIView {
         lines.fillColor = UIColor.clear.cgColor
         lines.lineWidth = 3
         lines.lineCap = .round
+        lines.name = setup.annotation
         return lines
     }
     
-    private func drawGraphClipping(_ path: UIBezierPath, color: UIColor) -> CAShapeLayer{
+    private func drawGraphClipping(_ setup: GraphSetup,  path: UIBezierPath) -> CAShapeLayer{
         let clippingPath = path.copy() as! UIBezierPath
         
         clippingPath.addLine(to: CGPoint(x: calculateX(6),y: viewHeight - GraphViewConstants.bottomBorder - 5))
@@ -234,15 +299,16 @@ final class GraphView: UIView {
         
         let clipping = CAShapeLayer()
         clipping.path = clippingPath.cgPath
-        clipping.fillColor = color.cgColor
+        clipping.fillColor = setup.color.cgColor
         clipping.opacity = 0.3
+        clipping.name = setup.annotation
         return clipping
     }
     
-    private func drawGraphPoints(_ setup: GraphSetup, maxValue: Int) -> [CAShapeLayer]{
+    private func drawGraphPoints(_ setup: GraphSetup) -> [CAShapeLayer]{
         var gPoints:[CAShapeLayer] = []
         for i in 0..<setup.points.count {
-            var point = CGPoint(x: calculateX(i), y: calculateY(setup.points[i], maxValue))
+            var point = CGPoint(x: calculateX(i), y: calculateY(setup.points[i]))
             point.x -= GraphViewConstants.circleDiameter / 2
             point.y -= GraphViewConstants.circleDiameter / 2
             
@@ -252,39 +318,25 @@ final class GraphView: UIView {
             gPoint.path = circlePath.cgPath
             gPoint.fillColor = setup.color.cgColor
             gPoints.append(gPoint)
+            gPoint.name = setup.annotation
         }
         
         return gPoints
     }
     
-    private func getGraphsMaxValue(_ setups: [GraphSetup]) -> Int?{
-        var allMaxValue:[Int] = []
-        for setup in setups {
-            guard let maxValue = setup.points.max() else{continue}
-            allMaxValue.append(maxValue)
-        }
+    private func drawAnnotationLine(color: UIColor, callback: @escaping(CAShapeLayer) -> Void){
+        let linePath = UIBezierPath()
         
-        guard let maxValue = allMaxValue.max() else{return nil}
-        return maxValue
-    }
-    
-    private func calculateX(_ column: Int) -> CGFloat{
-        let margin = GraphViewConstants.margin
-        let graphWidth = viewWidth - margin * 2 - 10
-        let spacing = graphWidth / CGFloat(6)
+        linePath.move(to: CGPoint(x: 20, y: self.annotationStackView.frame.height))
+        linePath.addLine(to: CGPoint(x: self.annotationWidth - 20, y: self.annotationStackView.frame.height))
         
-        return CGFloat(column) * spacing + margin + 5
-    }
-    
-    private func calculateY(_ graphPoint: Int , _ maxValue: Int) -> CGFloat {
-        let topBorder = GraphViewConstants.topBorder
-        let bottomBorder = GraphViewConstants.bottomBorder
-        let graphHeight = viewHeight - topBorder - bottomBorder
-        
-        
-        let yPoint =  CGFloat(graphPoint) / CGFloat(maxValue) * graphHeight
-        
-        return graphHeight + topBorder - yPoint
+        let line = CAShapeLayer()
+        line.path = linePath.cgPath
+        line.strokeColor = color.cgColor
+        line.fillColor = UIColor.clear.cgColor
+        line.lineWidth = 4
+        line.lineCap = .round
+        callback(line)
     }
 }
 

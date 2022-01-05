@@ -14,14 +14,6 @@ enum GraphModel {
         let color: UIColor
         let annotation: String
     }
-    
-    struct Graph{
-        let lines: CAShapeLayer
-        let clipping: CAShapeLayer
-        let points: [CAShapeLayer]
-    }
 }
 
-
 typealias GraphSetup = GraphModel.GraphSetup
-typealias Graph = GraphModel.Graph

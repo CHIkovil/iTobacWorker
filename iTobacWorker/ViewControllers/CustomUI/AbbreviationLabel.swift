@@ -15,6 +15,7 @@ private enum AbbreviationLabelString: String {
     case cigaretteImageName = "cigarette"
     case smokeImageName = "smoke"
     case charAnimationKey = "opacity"
+    case charLayerName = "char"
 }
 
 //MARK: CONSTANTS
@@ -34,12 +35,17 @@ final class AbbreviationLabel: UIView {
     weak var delegate: AbbreviationDelegate?
     
     override func draw(_ rect: CGRect) {
-        self.layer.sublayers?.removeAll()
         makeUI()
     }
     
     //MARK: showAbbreviation
     func showAbbreviation() {
+        self.layer.sublayers?.forEach {
+            if ($0.name == AbbreviationLabelString.charLayerName.rawValue){
+                $0.removeFromSuperlayer()
+            }
+        }
+        
         let stringAttributes = [ NSAttributedString.Key.font: UIFont(name: GlobalString.fontName.rawValue, size: AbbreviationLabelConstants.defTextSize)!]
         let attributedString = NSMutableAttributedString(string: GlobalString.appName.rawValue, attributes: stringAttributes )
         let charPaths = self.getCharacterPaths(attributedString: attributedString, position: CGPoint(x: -10, y: labelHeight - 10))
@@ -197,6 +203,7 @@ private extension CALayer {
                 break
             }
             
+            shapeLayer.name = AbbreviationLabelString.charLayerName.rawValue
             shapeLayer.add(animation, forKey: AbbreviationLabelString.charAnimationKey.rawValue)
         }
     }

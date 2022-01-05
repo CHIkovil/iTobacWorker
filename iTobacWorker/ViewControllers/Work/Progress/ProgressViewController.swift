@@ -54,7 +54,6 @@ class ProgressViewController: UIViewController
         progressView.cigaretteBankPicker.animateAttention()
         
         progressView.graphView.showGraphs([GraphSetup(points: [4, 2, 6, 4, 5, 8, 3], color: UIColor(white: 0.8, alpha: 0.9), annotation: "count"), GraphSetup(points: [1, 3, 4, 4, 7, 8, 3], color: UIColor(red: 0, green: 0.8, blue: 0, alpha: 0.9), annotation: "norm")], isAnimate: true)
-        
     }
     
     // MARK: OBJC

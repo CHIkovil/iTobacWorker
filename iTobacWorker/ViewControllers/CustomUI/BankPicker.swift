@@ -25,7 +25,6 @@ final class BankPicker: UIView{
     var image: UIImage?
     
     override func draw(_ rect: CGRect) {
-        self.layer.sublayers?.removeAll()
         makeUI()
     }
     
@@ -135,9 +134,6 @@ final class BankPicker: UIView{
     //MARK: SUPPORT FUNC
     
     private func makeUI(){
-        let color = #colorLiteral(red: 0.1261322796, green: 0.1471925974, blue: 0.2156360745, alpha: 1)
-        self.layer.drawBlockLayer(cornerWidth: 25,color: color)
-        
         self.addSubview(imageView)
         self.addSubview(countLabel)
         self.addSubview(inputTextField)
@@ -147,6 +143,8 @@ final class BankPicker: UIView{
         constraintsInputTextField()
         constraintsInputButton()
         
+        let color = #colorLiteral(red: 0.1261322796, green: 0.1471925974, blue: 0.2156360745, alpha: 1)
+        self.layer.drawBlockLayer(cornerWidth: 25,color: color)
         guard let image = image else {return}
         imageView.image = image
     }

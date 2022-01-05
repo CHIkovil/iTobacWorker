@@ -23,11 +23,11 @@ class AuthorizationView: UIView{
     }
 
     //MARK: UI
-    
+//    #colorLiteral(red: 0.1598679423, green: 0.1648836732, blue: 0.1904173791, alpha: 1)
     lazy var boardView:UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = #colorLiteral(red: 0.1598679423, green: 0.1648836732, blue: 0.1904173791, alpha: 1)
+        view.backgroundColor = #colorLiteral(red: 0.1220629886, green: 0.1255925298, blue: 0.1454096735, alpha: 1)
         view.alpha = 0
         view.layer.cornerRadius = 25
         view.layer.borderWidth = 5

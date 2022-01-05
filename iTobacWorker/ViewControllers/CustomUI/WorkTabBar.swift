@@ -14,6 +14,7 @@ private enum WorkTabBarString: String {
     case infoImageName = "info"
     case searchImageName = "search"
     case progressImageName = "progress"
+    case frameLayerName = "frame"
 }
 
 //MARK: CONSTANTS
@@ -131,14 +132,6 @@ final class WorkTabBar: UITabBar{
     //MARK: SUPPORT FUNC
     
     private func makeUI() {
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOpacity = 1
-        self.layer.shadowOffset = .zero
-        self.layer.shadowRadius = 10
-        
-        self.layer.insertSublayer(drawShapeLayer(), at: 0)
-        self.layer.insertSublayer(drawCircleLayer(), at: 1)
-        
         self.addSubview(searchButton)
         self.addSubview(infoButton)
         self.addSubview(progressButton)
@@ -146,6 +139,24 @@ final class WorkTabBar: UITabBar{
         constraintsSearchButton()
         constraintsInfoButton()
         constraintsProgressButton()
+        
+        showFrame()
+    }
+    
+    private func showFrame(){
+        if let layers = self.layer.sublayers?.filter({$0.name == WorkTabBarString.frameLayerName.rawValue}) {
+            if (!layers.isEmpty){
+                return
+            }
+        }
+        
+        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowOpacity = 1
+        self.layer.shadowOffset = .zero
+        self.layer.shadowRadius = 10
+        
+        self.layer.insertSublayer(drawShapeLayer(), at: 0)
+        self.layer.insertSublayer(drawCircleLayer(), at: 1)
     }
     
     private func drawShapeLayer() -> CAShapeLayer{
@@ -156,6 +167,7 @@ final class WorkTabBar: UITabBar{
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = path.cgPath
         shapeLayer.fillColor = #colorLiteral(red: 0.1598679423, green: 0.1648836732, blue: 0.1904173791, alpha: 1).cgColor
+        shapeLayer.name =  WorkTabBarString.frameLayerName.rawValue
         return shapeLayer
     }
     
@@ -169,6 +181,7 @@ final class WorkTabBar: UITabBar{
         let circleLayer = CAShapeLayer()
         circleLayer.path = path.cgPath
         circleLayer.fillColor = #colorLiteral(red: 0.1598679423, green: 0.1648836732, blue: 0.1904173791, alpha: 1).cgColor
+        circleLayer.name =  WorkTabBarString.frameLayerName.rawValue
         return circleLayer
     }
     

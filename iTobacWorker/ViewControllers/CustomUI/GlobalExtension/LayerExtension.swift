@@ -14,6 +14,12 @@ extension CALayer{
     //MARK: DRAW
     
     func drawBlockLayer(cornerWidth: CGFloat, color: UIColor) {
+        if let layers = self.sublayers?.filter({$0.name == "block"}) {
+            if (!layers.isEmpty){
+                return
+            }
+        }
+        
         let path = UIBezierPath(
             roundedRect: bounds,
             byRoundingCorners: [.allCorners],
@@ -21,11 +27,13 @@ extension CALayer{
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = path.cgPath
         shapeLayer.fillColor = color.cgColor
+        shapeLayer.name = "block"
        
         self.shadowColor = UIColor.black.cgColor
         self.shadowOpacity = 1
         self.shadowOffset = .zero
         self.shadowRadius = 10
+        
     
         self.insertSublayer(shapeLayer, at: 0)
     }
