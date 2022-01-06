@@ -13,7 +13,6 @@ import SnapKit
 
 private enum WakeUpTextFieldString: String {
     case titleLabelText = "Email or Username"
-    case lineAnimationKey = "strokeEnd"
     case lineLayerName = "line"
 }
 
@@ -32,11 +31,11 @@ final class WakeUpTextField: UIView {
     
     // MARK: showInputField
     func showInputField(){
-        let lineLayer = drawLineFromPoint(start: lineStartPoint, toPoint: lineEndPoint, color: #colorLiteral(red: 0.1598679423, green: 0.1648836732, blue: 0.1904173791, alpha: 1), width: WakeUpTextFieldConstants.lineWidth)
-        lineLayer.addActivationAnimation()
-    
-        self.layer.addSublayer(lineLayer)
-        
+        drawLineLayer(color: #colorLiteral(red: 0.1598679423, green: 0.1648836732, blue: 0.1904173791, alpha: 1)) {lineLayer in
+            lineLayer.addActivationAnimation()
+            self.layer.addSublayer(lineLayer)
+        }
+
         animateInputField()
     }
     
@@ -106,29 +105,30 @@ final class WakeUpTextField: UIView {
     }
     
     private func showLine(){
-        if let layers = self.layer.sublayers?.filter({$0.name == WakeUpTextFieldString.lineLayerName.rawValue}) {
-            if (!layers.isEmpty){
-                return
+        self.layer.sublayers?.forEach {
+            if ($0.name == WakeUpTextFieldString.lineLayerName.rawValue){
+                $0.removeFromSuperlayer()
             }
         }
         
-        let lineLayer = drawLineFromPoint(start: lineStartPoint, toPoint: lineEndPoint, color: .lightGray, width: WakeUpTextFieldConstants.lineWidth)
-        self.layer.addSublayer(lineLayer)
+        drawLineLayer( color: .lightGray) { shapeLayer in
+            self.layer.addSublayer(shapeLayer)
+        }
     }
     
-    private func drawLineFromPoint(start: CGPoint, toPoint end: CGPoint, color: UIColor, width: CGFloat) ->  CAShapeLayer{
+    private func drawLineLayer(color: UIColor, callback: @escaping(CAShapeLayer) -> Void) {
         let path = UIBezierPath()
-        path.move(to: start)
-        path.addLine(to: end)
+        path.move(to: lineStartPoint)
+        path.addLine(to: lineEndPoint)
         
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = path.cgPath
         shapeLayer.strokeColor = color.cgColor
-        shapeLayer.lineWidth = width
+        shapeLayer.lineWidth = WakeUpTextFieldConstants.lineWidth
         shapeLayer.lineCap = .round
         shapeLayer.name = WakeUpTextFieldString.lineLayerName.rawValue
         
-        return shapeLayer
+        callback(shapeLayer)
     }
 }
 
@@ -147,15 +147,4 @@ private extension WakeUpTextField {
         })
     }
    
-}
-
-private extension CALayer {
-    func addActivationAnimation(){
-        let animation : CABasicAnimation = CABasicAnimation(keyPath: WakeUpTextFieldString.lineAnimationKey.rawValue)
-        animation.fromValue = 0.0
-        animation.toValue = 1.0
-        animation.duration = 1
-    
-        self.add(animation, forKey: WakeUpTextFieldString.lineAnimationKey.rawValue)
-    }
 }

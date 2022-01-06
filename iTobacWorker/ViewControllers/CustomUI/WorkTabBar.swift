@@ -155,11 +155,17 @@ final class WorkTabBar: UITabBar{
         self.layer.shadowOffset = .zero
         self.layer.shadowRadius = 10
         
-        self.layer.insertSublayer(drawShapeLayer(), at: 0)
-        self.layer.insertSublayer(drawCircleLayer(), at: 1)
+        drawFrameLayer() {shapeLayer in
+            self.layer.insertSublayer(shapeLayer, at: 0)
+        }
+       
+        drawCircleLayer() { shapeLayer in
+            self.layer.insertSublayer(shapeLayer, at: 1)
+        }
+        
     }
     
-    private func drawShapeLayer() -> CAShapeLayer{
+    private func drawFrameLayer(callback: @escaping(CAShapeLayer) -> Void){
         let path = UIBezierPath(
             roundedRect: bounds,
             byRoundingCorners: [.topLeft, .topRight],
@@ -168,21 +174,21 @@ final class WorkTabBar: UITabBar{
         shapeLayer.path = path.cgPath
         shapeLayer.fillColor = #colorLiteral(red: 0.1598679423, green: 0.1648836732, blue: 0.1904173791, alpha: 1).cgColor
         shapeLayer.name =  WorkTabBarString.frameLayerName.rawValue
-        return shapeLayer
+        callback(shapeLayer)
     }
     
-    private func drawCircleLayer() -> CAShapeLayer {
+    private func drawCircleLayer(callback: @escaping(CAShapeLayer) -> Void) {
         let path = UIBezierPath()
         path.addArc(withCenter: CGPoint(x: buttonStep * 2, y: 20),
                     radius: WorkTabBarConstants.circleRadius,
                     startAngle: 180 * .pi / 180,
                     endAngle: 0 * 180 / .pi,
                     clockwise: true)
-        let circleLayer = CAShapeLayer()
-        circleLayer.path = path.cgPath
-        circleLayer.fillColor = #colorLiteral(red: 0.1598679423, green: 0.1648836732, blue: 0.1904173791, alpha: 1).cgColor
-        circleLayer.name =  WorkTabBarString.frameLayerName.rawValue
-        return circleLayer
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.path = path.cgPath
+        shapeLayer.fillColor = #colorLiteral(red: 0.1598679423, green: 0.1648836732, blue: 0.1904173791, alpha: 1).cgColor
+        shapeLayer.name =  WorkTabBarString.frameLayerName.rawValue
+        callback(shapeLayer)
     }
     
     private func deselectItems(){

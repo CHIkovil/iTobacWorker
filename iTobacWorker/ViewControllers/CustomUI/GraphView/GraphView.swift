@@ -11,6 +11,7 @@ import UIKit
 //MARK: STRING
 private enum GraphViewString: String{
     case markupLayerName = "markup"
+    case pointAnimationKey = "transform.scale"
 }
 //MARK: CONSTANTS
 private enum GraphViewConstants {
@@ -31,22 +32,21 @@ final class GraphView: UIView {
     //MARK: reloadGraph
     func reloadGraph(_ setup: GraphSetup, isAnimate: Bool){
         if (!checkGraphsMaxValue([setup])) {return}
-        if (self.annotationWidth == nil) {return}
+        if (!checkGraphExist(setup)) {return}
+        
         removeGraphs(annotations: [setup.annotation])
-        addGraph(setup, isAnimate: isAnimate)
+        addGraph(setup)
     }
     
     //MARK: showGraphs
     func showGraphs(_ setups: [GraphSetup], isAnimate: Bool) {
         if (setups.isEmpty) {return}
         if (!checkGraphsMaxValue(setups)) {return}
-        self.annotationWidth = (self.viewWidth - 2 * GraphViewConstants.margin) / CGFloat(setups.count)
-        
-        let annotations = setups.map {$0.annotation}
-        removeGraphs(annotations: annotations)
-        
+    
+        let annotation = setups.map {$0.annotation}
+        removeGraphs(annotations: annotation)
         for setup in setups {
-            addGraph(setup, isAnimate: isAnimate)
+            addGraph(setup)
         }
     }
     
@@ -54,7 +54,6 @@ final class GraphView: UIView {
     private var viewWidth: CGFloat {self.frame.width}
     private var viewHeight: CGFloat {self.frame.height}
     private var maxValue: Int!
-    private var annotationWidth: CGFloat!
     
     //MARK: UI
     private lazy var minValueLabel: UILabel = {
@@ -101,10 +100,77 @@ final class GraphView: UIView {
         showMarkup()
     }
     
+    private func addGraph(_ setup: GraphSetup){
+        showGraphLines(setup)
+        showGraphPoints(setup)
+        showGraphAnnotation(setup)
+    }
+    
+    private func showGraphLines(_ setup: GraphSetup) {
+        let linePath = UIBezierPath()
+        
+        linePath.move(to: CGPoint(x: calculateX(0), y: calculateY(setup.points[0])))
+        for i in 0..<setup.points.count{
+            let nextPoint = CGPoint(x: calculateX(i), y: calculateY(setup.points[i]))
+            linePath.addLine(to: nextPoint)
+        }
+        
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.path = linePath.cgPath
+        shapeLayer.strokeColor = setup.color.cgColor
+        shapeLayer.fillColor = UIColor.clear.cgColor
+        shapeLayer.lineWidth = 3
+        shapeLayer.lineCap = .round
+        shapeLayer.name = setup.annotation
+        
+        drawGraphClipping(setup, path: UIBezierPath(cgPath: shapeLayer.path!)) {shapeLayer in
+            self.layer.addSublayer(shapeLayer)
+        }
+        
+        shapeLayer.addActivationAnimation()
+        self.layer.addSublayer(shapeLayer)
+    }
+    
+    private func showGraphPoints(_ setup: GraphSetup) {
+        for i in 0..<setup.points.count {
+            var nextPoint = CGPoint(x: calculateX(i), y: calculateY(setup.points[i]))
+            nextPoint.x -= GraphViewConstants.circleDiameter / 2
+            nextPoint.y -= GraphViewConstants.circleDiameter / 2
+            
+            let circlePath = UIBezierPath(ovalIn: CGRect(origin: nextPoint, size: CGSize(width: GraphViewConstants.circleDiameter, height: GraphViewConstants.circleDiameter)))
+            
+            let shapeLayer = CAShapeLayer()
+            shapeLayer.path = circlePath.cgPath
+            shapeLayer.fillColor = setup.color.cgColor
+            shapeLayer.name = setup.annotation
+            
+            shapeLayer.addStickAnimation(duration: CGFloat(i + 1) / 10 + 0.1)
+            self.layer.addSublayer(shapeLayer)
+        }
+    }
+    
+    private func showGraphAnnotation(_ setup: GraphSetup){
+        let label = UILabel()
+        let width = (self.viewWidth - 2 * GraphViewConstants.margin) / 2
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.safeAreaLayoutGuide.widthAnchor.constraint(equalToConstant: width).isActive = true
+        label.textAlignment = .center
+        label.font = UIFont(name: GlobalString.fontName.rawValue, size: GraphViewConstants.defTextSize - 2)
+        label.textColor = .lightGray
+        label.text = setup.annotation
+        
+        drawAnnotationLine(to: width, color: setup.color) { line in
+            line.addActivationAnimation()
+            label.layer.addSublayer(line)
+        }
+        
+        annotationStackView.addArrangedSubview(label)
+    }
+    
     private func showMarkup(){
-        if let markupLayers = self.layer.sublayers?.filter({$0.name == GraphViewString.markupLayerName.rawValue}) {
-            if (!markupLayers.isEmpty){
-                return
+        self.layer.sublayers?.forEach {
+            if ($0.name == GraphViewString.markupLayerName.rawValue){
+                $0.removeFromSuperlayer()
             }
         }
         
@@ -136,55 +202,6 @@ final class GraphView: UIView {
         }
     }
     
-    private func addGraphAnnotation(_ setup: GraphSetup, isAnimate: Bool){
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.safeAreaLayoutGuide.widthAnchor.constraint(equalToConstant: self.annotationWidth).isActive = true
-        label.textAlignment = .center
-        label.font = UIFont(name: GlobalString.fontName.rawValue, size: GraphViewConstants.defTextSize - 2)
-        label.textColor = .lightGray
-        label.text = setup.annotation
-        
-        drawAnnotationLine(color: setup.color) { line in
-            label.layer.addSublayer(line)
-        }
-        
-        annotationStackView.addArrangedSubview(label)
-    }
-    
-    private func addGraph(_ setup: GraphSetup, isAnimate: Bool){
-        addGraphAnnotation(setup, isAnimate: isAnimate)
-        
-        let lines = drawGraphLines(setup)
-        let points = drawGraphPoints(setup)
-        let clipping = drawGraphClipping(setup, path: UIBezierPath(cgPath: lines.path!))
-        
-        self.layer.addSublayer(lines)
-        self.layer.addSublayer(clipping)
-        for point in points {
-            self.layer.addSublayer(point)
-        }
-    }
-    
-    private func removeGraphs(annotations: [String]) {
-        
-        self.layer.sublayers?.forEach {layer in
-            guard let name = layer.name else{return}
-            if (annotations.contains(name)){
-                layer.removeFromSuperlayer()
-            }
-        }
-        
-        self.annotationStackView.arrangedSubviews.forEach {view in
-            guard let label = view as? UILabel else{return}
-            guard let name = label.text else{return}
-            if (annotations.contains(name)) {
-                view.removeFromSuperview()
-            }
-        }
-        
-    }
-    
     private func checkGraphsMaxValue(_ setups: [GraphSetup]) -> Bool {
         if setups.count == 1{
             guard let newMaxValue = setups.first?.points.max() else{return false}
@@ -210,6 +227,38 @@ final class GraphView: UIView {
         return true
     }
     
+    private func checkGraphExist(_ setup: GraphSetup) -> Bool{
+        let layers = self.layer.sublayers?.filter {$0.name == setup.annotation}
+        
+        switch layers {
+        case (let layers?):
+            if(!layers.isEmpty){
+                return true
+            }else{
+                fallthrough
+            }
+        default:
+            return false
+        }
+    }
+    
+    private func removeGraphs(annotations: [String]) {
+        self.layer.sublayers?.forEach {layer in
+            guard let name = layer.name else{return}
+            if (annotations.contains(name)){
+                layer.removeFromSuperlayer()
+            }
+        }
+        
+        self.annotationStackView.arrangedSubviews.forEach {view in
+            guard let label = view as? UILabel else{return}
+            guard let name = label.text else{return}
+            if (annotations.contains(name)) {
+                view.removeFromSuperview()
+            }
+        }
+    }
+
     private func calculateX(_ column: Int) -> CGFloat{
         let margin = GraphViewConstants.margin
         let graphWidth = self.viewWidth - margin * 2 - 10
@@ -272,76 +321,48 @@ final class GraphView: UIView {
         callback(shapeLayer)
     }
     
-    private func drawGraphLines(_ setup: GraphSetup) -> CAShapeLayer{
-        let linePath = UIBezierPath()
-        
-        linePath.move(to: CGPoint(x: calculateX(0), y: calculateY(setup.points[0])))
-        for i in 0..<setup.points.count{
-            let nextPoint = CGPoint(x: calculateX(i), y: calculateY(setup.points[i]))
-            linePath.addLine(to: nextPoint)
-        }
-        
-        let lines = CAShapeLayer()
-        lines.path = linePath.cgPath
-        lines.strokeColor = setup.color.cgColor
-        lines.fillColor = UIColor.clear.cgColor
-        lines.lineWidth = 3
-        lines.lineCap = .round
-        lines.name = setup.annotation
-        return lines
-    }
-    
-    private func drawGraphClipping(_ setup: GraphSetup,  path: UIBezierPath) -> CAShapeLayer{
+    private func drawGraphClipping(_ setup: GraphSetup, path: UIBezierPath, callback: @escaping(CAShapeLayer) -> Void){
         let clippingPath = path.copy() as! UIBezierPath
         
         clippingPath.addLine(to: CGPoint(x: calculateX(6),y: viewHeight - GraphViewConstants.bottomBorder - 5))
         clippingPath.addLine(to: CGPoint(x: calculateX(0), y: viewHeight - GraphViewConstants.bottomBorder - 5))
         
-        let clipping = CAShapeLayer()
-        clipping.path = clippingPath.cgPath
-        clipping.fillColor = setup.color.cgColor
-        clipping.opacity = 0.3
-        clipping.name = setup.annotation
-        return clipping
-    }
-    
-    private func drawGraphPoints(_ setup: GraphSetup) -> [CAShapeLayer]{
-        var gPoints:[CAShapeLayer] = []
-        for i in 0..<setup.points.count {
-            var point = CGPoint(x: calculateX(i), y: calculateY(setup.points[i]))
-            point.x -= GraphViewConstants.circleDiameter / 2
-            point.y -= GraphViewConstants.circleDiameter / 2
-            
-            let circlePath = UIBezierPath(ovalIn: CGRect(origin: point, size: CGSize(width: GraphViewConstants.circleDiameter, height: GraphViewConstants.circleDiameter)))
-            
-            let gPoint = CAShapeLayer()
-            gPoint.path = circlePath.cgPath
-            gPoint.fillColor = setup.color.cgColor
-            gPoints.append(gPoint)
-            gPoint.name = setup.annotation
-        }
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.path = clippingPath.cgPath
+        shapeLayer.fillColor = setup.color.cgColor
+        shapeLayer.opacity = 0.3
+        shapeLayer.name = setup.annotation
         
-        return gPoints
+        callback(shapeLayer)
     }
     
-    private func drawAnnotationLine(color: UIColor, callback: @escaping(CAShapeLayer) -> Void){
+    private func drawAnnotationLine(to x: CGFloat,color: UIColor, callback: @escaping(CAShapeLayer) -> Void){
         let linePath = UIBezierPath()
         
         linePath.move(to: CGPoint(x: 20, y: self.annotationStackView.frame.height))
-        linePath.addLine(to: CGPoint(x: self.annotationWidth - 20, y: self.annotationStackView.frame.height))
+        linePath.addLine(to: CGPoint(x: x - 20, y: self.annotationStackView.frame.height))
         
-        let line = CAShapeLayer()
-        line.path = linePath.cgPath
-        line.strokeColor = color.cgColor
-        line.fillColor = UIColor.clear.cgColor
-        line.lineWidth = 4
-        line.lineCap = .round
-        callback(line)
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.path = linePath.cgPath
+        shapeLayer.strokeColor = color.cgColor
+        shapeLayer.fillColor = UIColor.clear.cgColor
+        shapeLayer.lineWidth = 4
+        shapeLayer.lineCap = .round
+        callback(shapeLayer)
     }
 }
 
 //MARK: ANIMATION EXTENSION
 
+private extension CALayer {
+    func addStickAnimation(duration: CGFloat){
+        let animation = CABasicAnimation(keyPath: GraphViewString.pointAnimationKey.rawValue)
+        animation.fromValue = 0
+        animation.toValue = 1
+        animation.duration = duration
+        self.add(animation, forKey: GraphViewString.pointAnimationKey.rawValue)
+    }
+}
 
 
 //MARK: EXTENSION
@@ -356,4 +377,5 @@ private extension Array {
         return Array(self[index ..< endIndex] + self[startIndex ..< index])
     }
 }
+
 

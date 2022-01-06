@@ -14,9 +14,9 @@ extension CALayer{
     //MARK: DRAW
     
     func drawBlockLayer(cornerWidth: CGFloat, color: UIColor) {
-        if let layers = self.sublayers?.filter({$0.name == "block"}) {
-            if (!layers.isEmpty){
-                return
+        self.sublayers?.forEach {
+            if ($0.name == "block"){
+                $0.removeFromSuperlayer()
             }
         }
         
@@ -56,5 +56,14 @@ extension CALayer{
         animationGroup.animations = [animation]
 
         self.add(animationGroup, forKey: "pulseAnimation")
+    }
+    
+    func addActivationAnimation(){
+        let animation : CABasicAnimation = CABasicAnimation(keyPath: "strokeEnd")
+        animation.fromValue = 0.0
+        animation.toValue = 1.0
+        animation.duration = 1
+    
+        self.add(animation, forKey:"strokeEnd")
     }
 }

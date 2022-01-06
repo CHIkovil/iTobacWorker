@@ -122,8 +122,7 @@ class UserImageView: UIView {
         constraintsImageView()
         constraintsButton()
         
-        let color = #colorLiteral(red: 0.1261322796, green: 0.1471925974, blue: 0.2156360745, alpha: 1)
-        self.layer.drawBlockLayer(cornerWidth: 35, color: color)
+        self.layer.drawBlockLayer(cornerWidth: 35, color: #colorLiteral(red: 0.1261322796, green: 0.1471925974, blue: 0.2156360745, alpha: 1))
         showImageFrame()
     }
     
@@ -136,13 +135,15 @@ class UserImageView: UIView {
         }
         
         for index in 1...3 {
-            let shapeLayer = drawArc(offset: CGFloat(index))
-            shapeLayer.addInfinityRotationAnimation()
-            self.layer.addSublayer(shapeLayer)
+            drawArcLayer(offset: CGFloat(index)) {shapeLayer in
+                shapeLayer.addInfinityRotationAnimation()
+                self.layer.addSublayer(shapeLayer)
+            }
+           
         }
     }
     
-    private func drawArc(offset: CGFloat) -> CAShapeLayer{
+    private func drawArcLayer(offset: CGFloat, callback: @escaping(CAShapeLayer) -> Void){
         let shapeLayer = CAShapeLayer()
         let center = CGPoint(x: viewWidth / 2, y: viewHeight / 2)
         let bounds = CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight)
@@ -160,7 +161,7 @@ class UserImageView: UIView {
         
         shapeLayer.position = center
         shapeLayer.bounds = bounds
-        return shapeLayer
+        callback(shapeLayer)
     }
 }
 

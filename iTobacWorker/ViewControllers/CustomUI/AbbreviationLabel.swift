@@ -46,28 +46,51 @@ final class AbbreviationLabel: UIView {
             }
         }
         
-        let stringAttributes = [ NSAttributedString.Key.font: UIFont(name: GlobalString.fontName.rawValue, size: AbbreviationLabelConstants.defTextSize)!]
+        let stringAttributes = [NSAttributedString.Key.font: UIFont(name: GlobalString.fontName.rawValue, size: AbbreviationLabelConstants.defTextSize)!]
         let attributedString = NSMutableAttributedString(string: GlobalString.appName.rawValue, attributes: stringAttributes )
-        let charPaths = self.getCharacterPaths(attributedString: attributedString, position: CGPoint(x: -10, y: labelHeight - 10))
+        let charPaths = self.getCharPaths(attributedString: attributedString, position: CGPoint(x: -10, y: labelHeight - 10))
         
-        let charLayers = charPaths.map { path -> CAShapeLayer in
-            let shapeLayer = CAShapeLayer()
+        charPaths.enumerated().forEach { index, path in
+            let  shapeLayer = CAShapeLayer()
             shapeLayer.fillColor = UIColor.clear.cgColor
-            shapeLayer.strokeColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).cgColor
+            shapeLayer.strokeColor = #colorLiteral(red: 0.9456624389, green: 0.9458207488, blue: 0.9456415772, alpha: 1).cgColor
             shapeLayer.lineWidth = 2
             shapeLayer.path = path
-            return shapeLayer
+            
+            self.layer.addSublayer(shapeLayer)
+            
+            let animation = CABasicAnimation(keyPath: AbbreviationLabelString.charAnimationKey.rawValue)
+            animation.fromValue = 1
+            animation.toValue = 0
+            animation.fillMode = .forwards;
+            animation.isRemovedOnCompletion = false;
+            
+            let length = charPaths.count
+            
+            switch index {
+            case length / 2 - 1:
+                animation.delegate = self
+                fallthrough
+            case 0...length / 2 - 2:
+                animation.duration = CFTimeInterval(index + 1)
+            case length / 2 + 1...length - 1:
+                animation.duration = CFTimeInterval(length - index + 1)
+            case length / 2:
+                return
+            default:
+                break
+            }
+            
+            shapeLayer.name = AbbreviationLabelString.charLayerName.rawValue
+            shapeLayer.add(animation, forKey: AbbreviationLabelString.charAnimationKey.rawValue)
         }
-        charLayers[6].strokeColor = UIColor.lightGray.cgColor
-        
-        self.layer.addAbbreviationAnimation(delegate: self, charLayers)
     }
     
     //MARK: showSmoke
     func showSmoke(){
         animateSmoke()
     }
- 
+    
     //MARK: PRIVATE
     
     private var labelHeight: CGFloat {self.frame.height}
@@ -101,7 +124,7 @@ final class AbbreviationLabel: UIView {
         }
     }
     
-   private func constraintsSmokeImageView() {
+    private func constraintsSmokeImageView() {
         smokeImageView.snp.makeConstraints {(make) -> Void in
             make.width.equalTo(labelHeight * 0.71)
             make.height.equalTo(labelHeight * 0.71)
@@ -120,29 +143,29 @@ final class AbbreviationLabel: UIView {
         constraintsSmokeImageView()
     }
     
-    private func getCharacterPaths(attributedString: NSAttributedString, position: CGPoint) -> [CGPath] {
-
+    private func getCharPaths(attributedString: NSAttributedString, position: CGPoint) -> [CGPath] {
+        
         let line = CTLineCreateWithAttributedString(attributedString)
-
+        
         guard let glyphRuns = CTLineGetGlyphRuns(line) as? [CTRun] else { return []}
-
+        
         var characterPaths = [CGPath]()
-
+        
         for glyphRun in glyphRuns {
             guard let attributes = CTRunGetAttributes(glyphRun) as? [String:AnyObject] else { continue }
             let font = attributes[kCTFontAttributeName as String] as! CTFont
-
+            
             for index in 0..<CTRunGetGlyphCount(glyphRun) {
                 let glyphRange = CFRangeMake(index, 1)
-
+                
                 var glyph = CGGlyph()
                 CTRunGetGlyphs(glyphRun, glyphRange, &glyph)
-
+                
                 var characterPosition = CGPoint()
                 CTRunGetPositions(glyphRun, glyphRange, &characterPosition)
                 characterPosition.x += position.x
                 characterPosition.y += position.y
-
+                
                 if let glyphPath = CTFontCreatePathForGlyph(font, glyph, nil) {
                     var transform = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: characterPosition.x, ty: characterPosition.y)
                     if let charPath = glyphPath.copy(using: &transform) {
@@ -177,42 +200,10 @@ private extension AbbreviationLabel {
     }
 }
 
-private extension CALayer {
-    func addAbbreviationAnimation(delegate: CAAnimationDelegate, _ charLayers: [CAShapeLayer]) {
-        for (index,shapeLayer) in charLayers.enumerated(){
-            self.addSublayer(shapeLayer)
-            let animation = CABasicAnimation(keyPath: AbbreviationLabelString.charAnimationKey.rawValue)
-            animation.fromValue = 1
-            animation.toValue = 0
-            animation.fillMode = .forwards;
-            animation.isRemovedOnCompletion = false;
-        
-            let layersLength = charLayers.count
-            
-            switch index {
-            case layersLength / 2 - 1:
-                animation.delegate = delegate
-                fallthrough
-            case 0...layersLength / 2 - 2:
-                animation.duration = CFTimeInterval(index + 1)
-            case layersLength / 2 + 1...layersLength - 1:
-                animation.duration = CFTimeInterval(layersLength - index + 1)
-            case layersLength / 2:
-                continue
-            default:
-                break
-            }
-            
-            shapeLayer.name = AbbreviationLabelString.charLayerName.rawValue
-            shapeLayer.add(animation, forKey: AbbreviationLabelString.charAnimationKey.rawValue)
-        }
-    }
-}
-
 //MARK: DELEGATE EXTENSION
 
 extension AbbreviationLabel:CAAnimationDelegate{
-
+    
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         animateCigaretteWithEnding(delegate: delegate)
     }
