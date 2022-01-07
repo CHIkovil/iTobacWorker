@@ -182,7 +182,7 @@ final class WorkTabBar: UITabBar{
         path.addArc(withCenter: CGPoint(x: buttonStep * 2, y: 20),
                     radius: WorkTabBarConstants.circleRadius,
                     startAngle: 180 * .pi / 180,
-                    endAngle: 0 * 180 / .pi,
+                    endAngle: 0,
                     clockwise: true)
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = path.cgPath

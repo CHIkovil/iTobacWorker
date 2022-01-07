@@ -8,9 +8,20 @@
 import Foundation
 import UIKit
 
-private enum ProgressViewString: String {
+//MARK: STRING
+
+enum ProgressViewString: String {
     case moneyBankImageName = "safe-box"
     case cigaretteBankImageName = "ashtray"
+    case moneyGraphButtonImageName = "money"
+    case cigaretteGraphButtonName = "cigarettes"
+    case graphButtonCircleLayerName = "arc"
+}
+
+//MARK: CONSTANTS
+enum ProgressViewConstants {
+    static let graphButtonDiameter: CGFloat = 35
+    static let graphButtonCircleRadius: CGFloat = 35
 }
 
 class ProgressView: UIView {
@@ -18,12 +29,12 @@ class ProgressView: UIView {
         super.init(frame: frame)
         makeUI()
     }
-
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         makeUI()
     }
-
+    
     //MARK: UI
     
     lazy var scrollView: UIScrollView = {
@@ -37,7 +48,7 @@ class ProgressView: UIView {
     
     lazy var userImageView: UserImageView = {
         let imageView = UserImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false        
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
@@ -55,30 +66,52 @@ class ProgressView: UIView {
         return imageView
     }()
     
-    lazy var graphView: GraphView = {
-        let view = GraphView()
+    lazy var backgroundGraphView: UIView = {
+        let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-
+        view.backgroundColor = .clear
         return view
     }()
     
-    //MARK: SUPPORT FUNC
+    lazy var moneyGraphView: GraphView = {
+        let view = GraphView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.isHidden = true
+        return view
+    }()
     
-    func makeUI() {
-        self.backgroundColor = #colorLiteral(red: 0.1126094386, green: 0.1120074913, blue: 0.1353533268, alpha: 1)
-        
-        scrollView.addSubview(userImageView)
-        scrollView.addSubview(moneyBankPicker)
-        scrollView.addSubview(cigaretteBankPicker)
-        scrollView.addSubview(graphView)
-        self.addSubview(scrollView)
-        
-        constraintsScrollView()
-        constraintsUserImageView()
-        constraintsMoneyBankPicker()
-        constraintsCigaretteBankPicker()
-        constraintsGraphView()
-    }
+    lazy var cigaretteGraphView: GraphView = {
+        let view = GraphView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.isHidden = true
+        return view
+    }()
+    
+    lazy var moneyGraphButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: ProgressViewString.moneyGraphButtonImageName.rawValue), for: .normal)
+        button.backgroundColor = .clear
+        button.layer.cornerRadius = ProgressViewConstants.graphButtonDiameter / 2
+        button.alpha = 0
+        button.isUserInteractionEnabled = false
+        button.layer.borderColor = #colorLiteral(red: 0.6947862506, green: 0.4770120382, blue: 0.02306269109, alpha: 1)
+        button.layer.borderWidth = 3
+        return button
+    }()
+    
+    lazy var cigaretteGraphButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: ProgressViewString.cigaretteGraphButtonName.rawValue), for: .normal)
+        button.backgroundColor = .clear
+        button.layer.cornerRadius = ProgressViewConstants.graphButtonDiameter / 2
+        button.alpha = 0
+        button.isUserInteractionEnabled = false
+        button.layer.borderColor = #colorLiteral(red: 0.6947862506, green: 0.4770120382, blue: 0.02306269109, alpha: 1)
+        button.layer.borderWidth = 3
+        return button
+    }()
     
     //MARK: CONSTRAINTS
     
@@ -118,12 +151,88 @@ class ProgressView: UIView {
         }
     }
     
-    func constraintsGraphView() {
-        graphView.snp.makeConstraints {(make) -> Void in
+    func constraintsBackgroundGraphView() {
+        backgroundGraphView.snp.makeConstraints {(make) -> Void in
             make.centerX.equalTo(scrollView.snp.centerX)
             make.top.equalTo(moneyBankPicker.snp.bottom).offset(15)
             make.height.equalTo(250)
-            make.width.equalTo(280)
+            make.width.equalTo(330)
         }
+    }
+    
+    func constraintsMoneyGraphView() {
+        moneyGraphView.snp.makeConstraints {(make) -> Void in
+            make.centerX.equalTo(scrollView.snp.centerX)
+            make.top.equalTo(moneyBankPicker.snp.bottom).offset(15)
+            make.height.equalTo(250)
+            make.width.equalTo(260)
+        }
+    }
+    
+    func constraintsCigaretteGraphView() {
+        cigaretteGraphView.snp.makeConstraints {(make) -> Void in
+            make.centerX.equalTo(scrollView.snp.centerX)
+            make.top.equalTo(cigaretteBankPicker.snp.bottom).offset(15)
+            make.height.equalTo(250)
+            make.width.equalTo(260)
+        }
+    }
+    
+    func constraintsMoneyGraphButton() {
+        moneyGraphButton.snp.makeConstraints {(make) -> Void in
+            make.centerX.equalTo(cigaretteGraphView.snp.leading)
+            make.centerY.equalTo(moneyGraphView.snp.centerY)
+            make.height.equalTo(ProgressViewConstants.graphButtonDiameter )
+            make.width.equalTo(ProgressViewConstants.graphButtonDiameter)
+        }
+    }
+    
+    func constraintsCigaretteGraphButton() {
+        cigaretteGraphButton.snp.makeConstraints {(make) -> Void in
+            make.centerX.equalTo(moneyGraphView.snp.trailing)
+            make.centerY.equalTo(cigaretteGraphView.snp.centerY)
+            make.height.equalTo(ProgressViewConstants.graphButtonDiameter)
+            make.width.equalTo(ProgressViewConstants.graphButtonDiameter)
+        }
+    }
+    
+    //MARK: SUPPORT FUNC
+    
+    func makeUI() {
+        self.backgroundColor = #colorLiteral(red: 0.1126094386, green: 0.1120074913, blue: 0.1353533268, alpha: 1)
+        
+        scrollView.addSubview(userImageView)
+        scrollView.addSubview(moneyBankPicker)
+        scrollView.addSubview(cigaretteBankPicker)
+        backgroundGraphView.addSubview(moneyGraphView)
+        backgroundGraphView.addSubview(cigaretteGraphView)
+        backgroundGraphView.addSubview(moneyGraphButton)
+        backgroundGraphView.addSubview(cigaretteGraphButton)
+        scrollView.addSubview(backgroundGraphView)
+        self.addSubview(scrollView)
+        
+        constraintsScrollView()
+        constraintsUserImageView()
+        constraintsMoneyBankPicker()
+        constraintsCigaretteBankPicker()
+        constraintsBackgroundGraphView()
+        constraintsMoneyGraphView()
+        constraintsCigaretteGraphView()
+        constraintsMoneyGraphButton()
+        constraintsCigaretteGraphButton()
+    }
+    
+    func drawGraphButtonArc(center: CGPoint,start: CGFloat, end: CGFloat, callback: @escaping(CAShapeLayer) -> Void){
+        let path = UIBezierPath()
+        path.addArc(withCenter: center,
+                    radius: ProgressViewConstants.graphButtonCircleRadius,
+                    startAngle: start,
+                    endAngle:  end,
+                    clockwise: true)
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.path = path.cgPath
+        shapeLayer.fillColor = #colorLiteral(red: 0.1582991481, green: 0.1590825021, blue: 0.1307061911, alpha: 1).cgColor
+        shapeLayer.name =  ProgressViewString.graphButtonCircleLayerName.rawValue
+        callback(shapeLayer)
     }
 }

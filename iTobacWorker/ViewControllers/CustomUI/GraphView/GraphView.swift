@@ -9,11 +9,14 @@ import Foundation
 import UIKit
 
 //MARK: STRING
+
 private enum GraphViewString: String{
     case markupLayerName = "markup"
     case pointAnimationKey = "transform.scale"
 }
+
 //MARK: CONSTANTS
+
 private enum GraphViewConstants {
     static let margin: CGFloat = 20.0
     static let topBorder: CGFloat = 45
@@ -88,8 +91,7 @@ final class GraphView: UIView {
     //MARK: SUPPORT FUNC
     
     private func makeUI(){
-        let color = #colorLiteral(red: 0.1582991481, green: 0.1590825021, blue: 0.1307061911, alpha: 1)
-        self.layer.drawBlockLayer(cornerWidth: 25, color: color)
+        self.layer.drawBlockLayer(cornerWidth: 25, color: #colorLiteral(red: 0.1582991481, green: 0.1590825021, blue: 0.1307061911, alpha: 1))
         
         self.addSubview(minValueLabel)
         self.addSubview(maxValueLabel)
