@@ -72,7 +72,7 @@ class ProgressViewController: UIViewController
                 $0.removeFromSuperlayer()
             }
         }
-        self.progressView.drawGraphButtonArc(center: CGPoint(x: self.progressView.cigaretteGraphView.bounds.width - 8, y: self.progressView.cigaretteGraphView.bounds.height / 2), start: 270 * .pi / 180,end: 90 * .pi / 180) {shapeLayer in
+        self.progressView.drawGraphButtonArc(center: CGPoint(x: self.progressView.cigaretteGraphView.bounds.width - 15, y: self.progressView.cigaretteGraphView.bounds.height / 2), start: 270 * .pi / 180,end: 90 * .pi / 180) {shapeLayer in
             self.progressView.moneyGraphView.layer.insertSublayer(shapeLayer, at: 1)
         }
         
@@ -86,7 +86,7 @@ class ProgressViewController: UIViewController
                 self.progressView.moneyGraphView.showGraphs([GraphSetup(points: [4, 2, 6, 4, 5, 8, 3], color: UIColor(white: 0.8, alpha: 0.9), annotation: "count"), GraphSetup(points: [1, 3, 4, 4, 7, 8, 3], color: UIColor(red: 0, green: 0.8, blue: 0, alpha: 0.9), annotation: "norm")], isAnimate: true)
                 UIView.animate(withDuration: 0.3){[weak self] in
                     guard let self = self else {return}
-                    self.progressView.cigaretteGraphButton.alpha = 0.6
+                    self.progressView.cigaretteGraphButton.alpha = 0.7
                     self.progressView.cigaretteGraphButton.isUserInteractionEnabled = true
                 }
             }
@@ -101,7 +101,7 @@ class ProgressViewController: UIViewController
                 $0.removeFromSuperlayer()
             }
         }
-        self.progressView.drawGraphButtonArc(center: CGPoint(x: 8, y: self.progressView.cigaretteGraphView.bounds.height / 2) , start: 90 * .pi / 180, end: 270 * .pi / 180) {shapeLayer in
+        self.progressView.drawGraphButtonArc(center: CGPoint(x: 15, y: self.progressView.cigaretteGraphView.bounds.height / 2) , start: 90 * .pi / 180, end: 270 * .pi / 180) {shapeLayer in
             self.progressView.cigaretteGraphView.layer.insertSublayer(shapeLayer, at: 1)
         }
         
@@ -115,7 +115,7 @@ class ProgressViewController: UIViewController
                 self.progressView.cigaretteGraphView.showGraphs([GraphSetup(points: [4, 2, 6, 4, 5, 8, 3], color: UIColor(white: 0.8, alpha: 0.9), annotation: "count"), GraphSetup(points: [1, 3, 4, 4, 7, 8, 3], color: UIColor(red: 0, green: 0.8, blue: 0, alpha: 0.9), annotation: "norm")], isAnimate: true)
                 UIView.animate(withDuration: 0.3){[weak self] in
                     guard let self = self else {return}
-                    self.progressView.moneyGraphButton.alpha = 0.6
+                    self.progressView.moneyGraphButton.alpha = 0.7
                     self.progressView.moneyGraphButton.isUserInteractionEnabled = true
                 }
                 

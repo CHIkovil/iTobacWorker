@@ -21,7 +21,7 @@ enum ProgressViewString: String {
 //MARK: CONSTANTS
 enum ProgressViewConstants {
     static let graphButtonDiameter: CGFloat = 35
-    static let graphButtonCircleRadius: CGFloat = 35
+    static let graphButtonCircleRadius: CGFloat = 42
 }
 
 class ProgressView: UIView {
