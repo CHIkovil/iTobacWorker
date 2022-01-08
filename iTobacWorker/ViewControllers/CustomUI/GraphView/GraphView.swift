@@ -103,55 +103,18 @@ final class GraphView: UIView {
     }
     
     private func addGraph(_ setup: GraphSetup){
-        showGraphLines(setup)
-        showGraphPoints(setup)
-        showGraphAnnotation(setup)
+        let graph = drawGraph(setup)
+        let annotation = getGraphAnnotation(setup)
+        
+        self.layer.addSublayer(graph.line)
+        self.layer.addSublayer(graph.clipping)
+        for point in graph.points {
+            self.layer.addSublayer(point)
+        }
+        annotationStackView.addArrangedSubview(annotation)
     }
     
-    private func showGraphLines(_ setup: GraphSetup) {
-        let linePath = UIBezierPath()
-        
-        linePath.move(to: CGPoint(x: calculateX(0), y: calculateY(setup.points[0])))
-        for i in 0..<setup.points.count{
-            let nextPoint = CGPoint(x: calculateX(i), y: calculateY(setup.points[i]))
-            linePath.addLine(to: nextPoint)
-        }
-        
-        let shapeLayer = CAShapeLayer()
-        shapeLayer.path = linePath.cgPath
-        shapeLayer.strokeColor = setup.color.cgColor
-        shapeLayer.fillColor = UIColor.clear.cgColor
-        shapeLayer.lineWidth = 3
-        shapeLayer.lineCap = .round
-        shapeLayer.name = setup.annotation
-        
-        drawGraphClipping(setup, path: UIBezierPath(cgPath: shapeLayer.path!)) {shapeLayer in
-            self.layer.addSublayer(shapeLayer)
-        }
-        
-        shapeLayer.addActivationAnimation()
-        self.layer.addSublayer(shapeLayer)
-    }
-    
-    private func showGraphPoints(_ setup: GraphSetup) {
-        for i in 0..<setup.points.count {
-            var nextPoint = CGPoint(x: calculateX(i), y: calculateY(setup.points[i]))
-            nextPoint.x -= GraphViewConstants.circleDiameter / 2
-            nextPoint.y -= GraphViewConstants.circleDiameter / 2
-            
-            let circlePath = UIBezierPath(ovalIn: CGRect(origin: nextPoint, size: CGSize(width: GraphViewConstants.circleDiameter, height: GraphViewConstants.circleDiameter)))
-            
-            let shapeLayer = CAShapeLayer()
-            shapeLayer.path = circlePath.cgPath
-            shapeLayer.fillColor = setup.color.cgColor
-            shapeLayer.name = setup.annotation
-            
-            shapeLayer.addStickAnimation(duration: CGFloat(i + 1) / 10 + 0.1)
-            self.layer.addSublayer(shapeLayer)
-        }
-    }
-    
-    private func showGraphAnnotation(_ setup: GraphSetup){
+    private func getGraphAnnotation(_ setup: GraphSetup) -> UILabel{
         let label = UILabel()
         let width = (self.viewWidth - 2 * GraphViewConstants.margin) / 2
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -166,7 +129,7 @@ final class GraphView: UIView {
             label.layer.addSublayer(line)
         }
         
-        annotationStackView.addArrangedSubview(label)
+        return label
     }
     
     private func showMarkup(){
@@ -323,7 +286,46 @@ final class GraphView: UIView {
         callback(shapeLayer)
     }
     
-    private func drawGraphClipping(_ setup: GraphSetup, path: UIBezierPath, callback: @escaping(CAShapeLayer) -> Void){
+    private func drawGraph(_ setup: GraphSetup) -> Graph {
+        
+        var pointLayers: [CAShapeLayer] = []
+        
+        let linePath = UIBezierPath()
+        linePath.move(to: CGPoint(x: calculateX(0), y: calculateY(setup.points[0])))
+        
+        for i in 0..<setup.points.count{
+            var nextPoint = CGPoint(x: calculateX(i), y: calculateY(setup.points[i]))
+            
+            linePath.addLine(to: nextPoint)
+            
+            nextPoint.x -= GraphViewConstants.circleDiameter / 2
+            nextPoint.y -= GraphViewConstants.circleDiameter / 2
+            
+            let pointPath = UIBezierPath(ovalIn: CGRect(origin: nextPoint, size: CGSize(width: GraphViewConstants.circleDiameter, height: GraphViewConstants.circleDiameter)))
+            let pointLayer = CAShapeLayer()
+            pointLayer.path = pointPath.cgPath
+            pointLayer.fillColor = setup.color.cgColor
+            pointLayer.name = setup.annotation
+            pointLayer.addStickAnimation(duration: CGFloat(i + 1) / 10 + 0.1)
+            pointLayers.append(pointLayer)
+        }
+        
+        let linesLayer = CAShapeLayer()
+        linesLayer.path = linePath.cgPath
+        linesLayer.strokeColor = setup.color.cgColor
+        linesLayer.fillColor = UIColor.clear.cgColor
+        linesLayer.lineWidth = 3
+        linesLayer.lineCap = .round
+        linesLayer.name = setup.annotation
+        linesLayer.addActivationAnimation()
+        
+    
+        let clippingLayer =  drawGraphClipping(setup, path: UIBezierPath(cgPath: linesLayer.path!))
+        
+        return  Graph(line: linesLayer, points: pointLayers, clipping: clippingLayer)
+    }
+    
+    private func drawGraphClipping(_ setup: GraphSetup, path: UIBezierPath) -> CAShapeLayer {
         let clippingPath = path.copy() as! UIBezierPath
         
         clippingPath.addLine(to: CGPoint(x: calculateX(6),y: viewHeight - GraphViewConstants.bottomBorder - 5))
@@ -335,7 +337,7 @@ final class GraphView: UIView {
         shapeLayer.opacity = 0.3
         shapeLayer.name = setup.annotation
         
-        callback(shapeLayer)
+        return shapeLayer
     }
     
     private func drawAnnotationLine(to x: CGFloat,color: UIColor, callback: @escaping(CAShapeLayer) -> Void){
