@@ -54,9 +54,9 @@ final class GraphView: UIView {
     }
     
     //MARK: PRIVATE
-    private var viewWidth: CGFloat {self.frame.width}
+    private var viewWidth: CGFloat {self.frame.height}
     private var viewHeight: CGFloat {self.frame.height}
-    private var maxValue: Int!
+    private var maxValue: Int?
     
     //MARK: UI
     private lazy var minValueLabel: UILabel = {
@@ -103,18 +103,39 @@ final class GraphView: UIView {
     }
     
     private func addGraph(_ setup: GraphSetup){
-        let graph = drawGraph(setup)
-        let annotation = getGraphAnnotation(setup)
+        var graph: Graph!
+        var finalSetup = setup
         
-        self.layer.addSublayer(graph.line)
-        self.layer.addSublayer(graph.clipping)
-        for point in graph.points {
-            self.layer.addSublayer(point)
+        if (finalSetup.viewSetup == nil) {
+            finalSetup.viewSetup = ViewSetup(width: self.viewWidth, height: self.viewHeight, graphMaxValue: self.maxValue!)
         }
-        annotationStackView.addArrangedSubview(annotation)
+        
+        let workItem = DispatchWorkItem {[weak self] in
+            guard let self = self else{return}
+            graph = self.drawGraph(finalSetup)
+        }
+        
+        DispatchQueue.global(qos: .userInteractive).async(execute: workItem)
+    
+        workItem.notify(queue: .main) {
+            
+            graph.line.addActivationAnimation()
+            
+            self.layer.addSublayer(graph.line)
+            
+            self.layer.addSublayer(graph.clipping)
+            for (index,point) in graph.points.enumerated() {
+                point.addStickAnimation(duration: CGFloat(index + 1) / 10 + 0.1)
+                self.layer.addSublayer(point)
+            }
+            
+            self.getGraphAnnotation(setup) { annotation in
+                self.annotationStackView.addArrangedSubview(annotation)
+            }
+        }
     }
     
-    private func getGraphAnnotation(_ setup: GraphSetup) -> UILabel{
+    private func getGraphAnnotation(_ setup: GraphSetup, callback: @escaping(UILabel) -> Void) {
         let label = UILabel()
         let width = (self.viewWidth - 2 * GraphViewConstants.margin) / 2
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -129,7 +150,7 @@ final class GraphView: UIView {
             label.layer.addSublayer(line)
         }
         
-        return label
+        callback(label)
     }
     
     private func showMarkup(){
@@ -224,20 +245,20 @@ final class GraphView: UIView {
         }
     }
 
-    private func calculateX(_ column: Int) -> CGFloat{
+    private func calculateX(_ column: Int,_ setup: GraphSetup?) -> CGFloat{
         let margin = GraphViewConstants.margin
-        let graphWidth = self.viewWidth - margin * 2 - 10
+        let graphWidth = (setup?.viewSetup?.width ?? self.viewWidth) - margin * 2 - 10
         let spacing = graphWidth / CGFloat(6)
         
         return CGFloat(column) * spacing + margin + 5
     }
     
-    private func calculateY(_ graphPoint: Int) -> CGFloat {
+    private func calculateY(_ graphPoint: Int, _ setup: GraphSetup) -> CGFloat {
         let topBorder = GraphViewConstants.topBorder
         let bottomBorder = GraphViewConstants.bottomBorder
-        let graphHeight = self.viewHeight - topBorder - bottomBorder
+        let graphHeight = setup.viewSetup!.height - topBorder - bottomBorder
         
-        let yPoint =  CGFloat(graphPoint) / CGFloat(self.maxValue!) * graphHeight
+        let yPoint =  CGFloat(graphPoint) / CGFloat(setup.viewSetup!.graphMaxValue) * graphHeight
         
         return graphHeight + topBorder - yPoint
     }
@@ -271,8 +292,8 @@ final class GraphView: UIView {
         let linePath = UIBezierPath()
         
         for column in 0...6{
-            linePath.move(to: CGPoint(x: calculateX(column), y: viewHeight - GraphViewConstants.bottomBorder))
-            linePath.addLine(to: CGPoint(x: calculateX(column), y: viewHeight - GraphViewConstants.bottomBorder - 5))
+            linePath.move(to: CGPoint(x: calculateX(column, nil), y: viewHeight - GraphViewConstants.bottomBorder))
+            linePath.addLine(to: CGPoint(x: calculateX(column, nil), y: viewHeight - GraphViewConstants.bottomBorder - 5))
         }
         
         let color = UIColor(white: 1.0, alpha: GraphViewConstants.colorAlpha)
@@ -291,10 +312,10 @@ final class GraphView: UIView {
         var pointLayers: [CAShapeLayer] = []
         
         let linePath = UIBezierPath()
-        linePath.move(to: CGPoint(x: calculateX(0), y: calculateY(setup.points[0])))
+        linePath.move(to: CGPoint(x: calculateX(0, setup), y: calculateY(setup.points[0], setup)))
         
         for i in 0..<setup.points.count{
-            var nextPoint = CGPoint(x: calculateX(i), y: calculateY(setup.points[i]))
+            var nextPoint = CGPoint(x: calculateX(i,setup), y: calculateY(setup.points[i], setup))
             
             linePath.addLine(to: nextPoint)
             
@@ -306,7 +327,6 @@ final class GraphView: UIView {
             pointLayer.path = pointPath.cgPath
             pointLayer.fillColor = setup.color.cgColor
             pointLayer.name = setup.annotation
-            pointLayer.addStickAnimation(duration: CGFloat(i + 1) / 10 + 0.1)
             pointLayers.append(pointLayer)
         }
         
@@ -317,7 +337,6 @@ final class GraphView: UIView {
         linesLayer.lineWidth = 3
         linesLayer.lineCap = .round
         linesLayer.name = setup.annotation
-        linesLayer.addActivationAnimation()
         
     
         let clippingLayer =  drawGraphClipping(setup, path: UIBezierPath(cgPath: linesLayer.path!))
@@ -328,8 +347,8 @@ final class GraphView: UIView {
     private func drawGraphClipping(_ setup: GraphSetup, path: UIBezierPath) -> CAShapeLayer {
         let clippingPath = path.copy() as! UIBezierPath
         
-        clippingPath.addLine(to: CGPoint(x: calculateX(6),y: viewHeight - GraphViewConstants.bottomBorder - 5))
-        clippingPath.addLine(to: CGPoint(x: calculateX(0), y: viewHeight - GraphViewConstants.bottomBorder - 5))
+        clippingPath.addLine(to: CGPoint(x: calculateX(6, setup),y: viewHeight - GraphViewConstants.bottomBorder - 5))
+        clippingPath.addLine(to: CGPoint(x: calculateX(0, setup), y: viewHeight - GraphViewConstants.bottomBorder - 5))
         
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = clippingPath.cgPath
