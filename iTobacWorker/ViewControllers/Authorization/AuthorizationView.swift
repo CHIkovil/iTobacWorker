@@ -9,6 +9,14 @@ import Foundation
 import UIKit
 import SnapKit
 
+//MARK: CONSTANTS
+
+enum AuthorizationViewConstants {
+    static let boardViewSide: CGFloat = 300
+    static let titleAppLabelHeight: CGFloat = 70
+    static let loginTextFieldWidth: CGFloat = 220
+    static let loginTextFieldHeight: CGFloat = 100
+}
 
 class AuthorizationView: UIView{
     
@@ -16,12 +24,12 @@ class AuthorizationView: UIView{
         super.init(frame: frame)
         makeUI()
     }
-
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         makeUI()
     }
-
+    
     //MARK: UI
     
     lazy var boardView:UIView = {
@@ -44,7 +52,7 @@ class AuthorizationView: UIView{
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-        
+    
     lazy var loginTextField: UIWakeUpTextField = {
         let textField = UIWakeUpTextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -55,16 +63,16 @@ class AuthorizationView: UIView{
     
     func constraintsBoardView() {
         boardView.snp.makeConstraints {(make) -> Void in
-            make.width.equalTo(300)
-            make.height.equalTo(300)
+            make.width.equalTo(AuthorizationViewConstants.boardViewSide)
+            make.height.equalTo(AuthorizationViewConstants.boardViewSide)
             make.center.equalTo(self.snp.center)
         }
     }
     
     func constraintsTitleAppLabel() {
         appLabel.snp.makeConstraints {(make) -> Void in
-            make.width.equalTo(300)
-            make.height.equalTo(70)
+            make.width.equalTo(AuthorizationViewConstants.boardViewSide)
+            make.height.equalTo(AuthorizationViewConstants.titleAppLabelHeight)
             make.centerY.equalTo(self.snp.centerY)
             make.centerX.equalTo(self.snp.centerX)
         }
@@ -72,8 +80,8 @@ class AuthorizationView: UIView{
     
     func constraintsLoginTextField() {
         loginTextField.snp.makeConstraints {(make) -> Void in
-            make.width.equalTo(220)
-            make.height.equalTo(100)
+            make.width.equalTo(AuthorizationViewConstants.loginTextFieldWidth)
+            make.height.equalTo(AuthorizationViewConstants.loginTextFieldHeight)
             make.bottom.equalTo(self.snp.centerY).offset(10)
             make.centerX.equalTo(self.snp.centerX)
         }
@@ -92,3 +100,25 @@ class AuthorizationView: UIView{
         constraintsLoginTextField()
     }
 }
+
+//MARK: ANIMATION EXTENSION
+extension AuthorizationView {
+    func showInputBoard(){
+        UIView.animate(withDuration: 0.3, animations: {[weak self] in
+            guard let self = self else{return}
+            self.appLabel.transform.ty = -113
+        }, completion: { [weak self] _ in
+            guard let self = self else{return}
+            UIView.animate(withDuration: 0.5,animations: {[weak self] in
+                guard let self = self else{return}
+                self.boardView.alpha = 1
+                self.loginTextField.showInputField()
+            },completion: {[weak self] _ in
+                guard let self = self else{return}
+                self.appLabel.showSmoke()
+            })
+        })
+    }
+}
+
+

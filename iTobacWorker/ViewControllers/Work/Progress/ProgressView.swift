@@ -19,6 +19,7 @@ enum ProgressViewString: String {
 }
 
 //MARK: CONSTANTS
+
 enum ProgressViewConstants {
     static let graphButtonDiameter: CGFloat = 35
     static let graphButtonCircleRadius: CGFloat = 42
@@ -257,5 +258,68 @@ class ProgressView: UIView {
         shapeLayer.fillColor = #colorLiteral(red: 0.1582991481, green: 0.1590825021, blue: 0.1307061911, alpha: 1).cgColor
         shapeLayer.name =  ProgressViewString.graphButtonCircleLayerName.rawValue
         callback(shapeLayer)
+    }
+}
+
+//MARK: ANIMATION EXTENSION
+
+extension ProgressView {
+    func showMoneyGraphs(_ setup: [GraphSetup]){
+        self.moneyGraphButton.alpha = 0
+        self.moneyGraphButton.isUserInteractionEnabled = false
+        self.cigaretteGraphView.layer.sublayers?.forEach {
+            if ($0.name == ProgressViewString.graphButtonCircleLayerName.rawValue){
+                $0.removeFromSuperlayer()
+            }
+        }
+        self.drawGraphButtonArc(center: CGPoint(x: self.cigaretteGraphView.bounds.width - 15, y: self.cigaretteGraphView.bounds.height / 2), start: 270 * .pi / 180,end: 90 * .pi / 180) {shapeLayer in
+            self.moneyGraphView.layer.insertSublayer(shapeLayer, at: 1)
+        }
+        
+        UIView.transition(
+            from: self.cigaretteGraphView,
+            to: self.moneyGraphView,
+            duration: 1,
+            options: [.transitionFlipFromRight, .showHideTransitionViews],
+            completion: {[weak self] _ in
+                guard let self = self else {return}
+                self.moneyGraphView.showGraphs(setup)
+                UIView.animate(withDuration: 0.3){[weak self] in
+                    guard let self = self else {return}
+                    self.cigaretteGraphButton.alpha = 0.7
+                    self.cigaretteGraphButton.isUserInteractionEnabled = true
+                }
+            }
+        )
+    }
+    
+    func showCigaretteGraphs(_ setup: [GraphSetup]){
+        self.cigaretteGraphButton.alpha = 0
+        self.cigaretteGraphButton.isUserInteractionEnabled = false
+        self.moneyGraphView.layer.sublayers?.forEach {
+            if ($0.name == ProgressViewString.graphButtonCircleLayerName.rawValue){
+                $0.removeFromSuperlayer()
+            }
+        }
+        self.drawGraphButtonArc(center: CGPoint(x: 15, y: self.cigaretteGraphView.bounds.height / 2) , start: 90 * .pi / 180, end: 270 * .pi / 180) {shapeLayer in
+            self.cigaretteGraphView.layer.insertSublayer(shapeLayer, at: 1)
+        }
+        
+        UIView.transition(
+            from: self.moneyGraphView,
+            to: self.cigaretteGraphView,
+            duration: 1,
+            options: [.transitionFlipFromLeft, .showHideTransitionViews],
+            completion: {[weak self] _ in
+                guard let self = self else {return}
+                self.cigaretteGraphView.showGraphs(setup)
+                UIView.animate(withDuration: 0.3){[weak self] in
+                    guard let self = self else {return}
+                    self.moneyGraphButton.alpha = 0.7
+                    self.moneyGraphButton.isUserInteractionEnabled = true
+                }
+                
+            }
+        )
     }
 }

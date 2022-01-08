@@ -35,8 +35,9 @@ class AuthorizationViewController: UIViewController
     {
         super.viewDidLoad()
         authorizationView = AuthorizationView()
-        authorizationView.appLabel.delegate = self
         self.view = authorizationView
+        
+        authorizationView.appLabel.delegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -49,20 +50,7 @@ class AuthorizationViewController: UIViewController
 
 extension AuthorizationViewController: UIAbbreviationDelegate{
     func animateEnd() {
-        UIView.animate(withDuration: 0.3, animations: {[weak self] in
-            guard let self = self else{return}
-            self.authorizationView.appLabel.transform.ty = -113
-        }, completion: { [weak self] _ in
-            guard let self = self else{return}
-            UIView.animate(withDuration: 0.5,animations: {[weak self] in
-                guard let self = self else{return}
-                self.authorizationView.boardView.alpha = 1
-                self.authorizationView.loginTextField.showInputField()
-            },completion: {[weak self] _ in
-                guard let self = self else{return}
-                self.authorizationView.appLabel.showSmoke()
-            })
-        })
+        authorizationView.showInputBoard()
     }
 }
 

@@ -42,7 +42,7 @@ final class UIGraphView: UIView {
     }
     
     //MARK: showGraphs
-    func showGraphs(_ setups: [GraphSetup], isAnimate: Bool) {
+    func showGraphs(_ setups: [GraphSetup]) {
         if (setups.isEmpty) {return}
         if (!checkGraphsMaxValue(setups)) {return}
     
