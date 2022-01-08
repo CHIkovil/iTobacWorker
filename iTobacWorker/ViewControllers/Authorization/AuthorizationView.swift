@@ -23,15 +23,15 @@ class AuthorizationView: UIView{
     }
 
     //MARK: UI
-//    #colorLiteral(red: 0.1598679423, green: 0.1648836732, blue: 0.1904173791, alpha: 1)
+    
     lazy var boardView:UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = #colorLiteral(red: 0.1220629886, green: 0.1255925298, blue: 0.1454096735, alpha: 1)
         view.alpha = 0
         view.layer.cornerRadius = 25
-        view.layer.borderWidth = 5
-        view.layer.borderColor = #colorLiteral(red: 0.1395464242, green: 0.1398070455, blue: 0.1519106925, alpha: 1)
+        view.layer.borderWidth = 4
+        view.layer.borderColor = #colorLiteral(red: 0.08958115429, green: 0.08975156397, blue: 0.09752175957, alpha: 1)
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowOpacity = 1
         view.layer.shadowOffset = .zero
@@ -39,14 +39,14 @@ class AuthorizationView: UIView{
         return view
     }()
     
-    lazy var appLabel: AbbreviationLabel = {
-        let label = AbbreviationLabel()
+    lazy var appLabel: UIAbbreviationLabel = {
+        let label = UIAbbreviationLabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
         
-    lazy var loginTextField: WakeUpTextField = {
-        let textField = WakeUpTextField()
+    lazy var loginTextField: UIWakeUpTextField = {
+        let textField = UIWakeUpTextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()

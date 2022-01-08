@@ -14,7 +14,7 @@ private enum WorkTabBarControllerString: String {
 
 class WorkTabBarController: UITabBarController {
     
-    var workTabBar: WorkTabBar!
+    var workTabBar: UIWorkTabBar!
     
     // MARK: View lifecycle
     
@@ -37,7 +37,7 @@ class WorkTabBarController: UITabBarController {
     
     func makeUI(){
         
-        let tabBar = WorkTabBar()
+        let tabBar = UIWorkTabBar()
         self.workTabBar = tabBar
         self.setValue(tabBar, forKey: WorkTabBarControllerString.valueKey.rawValue)
         

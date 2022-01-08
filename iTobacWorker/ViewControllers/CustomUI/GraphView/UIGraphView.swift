@@ -1,5 +1,5 @@
 //
-//  GraphView.swift
+//  UIGraphView.swift
 //  iTobacWorker
 //
 //  Created by Nikolas on 27.12.2021.
@@ -10,14 +10,14 @@ import UIKit
 
 //MARK: STRING
 
-private enum GraphViewString: String{
+private enum UIGraphViewString: String{
     case markupLayerName = "markup"
     case pointAnimationKey = "transform.scale"
 }
 
 //MARK: CONSTANTS
 
-private enum GraphViewConstants {
+private enum UIGraphViewConstants {
     static let margin: CGFloat = 20.0
     static let topBorder: CGFloat = 45
     static let bottomBorder: CGFloat = 35
@@ -26,7 +26,7 @@ private enum GraphViewConstants {
     static let defTextSize: CGFloat = 15
 }
 
-final class GraphView: UIView {
+final class UIGraphView: UIView {
     
     override func draw(_ rect: CGRect) {
         makeUI()
@@ -60,8 +60,8 @@ final class GraphView: UIView {
     
     //MARK: UI
     private lazy var minValueLabel: UILabel = {
-        let label = UILabel(frame: CGRect(x: viewWidth - GraphViewConstants.margin + 2, y: viewHeight - GraphViewConstants.bottomBorder - viewHeight * 0.05, width: viewHeight * 0.1, height: viewHeight * 0.1))
-        label.font = UIFont(name: GlobalString.fontName.rawValue, size: GraphViewConstants.defTextSize)
+        let label = UILabel(frame: CGRect(x: viewWidth - UIGraphViewConstants.margin + 2, y: viewHeight - UIGraphViewConstants.bottomBorder - viewHeight * 0.05, width: viewHeight * 0.1, height: viewHeight * 0.1))
+        label.font = UIFont(name: GlobalString.fontName.rawValue, size: UIGraphViewConstants.defTextSize)
         label.backgroundColor = .clear
         label.textColor = .lightGray
         label.text = "\(0)"
@@ -69,21 +69,21 @@ final class GraphView: UIView {
     }()
     
     private lazy var maxValueLabel: UILabel = {
-        let label = UILabel(frame: CGRect(x: viewWidth - GraphViewConstants.margin + 2, y: GraphViewConstants.topBorder - viewHeight * 0.05, width: viewHeight * 0.1, height: viewHeight * 0.1))
-        label.font = UIFont(name: GlobalString.fontName.rawValue, size: GraphViewConstants.defTextSize)
+        let label = UILabel(frame: CGRect(x: viewWidth - UIGraphViewConstants.margin + 2, y: UIGraphViewConstants.topBorder - viewHeight * 0.05, width: viewHeight * 0.1, height: viewHeight * 0.1))
+        label.font = UIFont(name: GlobalString.fontName.rawValue, size: UIGraphViewConstants.defTextSize)
         label.backgroundColor = .clear
         label.textColor = .lightGray
         return label
     }()
     
     private lazy var weekStackView: UIStackView = {
-        let view = UIStackView(frame: CGRect(x: GraphViewConstants.margin, y: viewHeight - GraphViewConstants.bottomBorder, width: viewWidth - 2 * GraphViewConstants.margin, height: viewHeight * 0.1))
+        let view = UIStackView(frame: CGRect(x: UIGraphViewConstants.margin, y: viewHeight - UIGraphViewConstants.bottomBorder, width: viewWidth - 2 * UIGraphViewConstants.margin, height: viewHeight * 0.1))
         view.backgroundColor = .clear
         return view
     }()
     
     private lazy var annotationStackView: UIStackView = {
-        let view = UIStackView(frame: CGRect(x: GraphViewConstants.margin, y: GraphViewConstants.topBorder - viewHeight * 0.1 - 10, width: viewWidth - 2 * GraphViewConstants.margin, height: viewHeight * 0.1))
+        let view = UIStackView(frame: CGRect(x: UIGraphViewConstants.margin, y: UIGraphViewConstants.topBorder - viewHeight * 0.1 - 10, width: viewWidth - 2 * UIGraphViewConstants.margin, height: viewHeight * 0.1))
         view.backgroundColor = .clear
         return view
     }()
@@ -137,11 +137,10 @@ final class GraphView: UIView {
     
     private func getGraphAnnotation(_ setup: GraphSetup, callback: @escaping(UILabel) -> Void) {
         let label = UILabel()
-        let width = (self.viewWidth - 2 * GraphViewConstants.margin) / 2
-        label.translatesAutoresizingMaskIntoConstraints = false
+        let width = (self.viewWidth - 2 * UIGraphViewConstants.margin) / 2
         label.safeAreaLayoutGuide.widthAnchor.constraint(equalToConstant: width).isActive = true
         label.textAlignment = .center
-        label.font = UIFont(name: GlobalString.fontName.rawValue, size: GraphViewConstants.defTextSize - 2)
+        label.font = UIFont(name: GlobalString.fontName.rawValue, size: UIGraphViewConstants.defTextSize - 2)
         label.textColor = .lightGray
         label.text = setup.annotation
         
@@ -155,7 +154,7 @@ final class GraphView: UIView {
     
     private func showMarkup(){
         self.layer.sublayers?.forEach {
-            if ($0.name == GraphViewString.markupLayerName.rawValue){
+            if ($0.name == UIGraphViewString.markupLayerName.rawValue){
                 $0.removeFromSuperlayer()
             }
         }
@@ -179,9 +178,9 @@ final class GraphView: UIView {
         for weekday in weekdays {
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
-            label.safeAreaLayoutGuide.widthAnchor.constraint(equalToConstant: (viewWidth - 2 * GraphViewConstants.margin) / 7).isActive = true
+            label.safeAreaLayoutGuide.widthAnchor.constraint(equalToConstant: (viewWidth - 2 * UIGraphViewConstants.margin) / 7).isActive = true
             label.textAlignment = .center
-            label.font = UIFont(name: GlobalString.fontName.rawValue, size: GraphViewConstants.defTextSize - 2)
+            label.font = UIFont(name: GlobalString.fontName.rawValue, size: UIGraphViewConstants.defTextSize - 2)
             label.textColor = .lightGray
             label.text = weekday
             weekStackView.addArrangedSubview(label)
@@ -246,7 +245,7 @@ final class GraphView: UIView {
     }
 
     private func calculateX(_ column: Int,_ setup: GraphSetup?) -> CGFloat{
-        let margin = GraphViewConstants.margin
+        let margin = UIGraphViewConstants.margin
         let graphWidth = (setup?.viewSetup?.width ?? self.viewWidth) - margin * 2 - 10
         let spacing = graphWidth / CGFloat(6)
         
@@ -254,8 +253,8 @@ final class GraphView: UIView {
     }
     
     private func calculateY(_ graphPoint: Int, _ setup: GraphSetup) -> CGFloat {
-        let topBorder = GraphViewConstants.topBorder
-        let bottomBorder = GraphViewConstants.bottomBorder
+        let topBorder = UIGraphViewConstants.topBorder
+        let bottomBorder = UIGraphViewConstants.bottomBorder
         let graphHeight = setup.viewSetup!.height - topBorder - bottomBorder
         
         let yPoint =  CGFloat(graphPoint) / CGFloat(setup.viewSetup!.graphMaxValue) * graphHeight
@@ -268,22 +267,22 @@ final class GraphView: UIView {
     private func drawHorizontalMarkup(callback: @escaping(CAShapeLayer) -> Void) {
         let linePath = UIBezierPath()
         
-        linePath.move(to: CGPoint(x:GraphViewConstants.margin, y: GraphViewConstants.topBorder))
-        linePath.addLine(to: CGPoint(x: viewWidth - GraphViewConstants.margin, y: GraphViewConstants.topBorder))
+        linePath.move(to: CGPoint(x:UIGraphViewConstants.margin, y: UIGraphViewConstants.topBorder))
+        linePath.addLine(to: CGPoint(x: viewWidth - UIGraphViewConstants.margin, y: UIGraphViewConstants.topBorder))
         
-        linePath.move(to: CGPoint(x: GraphViewConstants.margin, y: viewHeight / 2))
-        linePath.addLine(to: CGPoint(x: viewWidth - GraphViewConstants.margin, y: viewHeight / 2))
+        linePath.move(to: CGPoint(x: UIGraphViewConstants.margin, y: viewHeight / 2))
+        linePath.addLine(to: CGPoint(x: viewWidth - UIGraphViewConstants.margin, y: viewHeight / 2))
         
-        linePath.move(to: CGPoint(x: GraphViewConstants.margin, y: viewHeight - GraphViewConstants.bottomBorder))
-        linePath.addLine(to: CGPoint(x: viewWidth - GraphViewConstants.margin, y: viewHeight - GraphViewConstants.bottomBorder))
+        linePath.move(to: CGPoint(x: UIGraphViewConstants.margin, y: viewHeight - UIGraphViewConstants.bottomBorder))
+        linePath.addLine(to: CGPoint(x: viewWidth - UIGraphViewConstants.margin, y: viewHeight - UIGraphViewConstants.bottomBorder))
         
-        let color = UIColor(white: 1.0, alpha: GraphViewConstants.colorAlpha)
+        let color = UIColor(white: 1.0, alpha: UIGraphViewConstants.colorAlpha)
         
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = linePath.cgPath
         shapeLayer.strokeColor = color.cgColor
         shapeLayer.lineWidth = 2
-        shapeLayer.name = GraphViewString.markupLayerName.rawValue
+        shapeLayer.name = UIGraphViewString.markupLayerName.rawValue
         
         callback(shapeLayer)
     }
@@ -292,17 +291,17 @@ final class GraphView: UIView {
         let linePath = UIBezierPath()
         
         for column in 0...6{
-            linePath.move(to: CGPoint(x: calculateX(column, nil), y: viewHeight - GraphViewConstants.bottomBorder))
-            linePath.addLine(to: CGPoint(x: calculateX(column, nil), y: viewHeight - GraphViewConstants.bottomBorder - 5))
+            linePath.move(to: CGPoint(x: calculateX(column, nil), y: viewHeight - UIGraphViewConstants.bottomBorder))
+            linePath.addLine(to: CGPoint(x: calculateX(column, nil), y: viewHeight - UIGraphViewConstants.bottomBorder - 5))
         }
         
-        let color = UIColor(white: 1.0, alpha: GraphViewConstants.colorAlpha)
+        let color = UIColor(white: 1.0, alpha: UIGraphViewConstants.colorAlpha)
         
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = linePath.cgPath
         shapeLayer.strokeColor = color.cgColor
         shapeLayer.lineWidth = 2
-        shapeLayer.name = GraphViewString.markupLayerName.rawValue
+        shapeLayer.name = UIGraphViewString.markupLayerName.rawValue
         
         callback(shapeLayer)
     }
@@ -319,10 +318,10 @@ final class GraphView: UIView {
             
             linePath.addLine(to: nextPoint)
             
-            nextPoint.x -= GraphViewConstants.circleDiameter / 2
-            nextPoint.y -= GraphViewConstants.circleDiameter / 2
+            nextPoint.x -= UIGraphViewConstants.circleDiameter / 2
+            nextPoint.y -= UIGraphViewConstants.circleDiameter / 2
             
-            let pointPath = UIBezierPath(ovalIn: CGRect(origin: nextPoint, size: CGSize(width: GraphViewConstants.circleDiameter, height: GraphViewConstants.circleDiameter)))
+            let pointPath = UIBezierPath(ovalIn: CGRect(origin: nextPoint, size: CGSize(width: UIGraphViewConstants.circleDiameter, height: UIGraphViewConstants.circleDiameter)))
             let pointLayer = CAShapeLayer()
             pointLayer.path = pointPath.cgPath
             pointLayer.fillColor = setup.color.cgColor
@@ -347,8 +346,8 @@ final class GraphView: UIView {
     private func drawGraphClipping(_ setup: GraphSetup, path: UIBezierPath) -> CAShapeLayer {
         let clippingPath = path.copy() as! UIBezierPath
         
-        clippingPath.addLine(to: CGPoint(x: calculateX(6, setup),y: viewHeight - GraphViewConstants.bottomBorder - 5))
-        clippingPath.addLine(to: CGPoint(x: calculateX(0, setup), y: viewHeight - GraphViewConstants.bottomBorder - 5))
+        clippingPath.addLine(to: CGPoint(x: calculateX(6, setup),y: viewHeight - UIGraphViewConstants.bottomBorder - 5))
+        clippingPath.addLine(to: CGPoint(x: calculateX(0, setup), y: viewHeight - UIGraphViewConstants.bottomBorder - 5))
         
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = clippingPath.cgPath
@@ -379,11 +378,11 @@ final class GraphView: UIView {
 
 private extension CALayer {
     func addStickAnimation(duration: CGFloat){
-        let animation = CABasicAnimation(keyPath: GraphViewString.pointAnimationKey.rawValue)
+        let animation = CABasicAnimation(keyPath: UIGraphViewString.pointAnimationKey.rawValue)
         animation.fromValue = 0
         animation.toValue = 1
         animation.duration = duration
-        self.add(animation, forKey: GraphViewString.pointAnimationKey.rawValue)
+        self.add(animation, forKey: UIGraphViewString.pointAnimationKey.rawValue)
     }
 }
 

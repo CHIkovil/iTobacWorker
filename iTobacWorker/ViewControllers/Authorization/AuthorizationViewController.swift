@@ -47,7 +47,7 @@ class AuthorizationViewController: UIViewController
 
 //MARK: DELEGATE EXTENSION
 
-extension AuthorizationViewController: AbbreviationDelegate{
+extension AuthorizationViewController: UIAbbreviationDelegate{
     func animateEnd() {
         UIView.animate(withDuration: 0.3, animations: {[weak self] in
             guard let self = self else{return}

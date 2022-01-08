@@ -1,5 +1,5 @@
 //
-//  WakeUpTextField.swift
+//  UIWakeUpTextField.swift
 //  iTobacWorker
 //
 //  Created by Nikolas on 14.11.2021.
@@ -11,19 +11,19 @@ import SnapKit
 
 //MARK: STRING
 
-private enum WakeUpTextFieldString: String {
+private enum UIWakeUpTextFieldString: String {
     case titleLabelText = "Email or Username"
     case lineLayerName = "line"
 }
 
 //MARK: CONSTANTS
 
-private enum WakeUpTextFieldConstants{
+private enum UIWakeUpTextFieldConstants{
     static let defTextSize: CGFloat = 13.5
     static let lineWidth: CGFloat = 2
 }
 
-final class WakeUpTextField: UIView {
+final class UIWakeUpTextField: UIView {
     
     override func draw(_ rect: CGRect) {
         makeUI()
@@ -49,9 +49,9 @@ final class WakeUpTextField: UIView {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: GlobalString.fontName.rawValue, size: WakeUpTextFieldConstants.defTextSize)
+        label.font = UIFont(name: GlobalString.fontName.rawValue, size: UIWakeUpTextFieldConstants.defTextSize)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = WakeUpTextFieldString.titleLabelText.rawValue
+        label.text = UIWakeUpTextFieldString.titleLabelText.rawValue
         label.textAlignment = .center
         label.textColor = .gray
         label.backgroundColor = .clear
@@ -60,7 +60,7 @@ final class WakeUpTextField: UIView {
     
     private lazy var textField: UITextField = {
         let textField = UITextField()
-        textField.font = UIFont(name: GlobalString.fontName.rawValue, size: WakeUpTextFieldConstants.defTextSize + 1.5)
+        textField.font = UIFont(name: GlobalString.fontName.rawValue, size: UIWakeUpTextFieldConstants.defTextSize + 1.5)
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = #colorLiteral(red: 0.9386559129, green: 0.9388130307, blue: 0.9386352301, alpha: 1)
         textField.textColor = .black
@@ -106,7 +106,7 @@ final class WakeUpTextField: UIView {
     
     private func showLine(){
         self.layer.sublayers?.forEach {
-            if ($0.name == WakeUpTextFieldString.lineLayerName.rawValue){
+            if ($0.name == UIWakeUpTextFieldString.lineLayerName.rawValue){
                 $0.removeFromSuperlayer()
             }
         }
@@ -124,9 +124,9 @@ final class WakeUpTextField: UIView {
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = path.cgPath
         shapeLayer.strokeColor = color.cgColor
-        shapeLayer.lineWidth = WakeUpTextFieldConstants.lineWidth
+        shapeLayer.lineWidth = UIWakeUpTextFieldConstants.lineWidth
         shapeLayer.lineCap = .round
-        shapeLayer.name = WakeUpTextFieldString.lineLayerName.rawValue
+        shapeLayer.name = UIWakeUpTextFieldString.lineLayerName.rawValue
         
         callback(shapeLayer)
     }
@@ -134,7 +134,7 @@ final class WakeUpTextField: UIView {
 
 //MARK: ANIMATION EXTENSION
 
-private extension WakeUpTextField {
+private extension UIWakeUpTextField {
     func animateInputField(){
         UIView.animate(withDuration: 0.2, animations: {[weak self] in
             guard let self = self else{return}

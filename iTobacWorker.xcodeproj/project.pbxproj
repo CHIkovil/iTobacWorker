@@ -9,9 +9,9 @@
 /* Begin PBXBuildFile section */
 		0D9010154AA88E52BE8E0B6D /* Pods_iTobacWorkerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C68F35F2725DF0D1531F6B32 /* Pods_iTobacWorkerTests.framework */; };
 		17003032275D84CC0093DAC3 /* WorkTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17003031275D84CC0093DAC3 /* WorkTabBarController.swift */; };
-		17003036275D84F70093DAC3 /* WakeUpTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17003033275D84F70093DAC3 /* WakeUpTextField.swift */; };
-		17003037275D84F70093DAC3 /* WorkTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17003034275D84F70093DAC3 /* WorkTabBar.swift */; };
-		17003038275D84F70093DAC3 /* AbbreviationLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17003035275D84F70093DAC3 /* AbbreviationLabel.swift */; };
+		17003036275D84F70093DAC3 /* UIWakeUpTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17003033275D84F70093DAC3 /* UIWakeUpTextField.swift */; };
+		17003037275D84F70093DAC3 /* UIWorkTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17003034275D84F70093DAC3 /* UIWorkTabBar.swift */; };
+		17003038275D84F70093DAC3 /* UIAbbreviationLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17003035275D84F70093DAC3 /* UIAbbreviationLabel.swift */; };
 		17003042275D85AB0093DAC3 /* AuthorizationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1700303B275D85AB0093DAC3 /* AuthorizationPresenter.swift */; };
 		17003043275D85AB0093DAC3 /* AuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1700303C275D85AB0093DAC3 /* AuthorizationViewController.swift */; };
 		17003045275D85AB0093DAC3 /* AuthorizationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1700303E275D85AB0093DAC3 /* AuthorizationView.swift */; };
@@ -21,9 +21,10 @@
 		176E82842779F7FD00B73B0A /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 176E82832779F7FD00B73B0A /* plus.png */; };
 		17AE64A1278791F8003820EC /* cigarettes.png in Resources */ = {isa = PBXBuildFile; fileRef = 17AE64A0278791F8003820EC /* cigarettes.png */; };
 		17AE64A32787BDE4003820EC /* question.png in Resources */ = {isa = PBXBuildFile; fileRef = 17AE64A22787BDE4003820EC /* question.png */; };
-		17ECA681277A183100A1ADD5 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ECA680277A183100A1ADD5 /* GraphView.swift */; };
+		17AE64A5278A2231003820EC /* UINormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17AE64A4278A2231003820EC /* UINormView.swift */; };
+		17ECA681277A183100A1ADD5 /* UIGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ECA680277A183100A1ADD5 /* UIGraphView.swift */; };
 		17ECA684277A1DFB00A1ADD5 /* GlobalString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ECA683277A1DFB00A1ADD5 /* GlobalString.swift */; };
-		17F1D193276698F200C76A01 /* BankPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F1D192276698F200C76A01 /* BankPicker.swift */; };
+		17F1D193276698F200C76A01 /* UIBankPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F1D192276698F200C76A01 /* UIBankPicker.swift */; };
 		17F1D19627669B0300C76A01 /* LayerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F1D19527669B0300C76A01 /* LayerExtension.swift */; };
 		17F90ED9275D8050002D03CD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F90ED8275D8050002D03CD /* AppDelegate.swift */; };
 		17F90EDB275D8050002D03CD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F90EDA275D8050002D03CD /* SceneDelegate.swift */; };
@@ -44,7 +45,7 @@
 		17FB3680276003560046F6E0 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB367F276003560046F6E0 /* ProgressView.swift */; };
 		17FB36822760D9190046F6E0 /* AuthorizationModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB36812760D9190046F6E0 /* AuthorizationModels.swift */; };
 		17FB3684276149760046F6E0 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB3683276149760046F6E0 /* ImagePicker.swift */; };
-		17FB368D27626F3A0046F6E0 /* UserImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB368C27626F3A0046F6E0 /* UserImageView.swift */; };
+		17FB368D27626F3A0046F6E0 /* UIUserImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB368C27626F3A0046F6E0 /* UIUserImageView.swift */; };
 		17FB36922765169D0046F6E0 /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = 17FB36912765169D0046F6E0 /* add.png */; };
 		17FB36952766759D0046F6E0 /* safe-box.png in Resources */ = {isa = PBXBuildFile; fileRef = 17FB36932766759D0046F6E0 /* safe-box.png */; };
 		17FB36962766759D0046F6E0 /* ashtray.png in Resources */ = {isa = PBXBuildFile; fileRef = 17FB36942766759D0046F6E0 /* ashtray.png */; };
@@ -72,9 +73,9 @@
 /* Begin PBXFileReference section */
 		10C7E1F6C4C8C067D68F6016 /* Pods_iTobacWorker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iTobacWorker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		17003031275D84CC0093DAC3 /* WorkTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkTabBarController.swift; sourceTree = "<group>"; };
-		17003033275D84F70093DAC3 /* WakeUpTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WakeUpTextField.swift; sourceTree = "<group>"; };
-		17003034275D84F70093DAC3 /* WorkTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkTabBar.swift; sourceTree = "<group>"; };
-		17003035275D84F70093DAC3 /* AbbreviationLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbbreviationLabel.swift; sourceTree = "<group>"; };
+		17003033275D84F70093DAC3 /* UIWakeUpTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIWakeUpTextField.swift; sourceTree = "<group>"; };
+		17003034275D84F70093DAC3 /* UIWorkTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIWorkTabBar.swift; sourceTree = "<group>"; };
+		17003035275D84F70093DAC3 /* UIAbbreviationLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAbbreviationLabel.swift; sourceTree = "<group>"; };
 		1700303B275D85AB0093DAC3 /* AuthorizationPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationPresenter.swift; sourceTree = "<group>"; };
 		1700303C275D85AB0093DAC3 /* AuthorizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationViewController.swift; sourceTree = "<group>"; };
 		1700303E275D85AB0093DAC3 /* AuthorizationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationView.swift; sourceTree = "<group>"; };
@@ -84,9 +85,10 @@
 		176E82832779F7FD00B73B0A /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
 		17AE64A0278791F8003820EC /* cigarettes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cigarettes.png; sourceTree = "<group>"; };
 		17AE64A22787BDE4003820EC /* question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = question.png; sourceTree = "<group>"; };
-		17ECA680277A183100A1ADD5 /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
+		17AE64A4278A2231003820EC /* UINormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINormView.swift; sourceTree = "<group>"; };
+		17ECA680277A183100A1ADD5 /* UIGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIGraphView.swift; sourceTree = "<group>"; };
 		17ECA683277A1DFB00A1ADD5 /* GlobalString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalString.swift; sourceTree = "<group>"; };
-		17F1D192276698F200C76A01 /* BankPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankPicker.swift; sourceTree = "<group>"; };
+		17F1D192276698F200C76A01 /* UIBankPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBankPicker.swift; sourceTree = "<group>"; };
 		17F1D19527669B0300C76A01 /* LayerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerExtension.swift; sourceTree = "<group>"; };
 		17F90ED5275D8050002D03CD /* iTobacWorker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTobacWorker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17F90ED8275D8050002D03CD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -111,7 +113,7 @@
 		17FB367F276003560046F6E0 /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		17FB36812760D9190046F6E0 /* AuthorizationModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationModels.swift; sourceTree = "<group>"; };
 		17FB3683276149760046F6E0 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
-		17FB368C27626F3A0046F6E0 /* UserImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImageView.swift; sourceTree = "<group>"; };
+		17FB368C27626F3A0046F6E0 /* UIUserImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUserImageView.swift; sourceTree = "<group>"; };
 		17FB36912765169D0046F6E0 /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add.png; sourceTree = "<group>"; };
 		17FB36932766759D0046F6E0 /* safe-box.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "safe-box.png"; sourceTree = "<group>"; };
 		17FB36942766759D0046F6E0 /* ashtray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ashtray.png; sourceTree = "<group>"; };
@@ -178,12 +180,13 @@
 			children = (
 				17ECA682277A1DCE00A1ADD5 /* GlobalString */,
 				17F1D19427669AA100C76A01 /* GlobalExtension */,
-				17FB368C27626F3A0046F6E0 /* UserImageView.swift */,
-				17003035275D84F70093DAC3 /* AbbreviationLabel.swift */,
-				17003033275D84F70093DAC3 /* WakeUpTextField.swift */,
-				17003034275D84F70093DAC3 /* WorkTabBar.swift */,
-				17F1D192276698F200C76A01 /* BankPicker.swift */,
+				17FB368C27626F3A0046F6E0 /* UIUserImageView.swift */,
+				17003035275D84F70093DAC3 /* UIAbbreviationLabel.swift */,
+				17003033275D84F70093DAC3 /* UIWakeUpTextField.swift */,
+				17003034275D84F70093DAC3 /* UIWorkTabBar.swift */,
+				17F1D192276698F200C76A01 /* UIBankPicker.swift */,
 				1711EF3C2780E2330089E07D /* GraphView */,
+				17AE64A4278A2231003820EC /* UINormView.swift */,
 			);
 			path = CustomUI;
 			sourceTree = "<group>";
@@ -202,7 +205,7 @@
 		1711EF3C2780E2330089E07D /* GraphView */ = {
 			isa = PBXGroup;
 			children = (
-				17ECA680277A183100A1ADD5 /* GraphView.swift */,
+				17ECA680277A183100A1ADD5 /* UIGraphView.swift */,
 				1711EF3D2780E2620089E07D /* GraphModel.swift */,
 			);
 			path = GraphView;
@@ -598,17 +601,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17AE64A5278A2231003820EC /* UINormView.swift in Sources */,
 				17F1D19627669B0300C76A01 /* LayerExtension.swift in Sources */,
 				17FB3684276149760046F6E0 /* ImagePicker.swift in Sources */,
-				17ECA681277A183100A1ADD5 /* GraphView.swift in Sources */,
+				17ECA681277A183100A1ADD5 /* UIGraphView.swift in Sources */,
 				17003042275D85AB0093DAC3 /* AuthorizationPresenter.swift in Sources */,
 				17003032275D84CC0093DAC3 /* WorkTabBarController.swift in Sources */,
 				17003045275D85AB0093DAC3 /* AuthorizationView.swift in Sources */,
-				17003038275D84F70093DAC3 /* AbbreviationLabel.swift in Sources */,
+				17003038275D84F70093DAC3 /* UIAbbreviationLabel.swift in Sources */,
 				17F90EE3275D8050002D03CD /* iTobacWorker.xcdatamodeld in Sources */,
-				17003037275D84F70093DAC3 /* WorkTabBar.swift in Sources */,
-				17FB368D27626F3A0046F6E0 /* UserImageView.swift in Sources */,
-				17003036275D84F70093DAC3 /* WakeUpTextField.swift in Sources */,
+				17003037275D84F70093DAC3 /* UIWorkTabBar.swift in Sources */,
+				17FB368D27626F3A0046F6E0 /* UIUserImageView.swift in Sources */,
+				17003036275D84F70093DAC3 /* UIWakeUpTextField.swift in Sources */,
 				17FB3680276003560046F6E0 /* ProgressView.swift in Sources */,
 				1711EF3E2780E2620089E07D /* GraphModel.swift in Sources */,
 				17FB367D275FFFEC0046F6E0 /* ProgressViewController.swift in Sources */,
@@ -617,7 +621,7 @@
 				176E82822775361100B73B0A /* TextFieldExtension.swift in Sources */,
 				17FB36822760D9190046F6E0 /* AuthorizationModels.swift in Sources */,
 				17FB367C275FFFEC0046F6E0 /* ProgressModels.swift in Sources */,
-				17F1D193276698F200C76A01 /* BankPicker.swift in Sources */,
+				17F1D193276698F200C76A01 /* UIBankPicker.swift in Sources */,
 				17FB3679275FFFEC0046F6E0 /* ProgressPresenter.swift in Sources */,
 				17003043275D85AB0093DAC3 /* AuthorizationViewController.swift in Sources */,
 				17F90EDB275D8050002D03CD /* SceneDelegate.swift in Sources */,

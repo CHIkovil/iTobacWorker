@@ -1,5 +1,5 @@
 //
-//  UserImageView.swift
+//  UIUserImageView.swift
 //  iTobacWorker
 //
 //  Created by Nikolas on 09.12.2021.
@@ -10,21 +10,21 @@ import UIKit
 
 //MARK: STRING
 
-private enum UserImageViewString: String {
+private enum UIUserImageViewString: String {
     case defImageName = "question"
     case buttonImageName = "add"
     case frameLayerName = "arcLayer"
     case arcAnimationKey = "transform.rotation"
 }
 
-class UserImageView: UIView {
+class UIUserImageView: UIView {
 
     override func draw(_ rect: CGRect) {
         makeUI()
     }
     
     // MARK: addButtonGestureRecognizer
-    func addButtonGestureRecognizer(gestureRecognizer: UIGestureRecognizer){
+    func addButtonGestureRecognizer(_ gestureRecognizer: UIGestureRecognizer){
         button.addGestureRecognizer(gestureRecognizer)
     }
     
@@ -48,7 +48,7 @@ class UserImageView: UIView {
     
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: UserImageViewString.defImageName.rawValue)
+        imageView.image = UIImage(named: UIUserImageViewString.defImageName.rawValue)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = (viewWidth + viewHeight) * 0.15
         imageView.clipsToBounds = true
@@ -63,7 +63,7 @@ class UserImageView: UIView {
     private lazy var button: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: UserImageViewString.buttonImageName.rawValue), for: .normal)
+        button.setImage(UIImage(named: UIUserImageViewString.buttonImageName.rawValue), for: .normal)
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOpacity = 1
         button.layer.shadowOffset = .zero
@@ -122,14 +122,14 @@ class UserImageView: UIView {
         constraintsImageView()
         constraintsButton()
         
-        self.layer.drawBlockLayer(cornerWidth: 35, color: #colorLiteral(red: 0.1261322796, green: 0.1471925974, blue: 0.2156360745, alpha: 1))
+        self.layer.drawBlockLayer(cornerWidth: 35, color: #colorLiteral(red: 0.1261322796, green: 0.1471925974, blue: 0.2156360745, alpha: 0.7))
         showImageFrame()
     }
     
     // MARK: showImageFrame
     func showImageFrame(){
         self.layer.sublayers?.forEach {
-            if ($0.name == UserImageViewString.frameLayerName.rawValue){
+            if ($0.name == UIUserImageViewString.frameLayerName.rawValue){
                 $0.removeFromSuperlayer()
             }
         }
@@ -157,7 +157,7 @@ class UserImageView: UIView {
         shapeLayer.strokeColor = #colorLiteral(red: 0.7908198833, green: 0.8205971718, blue: 0.8312640786, alpha: 1).cgColor
         shapeLayer.lineWidth = offset
         shapeLayer.fillColor = UIColor.clear.cgColor
-        shapeLayer.name = UserImageViewString.frameLayerName.rawValue
+        shapeLayer.name = UIUserImageViewString.frameLayerName.rawValue
         
         shapeLayer.position = center
         shapeLayer.bounds = bounds
@@ -169,10 +169,10 @@ class UserImageView: UIView {
 
 private extension CALayer {
     func addInfinityRotationAnimation(){
-        let animation = CABasicAnimation(keyPath: UserImageViewString.arcAnimationKey.rawValue)
+        let animation = CABasicAnimation(keyPath: UIUserImageViewString.arcAnimationKey.rawValue)
         animation.byValue = NSNumber(floatLiteral: Double(CGFloat.pi * 2))
         animation.duration = 10
         animation.repeatCount = .infinity
-        self.add(animation, forKey: UserImageViewString.arcAnimationKey.rawValue)
+        self.add(animation, forKey: UIUserImageViewString.arcAnimationKey.rawValue)
     }
 }

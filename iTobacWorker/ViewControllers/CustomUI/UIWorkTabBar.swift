@@ -1,5 +1,5 @@
 //
-//  WorkTabBar.swift
+//  UIWorkTabBar.swift
 //  iTobacWorker
 //
 //  Created by Nikolas on 02.12.2021.
@@ -10,7 +10,7 @@ import UIKit
 
 //MARK: STRING
 
-private enum WorkTabBarString: String {
+private enum UIWorkTabBarString: String {
     case infoImageName = "info"
     case searchImageName = "search"
     case progressImageName = "progress"
@@ -19,13 +19,13 @@ private enum WorkTabBarString: String {
 
 //MARK: CONSTANTS
 
-private enum WorkTabBarConstants{
+private enum UIWorkTabBarConstants{
     static let middleButtonDiameter: CGFloat = 70
     static let otherButtonDiameter: CGFloat = 60
     static let circleRadius: CGFloat = 43
 }
 
-final class WorkTabBar: UITabBar{
+final class UIWorkTabBar: UITabBar{
     
     override func draw(_ rect: CGRect) {
         makeUI()
@@ -64,22 +64,22 @@ final class WorkTabBar: UITabBar{
     lazy var infoButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: WorkTabBarString.infoImageName.rawValue), for: .normal)
+        button.setImage(UIImage(named: UIWorkTabBarString.infoImageName.rawValue), for: .normal)
         button.backgroundColor = #colorLiteral(red: 0.2118592262, green: 0.2122503817, blue: 0.2306241989, alpha: 1)
-        button.layer.cornerRadius = WorkTabBarConstants.otherButtonDiameter / 2
+        button.layer.cornerRadius = UIWorkTabBarConstants.otherButtonDiameter / 2
         button.layer.borderWidth = 3
-        button.layer.borderColor = #colorLiteral(red: 0.1395464242, green: 0.1398070455, blue: 0.1519106925, alpha: 1)
+        button.layer.borderColor = #colorLiteral(red: 0.07416138798, green: 0.07430396229, blue: 0.08073649555, alpha: 1)
         return button
     }()
     
     lazy var searchButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: WorkTabBarString.searchImageName.rawValue), for: .normal)
+        button.setImage(UIImage(named: UIWorkTabBarString.searchImageName.rawValue), for: .normal)
         button.backgroundColor = #colorLiteral(red: 0.2118592262, green: 0.2122503817, blue: 0.2306241989, alpha: 1)
-        button.layer.cornerRadius = WorkTabBarConstants.middleButtonDiameter / 2
+        button.layer.cornerRadius = UIWorkTabBarConstants.middleButtonDiameter / 2
         button.layer.borderWidth = 4
-        button.layer.borderColor = #colorLiteral(red: 0.1395464242, green: 0.1398070455, blue: 0.1519106925, alpha: 1)
+        button.layer.borderColor = #colorLiteral(red: 0.07416138798, green: 0.07430396229, blue: 0.08073649555, alpha: 1)
         return button
     }()
     
@@ -87,11 +87,11 @@ final class WorkTabBar: UITabBar{
     lazy var progressButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: WorkTabBarString.progressImageName.rawValue), for: .normal)
+        button.setImage(UIImage(named: UIWorkTabBarString.progressImageName.rawValue), for: .normal)
         button.backgroundColor = #colorLiteral(red: 0.2118592262, green: 0.2122503817, blue: 0.2306241989, alpha: 1)
-        button.layer.cornerRadius = WorkTabBarConstants.otherButtonDiameter / 2
+        button.layer.cornerRadius = UIWorkTabBarConstants.otherButtonDiameter / 2
         button.layer.borderWidth = 3
-        button.layer.borderColor = #colorLiteral(red: 0.1395464242, green: 0.1398070455, blue: 0.1519106925, alpha: 1)
+        button.layer.borderColor = #colorLiteral(red: 0.07416138798, green: 0.07430396229, blue: 0.08073649555, alpha: 1)
         return button
     }()
     
@@ -104,8 +104,8 @@ final class WorkTabBar: UITabBar{
     
     private func constraintsInfoButton(){
         infoButton.snp.makeConstraints {(make) -> Void in
-            make.width.equalTo(WorkTabBarConstants.otherButtonDiameter)
-            make.height.equalTo(WorkTabBarConstants.otherButtonDiameter)
+            make.width.equalTo(UIWorkTabBarConstants.otherButtonDiameter)
+            make.height.equalTo(UIWorkTabBarConstants.otherButtonDiameter)
             make.centerX.equalTo(buttonStep)
             make.centerY.equalTo(tabBarHeight / 2)
         }
@@ -113,8 +113,8 @@ final class WorkTabBar: UITabBar{
     
     private func constraintsSearchButton(){
         searchButton.snp.makeConstraints {(make) -> Void in
-            make.width.equalTo(WorkTabBarConstants.middleButtonDiameter)
-            make.height.equalTo(WorkTabBarConstants.middleButtonDiameter)
+            make.width.equalTo(UIWorkTabBarConstants.middleButtonDiameter)
+            make.height.equalTo(UIWorkTabBarConstants.middleButtonDiameter)
             make.centerX.equalTo(buttonStep * 2)
             make.centerY.equalTo(tabBarHeight / 2).offset(20)
         }
@@ -122,8 +122,8 @@ final class WorkTabBar: UITabBar{
     
     private func constraintsProgressButton(){
         progressButton.snp.makeConstraints {(make) -> Void in
-            make.width.equalTo(WorkTabBarConstants.otherButtonDiameter)
-            make.height.equalTo(WorkTabBarConstants.otherButtonDiameter)
+            make.width.equalTo(UIWorkTabBarConstants.otherButtonDiameter)
+            make.height.equalTo(UIWorkTabBarConstants.otherButtonDiameter)
             make.centerX.equalTo(buttonStep * 3)
             make.centerY.equalTo(tabBarHeight / 2)
         }
@@ -144,7 +144,7 @@ final class WorkTabBar: UITabBar{
     }
     
     private func showFrame(){
-        if let layers = self.layer.sublayers?.filter({$0.name == WorkTabBarString.frameLayerName.rawValue}) {
+        if let layers = self.layer.sublayers?.filter({$0.name == UIWorkTabBarString.frameLayerName.rawValue}) {
             if (!layers.isEmpty){
                 return
             }
@@ -172,22 +172,22 @@ final class WorkTabBar: UITabBar{
             cornerRadii: CGSize(width: 35, height: 0.0))
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = path.cgPath
-        shapeLayer.fillColor = #colorLiteral(red: 0.1598679423, green: 0.1648836732, blue: 0.1904173791, alpha: 1).cgColor
-        shapeLayer.name =  WorkTabBarString.frameLayerName.rawValue
+        shapeLayer.fillColor = #colorLiteral(red: 0.1598679423, green: 0.1648836732, blue: 0.1904173791, alpha: 1).withAlphaComponent(0.87).cgColor
+        shapeLayer.name =  UIWorkTabBarString.frameLayerName.rawValue
         callback(shapeLayer)
     }
     
     private func drawCircleLayer(callback: @escaping(CAShapeLayer) -> Void) {
         let path = UIBezierPath()
         path.addArc(withCenter: CGPoint(x: buttonStep * 2, y: 20),
-                    radius: WorkTabBarConstants.circleRadius,
-                    startAngle: 180 * .pi / 180,
-                    endAngle: 0,
+                    radius: UIWorkTabBarConstants.circleRadius,
+                    startAngle: 207 * .pi / 180,
+                    endAngle: -27 * .pi / 180,
                     clockwise: true)
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = path.cgPath
-        shapeLayer.fillColor = #colorLiteral(red: 0.1598679423, green: 0.1648836732, blue: 0.1904173791, alpha: 1).cgColor
-        shapeLayer.name =  WorkTabBarString.frameLayerName.rawValue
+        shapeLayer.fillColor = #colorLiteral(red: 0.1598679423, green: 0.1648836732, blue: 0.1904173791, alpha: 1).withAlphaComponent(0.87).cgColor
+        shapeLayer.name =  UIWorkTabBarString.frameLayerName.rawValue
         callback(shapeLayer)
     }
     
