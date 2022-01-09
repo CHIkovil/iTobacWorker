@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+// MARK: STRING
+
 private enum WorkTabBarControllerString: String {
     case valueKey = "tabBar"
 }

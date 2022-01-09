@@ -11,7 +11,7 @@ import SnapKit
 
 //MARK: CONSTANTS
 
-enum AuthorizationViewConstants {
+private enum AuthorizationViewConstants {
     static let boardViewSide: CGFloat = 300
     static let titleAppLabelHeight: CGFloat = 70
     static let loginTextFieldWidth: CGFloat = 220
