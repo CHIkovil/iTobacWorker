@@ -39,8 +39,6 @@ final class UIBankPicker: UIView{
     
     //MARK: UI
     
-    
-    
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false

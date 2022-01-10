@@ -21,7 +21,6 @@
 		176E82842779F7FD00B73B0A /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 176E82832779F7FD00B73B0A /* plus.png */; };
 		17AE64A1278791F8003820EC /* cigarettes.png in Resources */ = {isa = PBXBuildFile; fileRef = 17AE64A0278791F8003820EC /* cigarettes.png */; };
 		17AE64A32787BDE4003820EC /* question.png in Resources */ = {isa = PBXBuildFile; fileRef = 17AE64A22787BDE4003820EC /* question.png */; };
-		17AE64A5278A2231003820EC /* UINormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17AE64A4278A2231003820EC /* UINormView.swift */; };
 		17ECA681277A183100A1ADD5 /* UIGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ECA680277A183100A1ADD5 /* UIGraphView.swift */; };
 		17ECA684277A1DFB00A1ADD5 /* GlobalString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ECA683277A1DFB00A1ADD5 /* GlobalString.swift */; };
 		17F1D193276698F200C76A01 /* UIBankPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F1D192276698F200C76A01 /* UIBankPicker.swift */; };
@@ -85,7 +84,6 @@
 		176E82832779F7FD00B73B0A /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
 		17AE64A0278791F8003820EC /* cigarettes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cigarettes.png; sourceTree = "<group>"; };
 		17AE64A22787BDE4003820EC /* question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = question.png; sourceTree = "<group>"; };
-		17AE64A4278A2231003820EC /* UINormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINormView.swift; sourceTree = "<group>"; };
 		17ECA680277A183100A1ADD5 /* UIGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIGraphView.swift; sourceTree = "<group>"; };
 		17ECA683277A1DFB00A1ADD5 /* GlobalString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalString.swift; sourceTree = "<group>"; };
 		17F1D192276698F200C76A01 /* UIBankPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBankPicker.swift; sourceTree = "<group>"; };
@@ -186,7 +184,6 @@
 				17003034275D84F70093DAC3 /* UIWorkTabBar.swift */,
 				17F1D192276698F200C76A01 /* UIBankPicker.swift */,
 				1711EF3C2780E2330089E07D /* GraphView */,
-				17AE64A4278A2231003820EC /* UINormView.swift */,
 			);
 			path = CustomUI;
 			sourceTree = "<group>";
@@ -601,7 +598,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				17AE64A5278A2231003820EC /* UINormView.swift in Sources */,
 				17F1D19627669B0300C76A01 /* LayerExtension.swift in Sources */,
 				17FB3684276149760046F6E0 /* ImagePicker.swift in Sources */,
 				17ECA681277A183100A1ADD5 /* UIGraphView.swift in Sources */,

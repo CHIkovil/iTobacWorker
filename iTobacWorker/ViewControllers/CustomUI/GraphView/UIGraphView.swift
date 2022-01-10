@@ -18,7 +18,7 @@ private enum UIGraphViewString: String{
 //MARK: CONSTANTS
 
 private enum UIGraphViewConstants {
-    static let margin: CGFloat = 20.0
+    static let margin: CGFloat = 15.0
     static let topBorder: CGFloat = 45
     static let bottomBorder: CGFloat = 35
     static let colorAlpha: CGFloat = 0.3
@@ -102,6 +102,41 @@ final class UIGraphView: UIView {
         showMarkup()
     }
     
+    private func showMarkup(){
+        self.layer.sublayers?.forEach {
+            if ($0.name == UIGraphViewString.markupLayerName.rawValue){
+                $0.removeFromSuperlayer()
+            }
+        }
+        
+        drawHorizontalMarkup { markup in
+            self.layer.addSublayer(markup)
+        }
+     
+        drawVerticalMarkup{ markup in
+            self.layer.addSublayer(markup)
+        }
+       
+    }
+    
+    private func showWeekdays(){
+        if (!self.weekStackView.arrangedSubviews.isEmpty){return}
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US")
+        let weekdays = dateFormatter.shortWeekdaySymbols.shift()
+        for weekday in weekdays {
+            let label = UILabel()
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.safeAreaLayoutGuide.widthAnchor.constraint(equalToConstant: (viewWidth - 2 * UIGraphViewConstants.margin) / 7).isActive = true
+            label.textAlignment = .center
+            label.font = UIFont(name: GlobalString.fontName.rawValue, size: UIGraphViewConstants.defTextSize - 2)
+            label.textColor = .lightGray
+            label.text = weekday
+            weekStackView.addArrangedSubview(label)
+        }
+    }
+    
     private func addGraph(_ setup: GraphSetup){
         var graph: Graph!
         var finalSetup = setup
@@ -150,41 +185,6 @@ final class UIGraphView: UIView {
         }
         
         callback(label)
-    }
-    
-    private func showMarkup(){
-        self.layer.sublayers?.forEach {
-            if ($0.name == UIGraphViewString.markupLayerName.rawValue){
-                $0.removeFromSuperlayer()
-            }
-        }
-        
-        drawHorizontalMarkup { markup in
-            self.layer.addSublayer(markup)
-        }
-     
-        drawVerticalMarkup{ markup in
-            self.layer.addSublayer(markup)
-        }
-       
-    }
-    
-    private func showWeekdays(){
-        if (!self.weekStackView.arrangedSubviews.isEmpty){return}
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US")
-        let weekdays = dateFormatter.shortWeekdaySymbols.shift()
-        for weekday in weekdays {
-            let label = UILabel()
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.safeAreaLayoutGuide.widthAnchor.constraint(equalToConstant: (viewWidth - 2 * UIGraphViewConstants.margin) / 7).isActive = true
-            label.textAlignment = .center
-            label.font = UIFont(name: GlobalString.fontName.rawValue, size: UIGraphViewConstants.defTextSize - 2)
-            label.textColor = .lightGray
-            label.text = weekday
-            weekStackView.addArrangedSubview(label)
-        }
     }
     
     private func checkGraphsMaxValue(_ setups: [GraphSetup]) -> Bool {

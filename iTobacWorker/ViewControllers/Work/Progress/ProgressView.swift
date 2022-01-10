@@ -28,12 +28,11 @@ private enum ProgressViewString: String {
 
 private enum ProgressViewConstants {
     static let graphButtonDiameter: CGFloat = 35
-    static let graphButtonCircleRadius: CGFloat = 42
-    static let graphViewWidth: CGFloat = 260
+    static let graphButtonArcRadius: CGFloat = 42
+    static let graphViewWidth: CGFloat = 255
     static let graphViewHeight: CGFloat = 250
     static let bankPickerSide: CGFloat = 150
     static let userImageViewSide: CGFloat = 240
-    static let normViewSide: CGFloat = 280
 }
 
 class ProgressView: UIView {
@@ -54,7 +53,7 @@ class ProgressView: UIView {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.showsVerticalScrollIndicator = false
         scrollView.bounces = false
-        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height+300)
+        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height + 100)
         return scrollView
     }()
     
@@ -125,12 +124,6 @@ class ProgressView: UIView {
         return button
     }()
     
-    lazy var normView: UINormView = {
-        let view = UINormView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     //MARK: CONSTRAINTS
     
     func constraintsScrollView() {
@@ -144,7 +137,7 @@ class ProgressView: UIView {
     
     func constraintsUserImageView() {
         userImageView.snp.makeConstraints {(make) -> Void in
-            make.top.equalTo(scrollView.snp.top).offset(50)
+            make.top.equalTo(scrollView.snp.top).offset(20)
             make.centerX.equalTo(scrollView.snp.centerX)
             make.height.equalTo(ProgressViewConstants.userImageViewSide)
             make.width.equalTo(ProgressViewConstants.userImageViewSide)
@@ -174,7 +167,7 @@ class ProgressView: UIView {
             make.centerX.equalTo(scrollView.snp.centerX)
             make.top.equalTo(moneyBankPicker.snp.bottom).offset(15)
             make.height.equalTo(ProgressViewConstants.graphViewHeight)
-            make.width.equalTo(ProgressViewConstants.graphViewWidth + 70)
+            make.width.equalTo(ProgressViewConstants.graphViewWidth + 90)
         }
     }
     
@@ -198,7 +191,7 @@ class ProgressView: UIView {
     
     func constraintsMoneyGraphButton() {
         moneyGraphButton.snp.makeConstraints {(make) -> Void in
-            make.centerX.equalTo(cigaretteGraphView.snp.leading)
+            make.centerX.equalTo(cigaretteGraphView.snp.leading).offset(-10)
             make.centerY.equalTo(moneyGraphView.snp.centerY)
             make.height.equalTo(ProgressViewConstants.graphButtonDiameter )
             make.width.equalTo(ProgressViewConstants.graphButtonDiameter)
@@ -207,19 +200,10 @@ class ProgressView: UIView {
     
     func constraintsCigaretteGraphButton() {
         cigaretteGraphButton.snp.makeConstraints {(make) -> Void in
-            make.centerX.equalTo(moneyGraphView.snp.trailing)
+            make.centerX.equalTo(moneyGraphView.snp.trailing).offset(10)
             make.centerY.equalTo(cigaretteGraphView.snp.centerY)
             make.height.equalTo(ProgressViewConstants.graphButtonDiameter)
             make.width.equalTo(ProgressViewConstants.graphButtonDiameter)
-        }
-    }
-    
-    func constraintsNormView() {
-        normView.snp.makeConstraints {(make) -> Void in
-            make.centerX.equalTo(scrollView.snp.centerX)
-            make.top.equalTo(graphBackgroundView.snp.bottom).offset(15)
-            make.height.equalTo(ProgressViewConstants.normViewSide)
-            make.width.equalTo(ProgressViewConstants.normViewSide)
         }
     }
     
@@ -237,7 +221,6 @@ class ProgressView: UIView {
         graphBackgroundView.addSubview(moneyGraphButton)
         graphBackgroundView.addSubview(cigaretteGraphButton)
         scrollView.addSubview(graphBackgroundView)
-        scrollView.addSubview(normView)
         self.addSubview(scrollView)
         
         constraintsScrollView()
@@ -249,13 +232,12 @@ class ProgressView: UIView {
         constraintsCigaretteGraphView()
         constraintsMoneyGraphButton()
         constraintsCigaretteGraphButton()
-        constraintsNormView()
     }
     
     func drawGraphButtonArc(center: CGPoint,start: CGFloat, end: CGFloat, callback: @escaping(CAShapeLayer) -> Void){
         let path = UIBezierPath()
         path.addArc(withCenter: center,
-                    radius: ProgressViewConstants.graphButtonCircleRadius,
+                    radius: ProgressViewConstants.graphButtonArcRadius,
                     startAngle: start,
                     endAngle:  end,
                     clockwise: true)
@@ -286,7 +268,7 @@ extension ProgressView {
             toButton = self.cigaretteGraphButton
             fromView = self.cigaretteGraphView
             toView = self.moneyGraphView
-            buttonArcCenter = CGPoint(x: self.moneyGraphView.bounds.width - 15, y: self.moneyGraphView.bounds.height / 2)
+            buttonArcCenter = CGPoint(x: self.moneyGraphView.bounds.width - 5, y: self.moneyGraphView.bounds.height / 2)
             startAngle = 270 * .pi / 180
             endAngele = 90 * .pi / 180
             animationOptions = [.transitionFlipFromRight, .showHideTransitionViews]
@@ -295,7 +277,7 @@ extension ProgressView {
             toButton = self.moneyGraphButton
             fromView = self.moneyGraphView
             toView = self.cigaretteGraphView
-            buttonArcCenter = CGPoint(x: 15, y: self.cigaretteGraphView.bounds.height / 2)
+            buttonArcCenter = CGPoint(x: 5, y: self.cigaretteGraphView.bounds.height / 2)
             startAngle = 90 * .pi / 180
             endAngele = 270 * .pi / 180
             animationOptions = [.transitionFlipFromLeft, .showHideTransitionViews]
