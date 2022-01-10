@@ -38,7 +38,7 @@ final class UIGraphView: UIView {
         if (!checkGraphExist(setup)) {return}
         
         removeGraphs(annotations: [setup.annotation])
-        addGraph(setup)
+        addGraph(setup, isAnimate: false)
     }
     
     //MARK: showGraphs
@@ -49,7 +49,7 @@ final class UIGraphView: UIView {
         let annotation = setups.map {$0.annotation}
         removeGraphs(annotations: annotation)
         for setup in setups {
-            addGraph(setup)
+            addGraph(setup, isAnimate: true)
         }
     }
     
@@ -137,7 +137,7 @@ final class UIGraphView: UIView {
         }
     }
     
-    private func addGraph(_ setup: GraphSetup){
+    private func addGraph(_ setup: GraphSetup, isAnimate: Bool){
         var graph: Graph!
         var finalSetup = setup
         
@@ -151,36 +151,39 @@ final class UIGraphView: UIView {
         }
         
         DispatchQueue.global(qos: .userInteractive).async(execute: workItem)
-    
+
         workItem.notify(queue: .main) {
-            
-            graph.line.addActivationAnimation()
-            
-            self.layer.addSublayer(graph.line)
             
             self.layer.addSublayer(graph.clipping)
             for (index,point) in graph.points.enumerated() {
-                point.addStickAnimation(duration: CGFloat(index + 1) / 10 + 0.1)
+                if (isAnimate) {
+                    point.addStickAnimation(duration: CGFloat(index + 1) / 10 + 0.1)
+                }
                 self.layer.addSublayer(point)
             }
             
             self.getGraphAnnotation(setup) { annotation in
+                if (isAnimate) {
+                    graph.line.addActivationAnimation()
+                    annotation.layer.sublayers?.first?.addActivationAnimation()
+                }
                 self.annotationStackView.addArrangedSubview(annotation)
+                self.layer.addSublayer(graph.line)
             }
+            
         }
     }
     
     private func getGraphAnnotation(_ setup: GraphSetup, callback: @escaping(UILabel) -> Void) {
         let label = UILabel()
         let width = (self.viewWidth - 2 * UIGraphViewConstants.margin) / 2
-        label.safeAreaLayoutGuide.widthAnchor.constraint(equalToConstant: width).isActive = true
+        label.widthAnchor.constraint(equalToConstant: width).isActive = true
         label.textAlignment = .center
         label.font = UIFont(name: GlobalString.fontName.rawValue, size: UIGraphViewConstants.defTextSize - 2)
         label.textColor = .lightGray
         label.text = setup.annotation
         
         drawAnnotationLine(to: width, color: setup.color) { line in
-            line.addActivationAnimation()
             label.layer.addSublayer(line)
         }
         

@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 
-enum GraphType {
+enum ProgressType {
     case money
     case cigarette
 }
@@ -33,6 +33,10 @@ private enum ProgressViewConstants {
     static let graphViewHeight: CGFloat = 250
     static let bankPickerSide: CGFloat = 150
     static let userImageViewSide: CGFloat = 240
+    static let normViewWidth: CGFloat = 120
+    static let normViewHeight: CGFloat = 50
+    static let vertivalBlockIndent: CGFloat = 15
+    static let horizontalBlockIndent: CGFloat = 10
 }
 
 class ProgressView: UIView {
@@ -124,6 +128,18 @@ class ProgressView: UIView {
         return button
     }()
     
+    lazy var moneyNormView: UINormView = {
+        let view = UINormView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    lazy var cigaretteNormView: UINormView = {
+        let view = UINormView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     //MARK: CONSTRAINTS
     
     func constraintsScrollView() {
@@ -146,8 +162,8 @@ class ProgressView: UIView {
     
     func constraintsMoneyBankPicker() {
         moneyBankPicker.snp.makeConstraints {(make) -> Void in
-            make.top.equalTo(userImageView.snp.bottom).offset(15)
-            make.trailing.equalTo(scrollView.snp.centerX).offset(-5)
+            make.top.equalTo(userImageView.snp.bottom).offset(ProgressViewConstants.vertivalBlockIndent)
+            make.trailing.equalTo(scrollView.snp.centerX).offset(-ProgressViewConstants.horizontalBlockIndent / 2)
             make.height.equalTo(ProgressViewConstants.bankPickerSide)
             make.width.equalTo(ProgressViewConstants.bankPickerSide)
         }
@@ -155,17 +171,35 @@ class ProgressView: UIView {
     
     func constraintsCigaretteBankPicker() {
         cigaretteBankPicker.snp.makeConstraints {(make) -> Void in
-            make.top.equalTo(userImageView.snp.bottom).offset(15)
-            make.leading.equalTo(scrollView.snp.centerX).offset(5)
+            make.top.equalTo(userImageView.snp.bottom).offset(ProgressViewConstants.vertivalBlockIndent)
+            make.leading.equalTo(scrollView.snp.centerX).offset(ProgressViewConstants.horizontalBlockIndent / 2)
             make.height.equalTo(ProgressViewConstants.bankPickerSide)
             make.width.equalTo(ProgressViewConstants.bankPickerSide)
+        }
+    }
+    
+    func constraintsmMoneyNormView() {
+        moneyNormView.snp.makeConstraints {(make) -> Void in
+            make.trailing.equalTo(scrollView.snp.centerX).offset(-ProgressViewConstants.horizontalBlockIndent / 2)
+            make.top.equalTo(moneyBankPicker.snp.bottom).offset(ProgressViewConstants.vertivalBlockIndent)
+            make.height.equalTo(ProgressViewConstants.normViewHeight)
+            make.width.equalTo(ProgressViewConstants.normViewWidth)
+        }
+    }
+    
+    func constraintsCigaretteNormView() {
+        cigaretteNormView.snp.makeConstraints {(make) -> Void in
+            make.leading.equalTo(scrollView.snp.centerX).offset(ProgressViewConstants.horizontalBlockIndent / 2)
+            make.top.equalTo(moneyBankPicker.snp.bottom).offset(ProgressViewConstants.vertivalBlockIndent)
+            make.height.equalTo(ProgressViewConstants.normViewHeight)
+            make.width.equalTo(ProgressViewConstants.normViewWidth)
         }
     }
     
     func constraintsGraphBackgroundView() {
         graphBackgroundView.snp.makeConstraints {(make) -> Void in
             make.centerX.equalTo(scrollView.snp.centerX)
-            make.top.equalTo(moneyBankPicker.snp.bottom).offset(15)
+            make.top.equalTo(cigaretteNormView.snp.bottom).offset(ProgressViewConstants.vertivalBlockIndent)
             make.height.equalTo(ProgressViewConstants.graphViewHeight)
             make.width.equalTo(ProgressViewConstants.graphViewWidth + 90)
         }
@@ -174,7 +208,7 @@ class ProgressView: UIView {
     func constraintsMoneyGraphView() {
         moneyGraphView.snp.makeConstraints {(make) -> Void in
             make.centerX.equalTo(scrollView.snp.centerX)
-            make.top.equalTo(moneyBankPicker.snp.bottom).offset(15)
+            make.top.equalTo(graphBackgroundView.snp.top)
             make.height.equalTo(ProgressViewConstants.graphViewHeight)
             make.width.equalTo(ProgressViewConstants.graphViewWidth)
         }
@@ -183,7 +217,7 @@ class ProgressView: UIView {
     func constraintsCigaretteGraphView() {
         cigaretteGraphView.snp.makeConstraints {(make) -> Void in
             make.centerX.equalTo(scrollView.snp.centerX)
-            make.top.equalTo(cigaretteBankPicker.snp.bottom).offset(15)
+            make.top.equalTo(graphBackgroundView.snp.top)
             make.height.equalTo(ProgressViewConstants.graphViewHeight)
             make.width.equalTo(ProgressViewConstants.graphViewWidth)
         }
@@ -207,6 +241,7 @@ class ProgressView: UIView {
         }
     }
     
+
     
     //MARK: SUPPORT FUNC
     
@@ -221,6 +256,8 @@ class ProgressView: UIView {
         graphBackgroundView.addSubview(moneyGraphButton)
         graphBackgroundView.addSubview(cigaretteGraphButton)
         scrollView.addSubview(graphBackgroundView)
+        scrollView.addSubview(moneyNormView)
+        scrollView.addSubview(cigaretteNormView)
         self.addSubview(scrollView)
         
         constraintsScrollView()
@@ -232,6 +269,8 @@ class ProgressView: UIView {
         constraintsCigaretteGraphView()
         constraintsMoneyGraphButton()
         constraintsCigaretteGraphButton()
+        constraintsmMoneyNormView()
+        constraintsCigaretteNormView()
     }
     
     func drawGraphButtonArc(center: CGPoint,start: CGFloat, end: CGFloat, callback: @escaping(CAShapeLayer) -> Void){
@@ -249,10 +288,10 @@ class ProgressView: UIView {
     }
 }
 
-//MARK: ANIMATION EXTENSION
+//MARK: ANIMATION
 
 extension ProgressView {
-    func switchGraphs(_ setup: [GraphSetup], _ graphType: GraphType){
+    func switchGraphs(_ setup: [GraphSetup], _ graphType: ProgressType){
         var fromButton: UIButton!
         var toButton: UIButton!
         var fromView: UIGraphView!

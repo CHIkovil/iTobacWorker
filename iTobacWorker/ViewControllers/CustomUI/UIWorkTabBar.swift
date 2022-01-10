@@ -33,16 +33,13 @@ final class UIWorkTabBar: UITabBar{
     
     //MARK: point
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        let pointIsInside = super.point(inside: point, with: event)
-        if pointIsInside == false {
-            for subview in subviews {
-                let pointInSubview = subview.convert(point, from: self)
-                if subview.point(inside: pointInSubview, with: event) {
-                    return true
-                }
+        for subview in subviews {
+            let pointInSubview = subview.convert(point, from: self)
+            if subview.point(inside: pointInSubview, with: event) {
+                return true
             }
         }
-        return pointIsInside
+        return false
     }
     
     //MARK: selectItem

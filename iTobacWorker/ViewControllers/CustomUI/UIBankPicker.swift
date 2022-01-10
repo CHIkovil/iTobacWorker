@@ -68,7 +68,7 @@ final class UIBankPicker: UIView{
         textField.backgroundColor = #colorLiteral(red: 0.2277443409, green: 0.227789104, blue: 0.2277384698, alpha: 1)
         textField.alpha = 0
         textField.delegate = self
-        textField.textColor = .lightGray
+        textField.textColor = #colorLiteral(red: 0.7371812463, green: 0.737306416, blue: 0.7328566909, alpha: 1)
         textField.layer.cornerRadius = 10
         textField.tintColor = .clear
         return textField
@@ -88,7 +88,6 @@ final class UIBankPicker: UIView{
         button.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didPressInputButton)))
         return button
     }()
-    
     
     //MARK: CONSTRAINTS
     
@@ -141,7 +140,8 @@ final class UIBankPicker: UIView{
         constraintsInputTextField()
         constraintsInputButton()
         
-        self.layer.drawBlockLayer(cornerWidth: 25,color: #colorLiteral(red: 0.1261322796, green: 0.1471925974, blue: 0.2156360745, alpha: 0.8))
+        let color = #colorLiteral(red: 0.1261322796, green: 0.1471925974, blue: 0.2156360745, alpha: 0.8)
+        self.layer.drawBlockLayer(cornerWidth: 25,color: color)
         guard let image = image else {return}
         imageView.image = image
     }

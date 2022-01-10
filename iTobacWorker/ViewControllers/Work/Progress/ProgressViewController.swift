@@ -53,6 +53,8 @@ class ProgressViewController: UIViewController
         progressView.userImageView.addButtonGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didPressAddPhotoButton)))
         progressView.moneyGraphButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didPressMoneyGraphButton)))
         progressView.cigaretteGraphButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didPressCigaretteGraphButton)))
+        progressView.moneyNormView.addTextFieldTarget(target: self, action:  #selector(moneyNormChanged), event: .editingChanged)
+        progressView.cigaretteNormView.addTextFieldTarget(target: self, action:  #selector(cigaretteNormChanged), event: .editingChanged)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -75,6 +77,14 @@ class ProgressViewController: UIViewController
     
     @objc func didPressCigaretteGraphButton() {
         progressView.switchGraphs([GraphSetup(points: [4, 2, 6, 4, 5, 8, 0], color: UIColor(white: 0.8, alpha: 0.9), annotation: ProgressViewControllerString.countGraphAnnotation.rawValue), GraphSetup(points: [1, 3, 4, 4, 7, 8, 0], color: UIColor(red: 0, green: 0.8, blue: 0, alpha: 0.9), annotation: ProgressViewControllerString.normGraphAnnotation.rawValue)], .cigarette)
+    }
+    
+    @objc func moneyNormChanged() {
+        progressView.moneyGraphView.reloadGraph(GraphSetup(points: [1, 3, 4, 4, 7, 8, 1], color: UIColor(red: 0, green: 0.8, blue: 0, alpha: 0.9), annotation: ProgressViewControllerString.normGraphAnnotation.rawValue), isAnimate: false)
+    }
+    
+    @objc func cigaretteNormChanged() {
+        progressView.moneyGraphView.reloadGraph(GraphSetup(points: [4, 2, 6, 4, 5, 8, 8], color: UIColor(red: 0, green: 0.8, blue: 0, alpha: 0.9), annotation: ProgressViewControllerString.normGraphAnnotation.rawValue), isAnimate: false)
     }
 }
 
