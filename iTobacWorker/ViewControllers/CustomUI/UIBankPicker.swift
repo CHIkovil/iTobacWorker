@@ -97,7 +97,7 @@ final class UIBankPicker: UIView{
             make.width.equalTo(viewWidth * 0.55)
             make.height.equalTo(viewHeight * 0.55)
             make.centerX.equalTo(self.snp.centerX)
-            make.centerY.equalTo(self.snp.centerY).offset(-10)
+            make.centerY.equalTo(self.snp.centerY).offset(-12)
         }
     }
     
@@ -105,7 +105,7 @@ final class UIBankPicker: UIView{
         countLabel.snp.makeConstraints {(make) -> Void in
             make.height.equalTo(viewHeight * 0.21)
             make.width.equalTo(viewWidth * 0.9)
-            make.top.equalTo(imageView.snp.bottom).offset(2)
+            make.top.equalTo(imageView.snp.bottom).offset(5)
             make.centerX.equalTo(imageView.snp.centerX)
         }
     }
@@ -160,6 +160,7 @@ final class UIBankPicker: UIView{
         self.countLabel.alpha = isEnabled ? 0 : 1
         self.inputTextField.isUserInteractionEnabled = isEnabled
         self.inputButton.isUserInteractionEnabled = isEnabled
+        self.imageView.isUserInteractionEnabled = !isEnabled
         animateInputState(alpha: isEnabled ? 1 : 0)
     }
     
