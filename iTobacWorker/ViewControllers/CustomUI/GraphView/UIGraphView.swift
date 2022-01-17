@@ -32,31 +32,43 @@ final class UIGraphView: UIView {
         makeUI()
     }
     
-    //MARK: reloadGraph
-    func reloadGraph(_ setup: GraphSetup, isAnimate: Bool){
+    //MARK: updateGraph
+    func updateGraph(_ setup: GraphSetup){
         if (!checkGraphsMaxValue([setup])) {return}
         if (!checkGraphExist(setup)) {return}
+        updateGraphSetups(setup)
         
-        removeGraphs(annotations: [setup.annotation])
+        removeGraphs([setup.annotation])
         addGraph(setup, isAnimate: false)
     }
     
-    //MARK: showGraphs
-    func showGraphs(_ setups: [GraphSetup]) {
-        if (setups.isEmpty) {return}
-        if (!checkGraphsMaxValue(setups)) {return}
-    
-        let annotation = setups.map {$0.annotation}
-        removeGraphs(annotations: annotation)
-        for setup in setups {
+    //MARK: setGraphs
+    func setGraphs(_ newSetups: [GraphSetup]?) {
+        if let setups = newSetups {
+            if (setups.isEmpty) {return}
+            if (!checkGraphsMaxValue(setups)) {return}
+            self.currentGraphSetups  = newSetups
+        }
+        
+        guard let currentGraphSetups = self.currentGraphSetups else{return}
+        removeGraphs(nil)
+        
+        for setup in currentGraphSetups {
             addGraph(setup, isAnimate: true)
         }
     }
+    
+    //MARK: getCurrentGraphSetups
+    func getCurrentGraphSetups() -> [GraphSetup]?{
+        return currentGraphSetups
+    }
+    
     
     //MARK: PRIVATE
     private var viewWidth: CGFloat {self.frame.height}
     private var viewHeight: CGFloat {self.frame.height}
     private var maxValue: Int?
+    private var currentGraphSetups: [GraphSetup]?
     
     //MARK: UI
     private lazy var minValueLabel: UILabel = {
@@ -150,7 +162,7 @@ final class UIGraphView: UIView {
             graph = self.drawGraph(finalSetup)
         }
         
-        DispatchQueue.global(qos: .userInteractive).async(execute: workItem)
+        DispatchQueue.global(qos: .userInitiated).sync(execute: workItem)
 
         workItem.notify(queue: .main) {
             
@@ -175,8 +187,8 @@ final class UIGraphView: UIView {
     }
     
     private func getGraphAnnotation(_ setup: GraphSetup, callback: @escaping(UILabel) -> Void) {
-        let label = UILabel()
         let width = (self.viewWidth - 2 * UIGraphViewConstants.margin) / 2
+        let label = UILabel()
         label.widthAnchor.constraint(equalToConstant: width).isActive = true
         label.textAlignment = .center
         label.font = UIFont(name: GlobalString.fontName.rawValue, size: UIGraphViewConstants.defTextSize - 2)
@@ -211,16 +223,16 @@ final class UIGraphView: UIView {
             self.maxValue = maxValue
         }
         
-        self.maxValueLabel.text = "\(self.maxValue!)"
+        self.maxValueLabel.text =  self.maxValue == 0 ? "" : "\(self.maxValue!)"
         return true
     }
     
     private func checkGraphExist(_ setup: GraphSetup) -> Bool{
-        let layers = self.layer.sublayers?.filter {$0.name == setup.annotation}
+        let setups = currentGraphSetups?.filter {$0.annotation == setup.annotation}
         
-        switch layers {
-        case (let layers?):
-            if(!layers.isEmpty){
+        switch setups {
+        case (let setups?):
+            if(!setups.isEmpty){
                 return true
             }else{
                 fallthrough
@@ -230,10 +242,21 @@ final class UIGraphView: UIView {
         }
     }
     
-    private func removeGraphs(annotations: [String]) {
+    private func removeGraphs(_ annotations: [String]?) {
+        guard let currentSetups = currentGraphSetups else {
+            return
+        }
+
+        let removedAnnotations:[String]!
+        if let annotations = annotations {
+            removedAnnotations = annotations
+        }else{
+            removedAnnotations = currentSetups.map {$0.annotation}
+        }
+        
         self.layer.sublayers?.forEach {layer in
             guard let name = layer.name else{return}
-            if (annotations.contains(name)){
+            if (removedAnnotations.contains(name)){
                 layer.removeFromSuperlayer()
             }
         }
@@ -241,8 +264,20 @@ final class UIGraphView: UIView {
         self.annotationStackView.arrangedSubviews.forEach {view in
             guard let label = view as? UILabel else{return}
             guard let name = label.text else{return}
-            if (annotations.contains(name)) {
+            if (removedAnnotations.contains(name)) {
                 view.removeFromSuperview()
+            }
+        }
+    }
+    
+    private func updateGraphSetups(_ newSetup: GraphSetup){
+        guard let currentSetups = currentGraphSetups else {
+            return
+        }
+        
+        currentSetups.enumerated().forEach {index, currentSetup in
+            if (currentSetup.annotation == newSetup.annotation){
+                currentGraphSetups![index] = newSetup
             }
         }
     }
@@ -260,7 +295,8 @@ final class UIGraphView: UIView {
         let bottomBorder = UIGraphViewConstants.bottomBorder
         let graphHeight = setup.viewSetup!.height - topBorder - bottomBorder
         
-        let yPoint =  CGFloat(graphPoint) / CGFloat(setup.viewSetup!.graphMaxValue) * graphHeight
+    
+        let yPoint =  CGFloat(graphPoint) / CGFloat(setup.viewSetup!.graphMaxValue == 0 ? 1 : setup.viewSetup!.graphMaxValue) * graphHeight
         
         return graphHeight + topBorder - yPoint
     }

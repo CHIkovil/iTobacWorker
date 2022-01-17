@@ -24,7 +24,7 @@ private enum UIAbbreviationLabelConstants{
     static let defTextSize: CGFloat = 45
 }
 
-//MARK: PROTOCOL
+// MARK: DELEGATE
 
 protocol UIAbbreviationDelegate: AnyObject {
     func animateEnd()

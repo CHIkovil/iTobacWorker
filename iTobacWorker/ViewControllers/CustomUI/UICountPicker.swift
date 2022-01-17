@@ -10,18 +10,18 @@ import UIKit
 
 //MARK: STRING
 
-private enum UIBankPickerString:String{
+private enum UICountPickerString:String{
     case animationKey =  "position"
     case buttonImageName = "plus"
 }
 
 //MARK: CONSTANTS
 
-private enum UIBankPickerConstants{
+private enum UICountPickerConstants{
     static let defTextSize: CGFloat = 28
 }
 
-final class UIBankPicker: UIView{
+final class UICountPicker: UIView{
     var image: UIImage?
     
     override func draw(_ rect: CGRect) {
@@ -31,6 +31,12 @@ final class UIBankPicker: UIView{
     //MARK: animateAttention
     func animateAttention(){
         imageView.animateShake()
+    }
+    
+    //MARK: setCountValue
+    func setCountValue(_ newValue: Int){
+        countLabel.text = "\(0)"
+        addCountValue(value: newValue)
     }
     
     //MARK: PRIVATE
@@ -51,7 +57,7 @@ final class UIBankPicker: UIView{
     
     private lazy var countLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: GlobalString.fontName.rawValue, size: UIBankPickerConstants.defTextSize)
+        label.font = UIFont(name: GlobalString.fontName.rawValue, size: UICountPickerConstants.defTextSize)
         label.text = "\(0)"
         label.textColor = .lightGray
         label.textAlignment = .center
@@ -61,7 +67,7 @@ final class UIBankPicker: UIView{
     
     private lazy var inputTextField: UITextField = {
         let textField = UITextField()
-        textField.font = UIFont(name: GlobalString.fontName.rawValue, size: UIBankPickerConstants.defTextSize - 5)
+        textField.font = UIFont(name: GlobalString.fontName.rawValue, size: UICountPickerConstants.defTextSize - 5)
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.isUserInteractionEnabled = false
         textField.setLeftPaddingPoints(12)
@@ -78,7 +84,7 @@ final class UIBankPicker: UIView{
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.isUserInteractionEnabled = false
-        button.setImage(UIImage(named: UIBankPickerString.buttonImageName.rawValue), for: .normal)
+        button.setImage(UIImage(named: UICountPickerString.buttonImageName.rawValue), for: .normal)
         button.layer.cornerRadius = button.frame.width / 2
         button.alpha = 0
         button.layer.shadowColor = UIColor.black.cgColor
@@ -146,7 +152,7 @@ final class UIBankPicker: UIView{
         imageView.image = image
     }
     
-    private func addBankValue(at newValue: Int){
+    private func addCountValue(value newValue: Int){
         if let number = NumberFormatter().number(from: countLabel.text!) {
             let oldValue = Int(truncating: number)
             countLabel.text = "\(oldValue + newValue)"
@@ -166,7 +172,7 @@ final class UIBankPicker: UIView{
     
     // MARK: OBJC
     @objc func didPressImage() {
-        addBankValue(at: 1)
+        addCountValue(value: 1)
     }
     
     @objc func didLongPressImage() {
@@ -178,13 +184,13 @@ final class UIBankPicker: UIView{
         guard let text = inputTextField.text else {return}
         switchInputState(false)
         guard let value = Int(text) else {return}
-        addBankValue(at: value)
+        addCountValue(value: value)
     }
 }
 
 //MARK: ANIMATION EXTENSION
 
-private extension UIBankPicker {
+private extension UICountPicker {
     func animateInputState(alpha: CGFloat){
         UIView.animate(withDuration: 0.1, animations: {[weak self] in
             guard let self = self else{return}
@@ -197,30 +203,30 @@ private extension UIBankPicker {
 
 private extension UIView{
     func animateShake(){
-        let animation = CABasicAnimation(keyPath: UIBankPickerString.animationKey.rawValue)
+        let animation = CABasicAnimation(keyPath: UICountPickerString.animationKey.rawValue)
         animation.duration = 0.07
         animation.repeatCount = 4
         animation.autoreverses = true
         animation.fromValue = NSValue(cgPoint: CGPoint(x: self.center.x - 1.5, y: self.center.y))
         animation.toValue = NSValue(cgPoint: CGPoint(x: self.center.x + 1.5, y: self.center.y))
     
-        self.layer.add(animation, forKey: UIBankPickerString.animationKey.rawValue)
+        self.layer.add(animation, forKey: UICountPickerString.animationKey.rawValue)
     }
     
     func animateDrop(){
-        let animation = CABasicAnimation(keyPath: UIBankPickerString.animationKey.rawValue)
+        let animation = CABasicAnimation(keyPath: UICountPickerString.animationKey.rawValue)
         animation.duration = 0.7
         animation.fromValue = NSValue(cgPoint: CGPoint(x: self.center.x, y: self.center.y - 4))
         animation.toValue = NSValue(cgPoint: CGPoint(x: self.center.x, y: self.center.y))
         
-        self.layer.add(animation, forKey: UIBankPickerString.animationKey.rawValue)
+        self.layer.add(animation, forKey: UICountPickerString.animationKey.rawValue)
     }
     
 }
 
 //MARK: DELEGATE EXTENSION
 
-extension UIBankPicker: UITextFieldDelegate{
+extension UICountPicker: UITextFieldDelegate{
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = textField.text else { return true }
         let allowedCharacters = CharacterSet.decimalDigits

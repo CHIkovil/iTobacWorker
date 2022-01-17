@@ -8,12 +8,20 @@
 import Foundation
 import UIKit
 
-enum GraphModel {
-    struct GraphSetup{
+enum GraphModels {
+    struct GraphSetup: Hashable{
         let points: [Int]
         let color: UIColor
         let annotation: String
         var viewSetup: ViewSetup?
+        
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(annotation)
+        }
+        
+        static func == (lhs: GraphModels.GraphSetup, rhs: GraphModels.GraphSetup) -> Bool {
+            return lhs.points == rhs.points && lhs.annotation == rhs.annotation
+        }
     }
     
     struct Graph {
@@ -29,6 +37,6 @@ enum GraphModel {
     }
 }
 
-typealias GraphSetup = GraphModel.GraphSetup
-typealias Graph = GraphModel.Graph
-typealias ViewSetup = GraphModel.ViewSetup
+typealias GraphSetup = GraphModels.GraphSetup
+typealias Graph = GraphModels.Graph
+typealias ViewSetup = GraphModels.ViewSetup

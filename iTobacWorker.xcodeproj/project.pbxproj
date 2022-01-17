@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0D9010154AA88E52BE8E0B6D /* Pods_iTobacWorkerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C68F35F2725DF0D1531F6B32 /* Pods_iTobacWorkerTests.framework */; };
 		17003032275D84CC0093DAC3 /* WorkTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17003031275D84CC0093DAC3 /* WorkTabBarController.swift */; };
 		17003036275D84F70093DAC3 /* UIWakeUpTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17003033275D84F70093DAC3 /* UIWakeUpTextField.swift */; };
 		17003037275D84F70093DAC3 /* UIWorkTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17003034275D84F70093DAC3 /* UIWorkTabBar.swift */; };
@@ -15,7 +14,7 @@
 		17003042275D85AB0093DAC3 /* AuthorizationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1700303B275D85AB0093DAC3 /* AuthorizationPresenter.swift */; };
 		17003043275D85AB0093DAC3 /* AuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1700303C275D85AB0093DAC3 /* AuthorizationViewController.swift */; };
 		17003045275D85AB0093DAC3 /* AuthorizationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1700303E275D85AB0093DAC3 /* AuthorizationView.swift */; };
-		1711EF3E2780E2620089E07D /* GraphModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1711EF3D2780E2620089E07D /* GraphModel.swift */; };
+		1711EF3E2780E2620089E07D /* GraphModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1711EF3D2780E2620089E07D /* GraphModels.swift */; };
 		1711EF4327877D620089E07D /* money.png in Resources */ = {isa = PBXBuildFile; fileRef = 1711EF4227877D620089E07D /* money.png */; };
 		175DED53278C750600C10DAB /* UINormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175DED52278C750600C10DAB /* UINormView.swift */; };
 		176E82822775361100B73B0A /* TextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176E82812775361100B73B0A /* TextFieldExtension.swift */; };
@@ -24,16 +23,13 @@
 		17AE64A32787BDE4003820EC /* question.png in Resources */ = {isa = PBXBuildFile; fileRef = 17AE64A22787BDE4003820EC /* question.png */; };
 		17ECA681277A183100A1ADD5 /* UIGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ECA680277A183100A1ADD5 /* UIGraphView.swift */; };
 		17ECA684277A1DFB00A1ADD5 /* GlobalString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ECA683277A1DFB00A1ADD5 /* GlobalString.swift */; };
-		17F1D193276698F200C76A01 /* UIBankPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F1D192276698F200C76A01 /* UIBankPicker.swift */; };
+		17F1D193276698F200C76A01 /* UICountPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F1D192276698F200C76A01 /* UICountPicker.swift */; };
 		17F1D19627669B0300C76A01 /* LayerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F1D19527669B0300C76A01 /* LayerExtension.swift */; };
 		17F90ED9275D8050002D03CD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F90ED8275D8050002D03CD /* AppDelegate.swift */; };
 		17F90EDB275D8050002D03CD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F90EDA275D8050002D03CD /* SceneDelegate.swift */; };
 		17F90EE3275D8050002D03CD /* iTobacWorker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 17F90EE1275D8050002D03CD /* iTobacWorker.xcdatamodeld */; };
 		17F90EE5275D8050002D03CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17F90EE4275D8050002D03CD /* Assets.xcassets */; };
 		17F90EE8275D8050002D03CD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17F90EE6275D8050002D03CD /* LaunchScreen.storyboard */; };
-		17F90EF3275D8050002D03CD /* iTobacWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F90EF2275D8050002D03CD /* iTobacWorkerTests.swift */; };
-		17F90EFD275D8050002D03CD /* iTobacWorkerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F90EFC275D8050002D03CD /* iTobacWorkerUITests.swift */; };
-		17F90EFF275D8050002D03CD /* iTobacWorkerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F90EFE275D8050002D03CD /* iTobacWorkerUITestsLaunchTests.swift */; };
 		17FB366D275E5B1A0046F6E0 /* info.png in Resources */ = {isa = PBXBuildFile; fileRef = 17FB3668275E5B190046F6E0 /* info.png */; };
 		17FB366E275E5B1A0046F6E0 /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = 17FB3669275E5B190046F6E0 /* search.png */; };
 		17FB366F275E5B1A0046F6E0 /* progress.png in Resources */ = {isa = PBXBuildFile; fileRef = 17FB366A275E5B190046F6E0 /* progress.png */; };
@@ -50,25 +46,7 @@
 		17FB36952766759D0046F6E0 /* safe-box.png in Resources */ = {isa = PBXBuildFile; fileRef = 17FB36932766759D0046F6E0 /* safe-box.png */; };
 		17FB36962766759D0046F6E0 /* ashtray.png in Resources */ = {isa = PBXBuildFile; fileRef = 17FB36942766759D0046F6E0 /* ashtray.png */; };
 		688067CF4C454BF842E84131 /* Pods_iTobacWorker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10C7E1F6C4C8C067D68F6016 /* Pods_iTobacWorker.framework */; };
-		E254F0CCEC1731FCCEDE9228 /* Pods_iTobacWorker_iTobacWorkerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B62FCBEB2C148C285597BF /* Pods_iTobacWorker_iTobacWorkerUITests.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		17F90EEF275D8050002D03CD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 17F90ECD275D8050002D03CD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 17F90ED4275D8050002D03CD;
-			remoteInfo = iTobacWorker;
-		};
-		17F90EF9275D8050002D03CD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 17F90ECD275D8050002D03CD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 17F90ED4275D8050002D03CD;
-			remoteInfo = iTobacWorker;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		10C7E1F6C4C8C067D68F6016 /* Pods_iTobacWorker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iTobacWorker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -79,7 +57,7 @@
 		1700303B275D85AB0093DAC3 /* AuthorizationPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationPresenter.swift; sourceTree = "<group>"; };
 		1700303C275D85AB0093DAC3 /* AuthorizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationViewController.swift; sourceTree = "<group>"; };
 		1700303E275D85AB0093DAC3 /* AuthorizationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationView.swift; sourceTree = "<group>"; };
-		1711EF3D2780E2620089E07D /* GraphModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphModel.swift; sourceTree = "<group>"; };
+		1711EF3D2780E2620089E07D /* GraphModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphModels.swift; sourceTree = "<group>"; };
 		1711EF4227877D620089E07D /* money.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = money.png; sourceTree = "<group>"; };
 		175DED52278C750600C10DAB /* UINormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINormView.swift; sourceTree = "<group>"; };
 		176E82812775361100B73B0A /* TextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldExtension.swift; sourceTree = "<group>"; };
@@ -88,7 +66,7 @@
 		17AE64A22787BDE4003820EC /* question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = question.png; sourceTree = "<group>"; };
 		17ECA680277A183100A1ADD5 /* UIGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIGraphView.swift; sourceTree = "<group>"; };
 		17ECA683277A1DFB00A1ADD5 /* GlobalString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalString.swift; sourceTree = "<group>"; };
-		17F1D192276698F200C76A01 /* UIBankPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBankPicker.swift; sourceTree = "<group>"; };
+		17F1D192276698F200C76A01 /* UICountPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICountPicker.swift; sourceTree = "<group>"; };
 		17F1D19527669B0300C76A01 /* LayerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerExtension.swift; sourceTree = "<group>"; };
 		17F90ED5275D8050002D03CD /* iTobacWorker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTobacWorker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17F90ED8275D8050002D03CD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -97,11 +75,6 @@
 		17F90EE4275D8050002D03CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		17F90EE7275D8050002D03CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		17F90EE9275D8050002D03CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		17F90EEE275D8050002D03CD /* iTobacWorkerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iTobacWorkerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		17F90EF2275D8050002D03CD /* iTobacWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTobacWorkerTests.swift; sourceTree = "<group>"; };
-		17F90EF8275D8050002D03CD /* iTobacWorkerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iTobacWorkerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		17F90EFC275D8050002D03CD /* iTobacWorkerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTobacWorkerUITests.swift; sourceTree = "<group>"; };
-		17F90EFE275D8050002D03CD /* iTobacWorkerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTobacWorkerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		17FB3668275E5B190046F6E0 /* info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = info.png; sourceTree = "<group>"; };
 		17FB3669275E5B190046F6E0 /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search.png; sourceTree = "<group>"; };
 		17FB366A275E5B190046F6E0 /* progress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = progress.png; sourceTree = "<group>"; };
@@ -133,22 +106,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				688067CF4C454BF842E84131 /* Pods_iTobacWorker.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		17F90EEB275D8050002D03CD /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				0D9010154AA88E52BE8E0B6D /* Pods_iTobacWorkerTests.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		17F90EF5275D8050002D03CD /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E254F0CCEC1731FCCEDE9228 /* Pods_iTobacWorker_iTobacWorkerUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,7 +141,7 @@
 				17003035275D84F70093DAC3 /* UIAbbreviationLabel.swift */,
 				17003033275D84F70093DAC3 /* UIWakeUpTextField.swift */,
 				17003034275D84F70093DAC3 /* UIWorkTabBar.swift */,
-				17F1D192276698F200C76A01 /* UIBankPicker.swift */,
+				17F1D192276698F200C76A01 /* UICountPicker.swift */,
 				1711EF3C2780E2330089E07D /* GraphView */,
 				175DED52278C750600C10DAB /* UINormView.swift */,
 			);
@@ -206,7 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				17ECA680277A183100A1ADD5 /* UIGraphView.swift */,
-				1711EF3D2780E2620089E07D /* GraphModel.swift */,
+				1711EF3D2780E2620089E07D /* GraphModels.swift */,
 			);
 			path = GraphView;
 			sourceTree = "<group>";
@@ -240,8 +197,6 @@
 			isa = PBXGroup;
 			children = (
 				17F90ED7275D8050002D03CD /* iTobacWorker */,
-				17F90EF1275D8050002D03CD /* iTobacWorkerTests */,
-				17F90EFB275D8050002D03CD /* iTobacWorkerUITests */,
 				17F90ED6275D8050002D03CD /* Products */,
 				6E90641452C66F4D5C10986D /* Pods */,
 				6440D1556584387EA3F319AD /* Frameworks */,
@@ -252,8 +207,6 @@
 			isa = PBXGroup;
 			children = (
 				17F90ED5275D8050002D03CD /* iTobacWorker.app */,
-				17F90EEE275D8050002D03CD /* iTobacWorkerTests.xctest */,
-				17F90EF8275D8050002D03CD /* iTobacWorkerUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -266,23 +219,6 @@
 				1700302E275D84720093DAC3 /* ViewControllers */,
 			);
 			path = iTobacWorker;
-			sourceTree = "<group>";
-		};
-		17F90EF1275D8050002D03CD /* iTobacWorkerTests */ = {
-			isa = PBXGroup;
-			children = (
-				17F90EF2275D8050002D03CD /* iTobacWorkerTests.swift */,
-			);
-			path = iTobacWorkerTests;
-			sourceTree = "<group>";
-		};
-		17F90EFB275D8050002D03CD /* iTobacWorkerUITests */ = {
-			isa = PBXGroup;
-			children = (
-				17F90EFC275D8050002D03CD /* iTobacWorkerUITests.swift */,
-				17F90EFE275D8050002D03CD /* iTobacWorkerUITestsLaunchTests.swift */,
-			);
-			path = iTobacWorkerUITests;
 			sourceTree = "<group>";
 		};
 		17F90F0B275D805A002D03CD /* AppSupport */ = {
@@ -373,45 +309,6 @@
 			productReference = 17F90ED5275D8050002D03CD /* iTobacWorker.app */;
 			productType = "com.apple.product-type.application";
 		};
-		17F90EED275D8050002D03CD /* iTobacWorkerTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 17F90F05275D8050002D03CD /* Build configuration list for PBXNativeTarget "iTobacWorkerTests" */;
-			buildPhases = (
-				AD085EAD03D216CCA23229FB /* [CP] Check Pods Manifest.lock */,
-				17F90EEA275D8050002D03CD /* Sources */,
-				17F90EEB275D8050002D03CD /* Frameworks */,
-				17F90EEC275D8050002D03CD /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				17F90EF0275D8050002D03CD /* PBXTargetDependency */,
-			);
-			name = iTobacWorkerTests;
-			productName = iTobacWorkerTests;
-			productReference = 17F90EEE275D8050002D03CD /* iTobacWorkerTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		17F90EF7275D8050002D03CD /* iTobacWorkerUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 17F90F08275D8050002D03CD /* Build configuration list for PBXNativeTarget "iTobacWorkerUITests" */;
-			buildPhases = (
-				3D09CCF9CBE353FF4EDD3B7D /* [CP] Check Pods Manifest.lock */,
-				17F90EF4275D8050002D03CD /* Sources */,
-				17F90EF5275D8050002D03CD /* Frameworks */,
-				17F90EF6275D8050002D03CD /* Resources */,
-				37C04171F32BAFF74BA3D15E /* [CP] Embed Pods Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				17F90EFA275D8050002D03CD /* PBXTargetDependency */,
-			);
-			name = iTobacWorkerUITests;
-			productName = iTobacWorkerUITests;
-			productReference = 17F90EF8275D8050002D03CD /* iTobacWorkerUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -424,14 +321,6 @@
 				TargetAttributes = {
 					17F90ED4275D8050002D03CD = {
 						CreatedOnToolsVersion = 13.1;
-					};
-					17F90EED275D8050002D03CD = {
-						CreatedOnToolsVersion = 13.1;
-						TestTargetID = 17F90ED4275D8050002D03CD;
-					};
-					17F90EF7275D8050002D03CD = {
-						CreatedOnToolsVersion = 13.1;
-						TestTargetID = 17F90ED4275D8050002D03CD;
 					};
 				};
 			};
@@ -449,8 +338,6 @@
 			projectRoot = "";
 			targets = (
 				17F90ED4275D8050002D03CD /* iTobacWorker */,
-				17F90EED275D8050002D03CD /* iTobacWorkerTests */,
-				17F90EF7275D8050002D03CD /* iTobacWorkerUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -477,20 +364,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		17F90EEC275D8050002D03CD /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		17F90EF6275D8050002D03CD /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -509,67 +382,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-iTobacWorker/Pods-iTobacWorker-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		37C04171F32BAFF74BA3D15E /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-iTobacWorker-iTobacWorkerUITests/Pods-iTobacWorker-iTobacWorkerUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-iTobacWorker-iTobacWorkerUITests/Pods-iTobacWorker-iTobacWorkerUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-iTobacWorker-iTobacWorkerUITests/Pods-iTobacWorker-iTobacWorkerUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		3D09CCF9CBE353FF4EDD3B7D /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-iTobacWorker-iTobacWorkerUITests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		AD085EAD03D216CCA23229FB /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-iTobacWorkerTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B3B812C0C7EA5FA5511F0866 /* [CP] Check Pods Manifest.lock */ = {
@@ -614,51 +426,21 @@
 				17FB368D27626F3A0046F6E0 /* UIUserImageView.swift in Sources */,
 				17003036275D84F70093DAC3 /* UIWakeUpTextField.swift in Sources */,
 				17FB3680276003560046F6E0 /* ProgressView.swift in Sources */,
-				1711EF3E2780E2620089E07D /* GraphModel.swift in Sources */,
+				1711EF3E2780E2620089E07D /* GraphModels.swift in Sources */,
 				17FB367D275FFFEC0046F6E0 /* ProgressViewController.swift in Sources */,
 				17ECA684277A1DFB00A1ADD5 /* GlobalString.swift in Sources */,
 				17F90ED9275D8050002D03CD /* AppDelegate.swift in Sources */,
 				176E82822775361100B73B0A /* TextFieldExtension.swift in Sources */,
 				17FB36822760D9190046F6E0 /* AuthorizationModels.swift in Sources */,
 				17FB367C275FFFEC0046F6E0 /* ProgressModels.swift in Sources */,
-				17F1D193276698F200C76A01 /* UIBankPicker.swift in Sources */,
+				17F1D193276698F200C76A01 /* UICountPicker.swift in Sources */,
 				17FB3679275FFFEC0046F6E0 /* ProgressPresenter.swift in Sources */,
 				17003043275D85AB0093DAC3 /* AuthorizationViewController.swift in Sources */,
 				17F90EDB275D8050002D03CD /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		17F90EEA275D8050002D03CD /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				17F90EF3275D8050002D03CD /* iTobacWorkerTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		17F90EF4275D8050002D03CD /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				17F90EFF275D8050002D03CD /* iTobacWorkerUITestsLaunchTests.swift in Sources */,
-				17F90EFD275D8050002D03CD /* iTobacWorkerUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		17F90EF0275D8050002D03CD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 17F90ED4275D8050002D03CD /* iTobacWorker */;
-			targetProxy = 17F90EEF275D8050002D03CD /* PBXContainerItemProxy */;
-		};
-		17F90EFA275D8050002D03CD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 17F90ED4275D8050002D03CD /* iTobacWorker */;
-			targetProxy = 17F90EF9275D8050002D03CD /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		17F90EE6275D8050002D03CD /* LaunchScreen.storyboard */ = {
@@ -846,106 +628,6 @@
 			};
 			name = Release;
 		};
-		17F90F06275D8050002D03CD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = B0DFE2CC9EA1411CCB54E241 /* Pods-iTobacWorkerTests.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = AX7Z37UN4D;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = CHIkovil.iTobacWorkerTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iTobacWorker.app/iTobacWorker";
-			};
-			name = Debug;
-		};
-		17F90F07275D8050002D03CD /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 388C7545A4F58196245E19D0 /* Pods-iTobacWorkerTests.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = AX7Z37UN4D;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = CHIkovil.iTobacWorkerTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iTobacWorker.app/iTobacWorker";
-			};
-			name = Release;
-		};
-		17F90F09275D8050002D03CD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 27731B277CC6197EFAFC4A28 /* Pods-iTobacWorker-iTobacWorkerUITests.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = AX7Z37UN4D;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = CHIkovil.iTobacWorkerUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = iTobacWorker;
-			};
-			name = Debug;
-		};
-		17F90F0A275D8050002D03CD /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = F7349F47E5EA04C2AEAAF458 /* Pods-iTobacWorker-iTobacWorkerUITests.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = AX7Z37UN4D;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = CHIkovil.iTobacWorkerUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = iTobacWorker;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -963,24 +645,6 @@
 			buildConfigurations = (
 				17F90F03275D8050002D03CD /* Debug */,
 				17F90F04275D8050002D03CD /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		17F90F05275D8050002D03CD /* Build configuration list for PBXNativeTarget "iTobacWorkerTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				17F90F06275D8050002D03CD /* Debug */,
-				17F90F07275D8050002D03CD /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		17F90F08275D8050002D03CD /* Build configuration list for PBXNativeTarget "iTobacWorkerUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				17F90F09275D8050002D03CD /* Debug */,
-				17F90F0A275D8050002D03CD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

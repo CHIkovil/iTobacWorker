@@ -8,12 +8,6 @@
 import Foundation
 import UIKit
 
-////MARK: STRING
-//
-//private enum UINormViewString:String{
-//
-//}
-
 //MARK: CONSTANTS
 
 private enum UINormViewConstants{
@@ -37,6 +31,11 @@ final class UINormView: UIView{
     // MARK: addTextFieldTarget
     func addTextFieldTarget(target: Any?, action: Selector, event: UIControl.Event){
         inputTextField.addTarget(target, action: action, for: event)
+    }
+    
+    // MARK: setNormValue
+    func setNormValue(_ newValue: Int){
+        inputTextField.text = "\(newValue)"
     }
     
     //MARK: PRIVATE

@@ -7,6 +7,12 @@
 
 import UIKit
 
+// MARK: DELEGATE
+
+protocol ProgressViewDelegate: AnyObject{
+    func showUserData(_ data: UserData)
+}
+
 // MARK: STRING
 
 private enum ProgressViewControllerString: String {
@@ -16,9 +22,10 @@ private enum ProgressViewControllerString: String {
 
 class ProgressViewController: UIViewController
 {
+    var imagePicker: ImagePicker!
     
     var progressView: ProgressView!
-    var imagePicker: ImagePicker!
+    var progressStoreDelegate: ProgressStoreDelegate!
     
     // MARK: Object lifecycle
     
@@ -38,7 +45,7 @@ class ProgressViewController: UIViewController
     
     private func setup()
     {
-        
+        progressStoreDelegate = ProgressPresenter(delegate: self)
     }
     
     // MARK: View lifecycle
@@ -61,7 +68,7 @@ class ProgressViewController: UIViewController
         super.viewDidAppear(animated)
         progressView.moneyBankPicker.animateAttention()
         progressView.cigaretteBankPicker.animateAttention()
-        didPressMoneyGraphButton()
+        progressStoreDelegate.loadUserData()
     }
     
     // MARK: OBJC
@@ -72,19 +79,19 @@ class ProgressViewController: UIViewController
     }
     
     @objc func didPressMoneyGraphButton() {
-        progressView.switchGraphs([GraphSetup(points: [4, 2, 6, 4, 5, 8, 3], color: UIColor(white: 0.8, alpha: 0.9), annotation: ProgressViewControllerString.countGraphAnnotation.rawValue), GraphSetup(points: [1, 3, 4, 4, 7, 8, 3], color: UIColor(red: 0, green: 0.8, blue: 0, alpha: 0.9), annotation: ProgressViewControllerString.normGraphAnnotation.rawValue)], .money)
+        progressView.switchGraphs(newGraphs: nil, .money)
     }
     
     @objc func didPressCigaretteGraphButton() {
-        progressView.switchGraphs([GraphSetup(points: [4, 2, 6, 4, 5, 8, 0], color: UIColor(white: 0.8, alpha: 0.9), annotation: ProgressViewControllerString.countGraphAnnotation.rawValue), GraphSetup(points: [1, 3, 4, 4, 7, 8, 0], color: UIColor(red: 0, green: 0.8, blue: 0, alpha: 0.9), annotation: ProgressViewControllerString.normGraphAnnotation.rawValue)], .cigarette)
+        progressView.switchGraphs(newGraphs: nil, .cigarette)
     }
     
     @objc func moneyNormChanged() {
-        progressView.moneyGraphView.reloadGraph(GraphSetup(points: [1, 3, 4, 4, 7, 8, 1], color: UIColor(red: 0, green: 0.8, blue: 0, alpha: 0.9), annotation: ProgressViewControllerString.normGraphAnnotation.rawValue), isAnimate: false)
+     
     }
     
     @objc func cigaretteNormChanged() {
-        progressView.moneyGraphView.reloadGraph(GraphSetup(points: [4, 2, 6, 4, 5, 8, 8], color: UIColor(red: 0, green: 0.8, blue: 0, alpha: 0.9), annotation: ProgressViewControllerString.normGraphAnnotation.rawValue), isAnimate: false)
+ 
     }
 }
 
@@ -97,6 +104,30 @@ extension ProgressViewController: ImagePickerDelegate {
             return
         }
         progressView.userImageView.setImage(image: image)
+    }
+}
+
+extension ProgressViewController: ProgressViewDelegate {
+    func showUserData(_ data: UserData) {
+        if let imageData = data.image as Data? {
+            if let image = UIImage(data: imageData){
+                progressView.userImageView.setImage(image: image)
+            }
+        }
+        
+        progressView.moneyBankPicker.setCountValue(data.moneyProgress.bank)
+        progressView.cigaretteBankPicker.setCountValue(data.cigaretteProgress.bank)
+        
+        
+        progressView.moneyNormView.setNormValue(data.moneyProgress.norm.last!)
+        progressView.cigaretteNormView.setNormValue(data.cigaretteProgress.norm.last!)
+        
+
+        
+        progressView.switchGraphs(newGraphs: [GraphSetup(points: data.moneyProgress.count, color: UIColor(white: 0.8, alpha: 0.9), annotation: ProgressViewControllerString.countGraphAnnotation.rawValue), GraphSetup(points: data.moneyProgress.norm, color: UIColor(red: 0, green: 0.8, blue: 0, alpha: 0.9), annotation: ProgressViewControllerString.normGraphAnnotation.rawValue)],.money)
+        
+        progressView.cigaretteGraphView.setGraphs([GraphSetup(points: data.cigaretteProgress.count, color: UIColor(white: 0.8, alpha: 0.9), annotation: ProgressViewControllerString.countGraphAnnotation.rawValue), GraphSetup(points: data.cigaretteProgress.norm, color: UIColor(red: 0, green: 0.8, blue: 0, alpha: 0.9), annotation: ProgressViewControllerString.normGraphAnnotation.rawValue)])
+        
     }
 }
 

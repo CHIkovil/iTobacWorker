@@ -8,12 +8,6 @@
 import Foundation
 import UIKit
 
-
-enum ProgressType {
-    case money
-    case cigarette
-}
-
 //MARK: STRING
 
 private enum ProgressViewString: String {
@@ -67,15 +61,15 @@ class ProgressView: UIView {
         return imageView
     }()
     
-    lazy var moneyBankPicker: UIBankPicker = {
-        let imageView = UIBankPicker()
+    lazy var moneyBankPicker: UICountPicker = {
+        let imageView = UICountPicker()
         imageView.image = UIImage(named: ProgressViewString.moneyBankImageName.rawValue)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
-    lazy var cigaretteBankPicker: UIBankPicker = {
-        let imageView = UIBankPicker()
+    lazy var cigaretteBankPicker: UICountPicker = {
+        let imageView = UICountPicker()
         imageView.image = UIImage(named: ProgressViewString.cigaretteBankImageName.rawValue)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -291,7 +285,8 @@ class ProgressView: UIView {
 //MARK: ANIMATION
 
 extension ProgressView {
-    func switchGraphs(_ setup: [GraphSetup], _ graphType: ProgressType){
+    func switchGraphs(newGraphs: [GraphSetup]?,_ graphType: ProgressType){
+        
         var fromButton: UIButton!
         var toButton: UIButton!
         var fromView: UIGraphView!
@@ -341,7 +336,7 @@ extension ProgressView {
             duration: 1,
             options: animationOptions,
             completion: {_ in
-                toView.showGraphs(setup)
+                toView.setGraphs(newGraphs)
                 UIView.animate(withDuration: 0.3){
                     toButton.alpha = 0.7
                     toButton.isUserInteractionEnabled = true
