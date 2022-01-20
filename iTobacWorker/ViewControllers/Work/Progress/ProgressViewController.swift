@@ -25,7 +25,7 @@ class ProgressViewController: UIViewController
     var imagePicker: ImagePicker!
     
     var progressView: ProgressView!
-    var progressStoreDelegate: ProgressStoreDelegate!
+    var progressStoreDelegate: (ProgressStoreDelegate & ProgressRecalculateDelegate)!
     
     // MARK: Object lifecycle
     
@@ -57,11 +57,15 @@ class ProgressViewController: UIViewController
         view = progressView
         
         self.imagePicker = ImagePicker(presentationController: self, delegate: self)
+        self.progressView.moneyBankPicker.delegate = self
+        self.progressView.cigaretteBankPicker.delegate = self
+        self.progressView.moneyNormPicker.delegate = self
+        self.progressView.cigaretteNormPicker.delegate = self
+        
         progressView.userImageView.addButtonGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didPressAddPhotoButton)))
         progressView.moneyGraphButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didPressMoneyGraphButton)))
         progressView.cigaretteGraphButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didPressCigaretteGraphButton)))
-        progressView.moneyNormView.addTextFieldTarget(target: self, action:  #selector(moneyNormChanged), event: .editingChanged)
-        progressView.cigaretteNormView.addTextFieldTarget(target: self, action:  #selector(cigaretteNormChanged), event: .editingChanged)
+       
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -84,14 +88,6 @@ class ProgressViewController: UIViewController
     
     @objc func didPressCigaretteGraphButton() {
         progressView.switchGraphs(newGraphs: nil, .cigarette)
-    }
-    
-    @objc func moneyNormChanged() {
-     
-    }
-    
-    @objc func cigaretteNormChanged() {
- 
     }
 }
 
@@ -119,15 +115,40 @@ extension ProgressViewController: ProgressViewDelegate {
         progressView.cigaretteBankPicker.setCountValue(data.cigaretteProgress.bank)
         
         
-        progressView.moneyNormView.setNormValue(data.moneyProgress.norm.last!)
-        progressView.cigaretteNormView.setNormValue(data.cigaretteProgress.norm.last!)
+        progressView.moneyNormPicker.setNormValue(data.moneyProgress.norm.last!)
+        progressView.cigaretteNormPicker.setNormValue(data.cigaretteProgress.norm.last!)
         
 
         
         progressView.switchGraphs(newGraphs: [GraphSetup(points: data.moneyProgress.count, color: UIColor(white: 0.8, alpha: 0.9), annotation: ProgressViewControllerString.countGraphAnnotation.rawValue), GraphSetup(points: data.moneyProgress.norm, color: UIColor(red: 0, green: 0.8, blue: 0, alpha: 0.9), annotation: ProgressViewControllerString.normGraphAnnotation.rawValue)],.money)
         
-        progressView.cigaretteGraphView.setGraphs([GraphSetup(points: data.cigaretteProgress.count, color: UIColor(white: 0.8, alpha: 0.9), annotation: ProgressViewControllerString.countGraphAnnotation.rawValue), GraphSetup(points: data.cigaretteProgress.norm, color: UIColor(red: 0, green: 0.8, blue: 0, alpha: 0.9), annotation: ProgressViewControllerString.normGraphAnnotation.rawValue)])
+        progressView.cigaretteGraphView.showGraphs([GraphSetup(points: data.cigaretteProgress.count, color: UIColor(white: 0.8, alpha: 0.9), annotation: ProgressViewControllerString.countGraphAnnotation.rawValue), GraphSetup(points: data.cigaretteProgress.norm, color: UIColor(red: 0, green: 0.8, blue: 0, alpha: 0.9), annotation: ProgressViewControllerString.normGraphAnnotation.rawValue)])
         
     }
 }
 
+extension ProgressViewController: UICountPickerDelegate {
+    func didCountValueChanged(_ value: Int, _ type: Any) {
+//        switch type {
+//        case ProgressType.money:
+//
+//        case ProgressType.cigarette:
+//
+//        default:
+//            return
+//        }
+    }
+}
+
+extension ProgressViewController: UINormPickerDelegate {
+    func didNormValueChanged(_ value: Int, _ type: Any) {
+//        switch type {
+//        case ProgressType.money:
+//            
+//        case ProgressType.cigarette:
+//            
+//        default:
+//            return
+//        }
+    }
+}

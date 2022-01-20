@@ -1,5 +1,5 @@
 //
-//  UINormView.swift
+//  UINormPicker.swift
 //  iTobacWorker
 //
 //  Created by Nikolas on 10.01.2022.
@@ -10,19 +10,19 @@ import UIKit
 
 //MARK: CONSTANTS
 
-private enum UINormViewConstants{
+private enum UINormPickerConstants{
     static let defTextSize: CGFloat = 28
 }
 
-//MARK: PROTOCOL
+// MARK: DELEGATE
 
-protocol UINormViewDelegate: AnyObject {
-    func editingEnd(_ value: Int)
+protocol UINormPickerDelegate: AnyObject {
+    func didNormValueChanged(_ toValue: Int, _ type: Any)
 }
 
-final class UINormView: UIView{
-    
-    weak var delegate: UINormViewDelegate?
+final class UINormPicker: UIView{
+    weak var delegate: UINormPickerDelegate?
+    var normType: Any?
     
     override func draw(_ rect: CGRect) {
         makeUI()
@@ -42,13 +42,12 @@ final class UINormView: UIView{
     
     private var viewWidth: CGFloat {self.frame.width}
     private var viewHeight: CGFloat {self.frame.height}
-    private var isWait: Bool = false
     
     //MARK: UI
  
     private lazy var inputTextField: UITextField = {
         let textField = UITextField()
-        textField.font = UIFont(name: GlobalString.fontName.rawValue, size: UINormViewConstants.defTextSize - 5)
+        textField.font = UIFont(name: GlobalString.fontName.rawValue, size: UINormPickerConstants.defTextSize - 5)
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = .clear
         textField.delegate = self
@@ -79,12 +78,22 @@ final class UINormView: UIView{
         
         let color = #colorLiteral(red: 0.1261322796, green: 0.1471925974, blue: 0.2156360745, alpha: 0.8)
         self.layer.drawBlockLayer(cornerWidth: 15,color: color)
+        
+        inputTextField.addTarget(self, action:  #selector(didNormChanged), for: .editingChanged)
+    }
+    
+    // MARK: OBJC
+    @objc func didNormChanged() {
+        guard let normType = normType, let normValue = Int(inputTextField.text!) else {
+            return
+        }
+        delegate?.didNormValueChanged(normValue, normType)
     }
 }
 
 //MARK: DELEGATE EXTENSION
 
-extension UINormView: UITextFieldDelegate {
+extension UINormPicker: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = textField.text else { return true }
         let allowedCharacters = CharacterSet.decimalDigits
@@ -94,6 +103,7 @@ extension UINormView: UITextFieldDelegate {
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.backgroundColor = #colorLiteral(red: 0.2277443409, green: 0.227789104, blue: 0.2277384698, alpha: 1)
         if (textField.text == "0"){
             textField.text = ""
         }
@@ -102,6 +112,7 @@ extension UINormView: UITextFieldDelegate {
             if (textField.text == ""){
                 textField.text = "0"
             }
+            textField.backgroundColor = .clear
             textField.resignFirstResponder()
         }
     }

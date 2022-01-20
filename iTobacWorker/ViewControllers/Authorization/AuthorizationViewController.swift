@@ -49,7 +49,7 @@ class AuthorizationViewController: UIViewController
 //MARK: DELEGATE EXTENSION
 
 extension AuthorizationViewController: UIAbbreviationDelegate{
-    func animateEnd() {
+    func didEndedAnimation() {
         authorizationView.showInputBoard()
     }
 }

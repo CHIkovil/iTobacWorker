@@ -10,9 +10,13 @@ import UIKit
 
 //MARK: DELEGATE
 
-protocol ProgressStoreDelegate: Any {
+protocol ProgressStoreDelegate: AnyObject {
     func saveUserData(_ data: UserData)
     func loadUserData()
+}
+
+protocol ProgressRecalculateDelegate: AnyObject {
+    func recalculateGraphData(_ currentData: GraphData)
 }
 
 //MARK: STRING
@@ -22,6 +26,7 @@ private enum ProgressPresenterString: String {
     case imageValueKey = "image"
     case cigaretteProgressValueKey = "cigaretteProgress"
     case moneyProgressValueKey = "moneyProgress"
+    case datesValueKey = "dates"
 }
 
 class ProgressPresenter
@@ -31,58 +36,146 @@ class ProgressPresenter
     init(delegate:ProgressViewDelegate){
         self.progressViewDelegate = delegate
     }
+    
+    private func requestUserData(callback: @escaping(NSManagedObject?) -> Void){
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: ProgressPresenterString.entityName.rawValue)
+        request.returnsObjectsAsFaults = false
+        
+        let result = (try? context.fetch(request) as? [NSManagedObject])?.first
+        callback(result)
+    }
+    
+    private func clearUserDataStore() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: ProgressPresenterString.entityName.rawValue)
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        
+        do {
+            try context.execute(deleteRequest)
+            appDelegate.saveContext()
+        } catch _ as NSError {
+            // TODO: handle the error
+        }
+    }
 }
 
+
+//MARK: ProgressStoreDelegate
 extension ProgressPresenter: ProgressStoreDelegate{
     
     func loadUserData() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
+        requestUserData() {[weak self] result in
+            guard let self = self else {return}
         
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: ProgressPresenterString.entityName.rawValue)
-        request.returnsObjectsAsFaults = false
-        
-        var data:UserData!
-        
-        switch (try? context.fetch(request) as? [NSManagedObject])?.first {
-        case (let result?):
-            if let image = result.value(forKey: ProgressPresenterString.imageValueKey.rawValue) as? NSData, let moneyProgress = result.value(forKey: ProgressPresenterString.moneyProgressValueKey.rawValue) as? NSProgressData, let cigaretteProgress = result.value(forKey: ProgressPresenterString.cigaretteProgressValueKey.rawValue) as? NSProgressData {
-                data = UserData(image: image, moneyProgress: moneyProgress, cigaretteProgress: cigaretteProgress)
-            }else{
-                fallthrough
+            var data:UserData!
+            
+            switch result{
+            case (let result?):
+                if let image = result.value(forKey: ProgressPresenterString.imageValueKey.rawValue) as? NSData, let moneyProgress = result.value(forKey: ProgressPresenterString.moneyProgressValueKey.rawValue) as? NSProgressData, let cigaretteProgress = result.value(forKey: ProgressPresenterString.cigaretteProgressValueKey.rawValue) as? NSProgressData, let dates = result.value(forKey: ProgressPresenterString.datesValueKey.rawValue) as? [String]{
+                    
+                    if (!dates.contains(Date().noon.ddMMyyyy)) {
+                        self.clearUserDataStore()
+                        fallthrough
+                    }
+                    data = UserData(image: image, moneyProgress: moneyProgress, cigaretteProgress: cigaretteProgress, dates: dates)
+                }else{
+                    fallthrough
+                }
+            default:
+                let dates = Date().daysOfWeek(using: .iso8601).map(\.ddMMyyyy)
+                data = UserData(image: nil, moneyProgress: NSProgressData(bank: 0, count: [Int](repeating: 0, count: 7), norm: [Int](repeating: 0, count: 7)), cigaretteProgress: NSProgressData(bank: 0, count: [Int](repeating: 0, count: 7), norm: [Int](repeating: 0, count: 7)), dates: dates)
             }
-        default:
-            data = UserData(image: nil, moneyProgress: NSProgressData(bank: 0, count: [Int](repeating: 0, count: 7), norm: [Int](repeating: 0, count: 7)), cigaretteProgress: NSProgressData(bank: 0, count: [Int](repeating: 0, count: 7), norm: [Int](repeating: 0, count: 7)))
+            
+            self.progressViewDelegate?.showUserData(data)
+            
         }
-        
-        progressViewDelegate?.showUserData(data)
     }
     
     func saveUserData(_ data: UserData) {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
-        
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: ProgressPresenterString.entityName.rawValue)
-        request.returnsObjectsAsFaults = false
-        
-    
-        switch (try? context.fetch(request) as? [NSManagedObject])?.first {
-        case (let result?):
-            result.setValue(data.image, forKey: ProgressPresenterString.imageValueKey.rawValue)
-            result.setValue(data.moneyProgress, forKey: ProgressPresenterString.moneyProgressValueKey.rawValue)
-            result.setValue(data.cigaretteProgress, forKey: ProgressPresenterString.cigaretteProgressValueKey.rawValue)
-        default:
-            let entity = NSEntityDescription.entity(forEntityName: ProgressPresenterString.entityName.rawValue, in: context)
-            let userData = NSManagedObject(entity: entity!, insertInto: context)
+        requestUserData() {result in
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let dates = Date().daysOfWeek(using: .iso8601).map(\.ddMMyyyy)
             
-            userData.setValue(data.image, forKey: ProgressPresenterString.imageValueKey.rawValue)
-            userData.setValue(data.moneyProgress, forKey: ProgressPresenterString.moneyProgressValueKey.rawValue)
-            userData.setValue(data.cigaretteProgress, forKey: ProgressPresenterString.cigaretteProgressValueKey.rawValue)
+            switch result{
+            case (let result?):
+                result.setValue(data.image, forKey: ProgressPresenterString.imageValueKey.rawValue)
+                result.setValue(data.moneyProgress, forKey: ProgressPresenterString.moneyProgressValueKey.rawValue)
+                result.setValue(data.cigaretteProgress, forKey: ProgressPresenterString.cigaretteProgressValueKey.rawValue)
+                result.setValue(dates, forKey: ProgressPresenterString.datesValueKey.rawValue)
+                
+            default:
+                let entity = NSEntityDescription.entity(forEntityName: ProgressPresenterString.entityName.rawValue, in: appDelegate.persistentContainer.viewContext)
+                let newUserData = NSManagedObject(entity: entity!, insertInto: appDelegate.persistentContainer.viewContext)
+                
+                newUserData.setValue(data.image, forKey: ProgressPresenterString.imageValueKey.rawValue)
+                newUserData.setValue(data.moneyProgress, forKey: ProgressPresenterString.moneyProgressValueKey.rawValue)
+                newUserData.setValue(data.cigaretteProgress, forKey: ProgressPresenterString.cigaretteProgressValueKey.rawValue)
+                newUserData.setValue(dates, forKey: ProgressPresenterString.datesValueKey.rawValue)
+            }
+            
+            appDelegate.saveContext()
         }
-   
-      
-        appDelegate.saveContext()
-       
     }
+}
+
+
+
+//MARK: ProgressRecalculateDelegate
+extension ProgressPresenter: ProgressRecalculateDelegate{
+    func recalculateGraphData(_ currentData: GraphData) {
+        
+    }
+}
+
+
+//MARK: EXTENSION
+private extension Date {
+    func byAdding(component: Calendar.Component, value: Int, wrappingComponents: Bool = false, using calendar: Calendar = .current) -> Date? {
+        calendar.date(byAdding: component, value: value, to: self, wrappingComponents: wrappingComponents)
+    }
+    
+    func dateComponents(_ components: Set<Calendar.Component>, using calendar: Calendar = .current) -> DateComponents {
+        calendar.dateComponents(components, from: self)
+    }
+    
+    func startOfWeek(using calendar: Calendar = .current) -> Date {
+        calendar.date(from: dateComponents([.yearForWeekOfYear, .weekOfYear], using: calendar))!
+    }
+    
+    var noon: Date {
+        let gmtHour: Int = TimeZone.current.secondsFromGMT() / 3600
+        let hour = Calendar.current.component(.hour, from: self)
+        let minute = Calendar.current.component(.minute, from: self)
+        let second = Calendar.current.component(.second, from: self)
+        return Calendar.current.date(bySettingHour: gmtHour + hour, minute: minute, second: second, of: self)!
+    }
+    
+    func daysOfWeek(using calendar: Calendar = .current) -> [Date] {
+            let startOfWeek = self.startOfWeek(using: calendar).noon
+            return (0...6).map { startOfWeek.byAdding(component: .day, value: $0, using: calendar)! }
+        }
+}
+
+private extension Formatter {
+    static let ddMMyyyy: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.calendar = Calendar(identifier: .iso8601)
+        dateFormatter.dateFormat = "dd.MM.yyyy"
+        return dateFormatter
+    }()
+}
+
+private extension Date {
+    var ddMMyyyy: String { Formatter.ddMMyyyy.string(from: self) }
+}
+
+private extension Calendar {
+    static let iso8601 = Calendar(identifier: .iso8601)
+    static let gregorian = Calendar(identifier: .gregorian)
 }
 

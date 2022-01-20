@@ -16,7 +16,7 @@
 		17003045275D85AB0093DAC3 /* AuthorizationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1700303E275D85AB0093DAC3 /* AuthorizationView.swift */; };
 		1711EF3E2780E2620089E07D /* GraphModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1711EF3D2780E2620089E07D /* GraphModels.swift */; };
 		1711EF4327877D620089E07D /* money.png in Resources */ = {isa = PBXBuildFile; fileRef = 1711EF4227877D620089E07D /* money.png */; };
-		175DED53278C750600C10DAB /* UINormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175DED52278C750600C10DAB /* UINormView.swift */; };
+		175DED53278C750600C10DAB /* UINormPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175DED52278C750600C10DAB /* UINormPicker.swift */; };
 		176E82822775361100B73B0A /* TextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176E82812775361100B73B0A /* TextFieldExtension.swift */; };
 		176E82842779F7FD00B73B0A /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 176E82832779F7FD00B73B0A /* plus.png */; };
 		17AE64A1278791F8003820EC /* cigarettes.png in Resources */ = {isa = PBXBuildFile; fileRef = 17AE64A0278791F8003820EC /* cigarettes.png */; };
@@ -59,7 +59,7 @@
 		1700303E275D85AB0093DAC3 /* AuthorizationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationView.swift; sourceTree = "<group>"; };
 		1711EF3D2780E2620089E07D /* GraphModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphModels.swift; sourceTree = "<group>"; };
 		1711EF4227877D620089E07D /* money.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = money.png; sourceTree = "<group>"; };
-		175DED52278C750600C10DAB /* UINormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINormView.swift; sourceTree = "<group>"; };
+		175DED52278C750600C10DAB /* UINormPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINormPicker.swift; sourceTree = "<group>"; };
 		176E82812775361100B73B0A /* TextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldExtension.swift; sourceTree = "<group>"; };
 		176E82832779F7FD00B73B0A /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
 		17AE64A0278791F8003820EC /* cigarettes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cigarettes.png; sourceTree = "<group>"; };
@@ -143,7 +143,7 @@
 				17003034275D84F70093DAC3 /* UIWorkTabBar.swift */,
 				17F1D192276698F200C76A01 /* UICountPicker.swift */,
 				1711EF3C2780E2330089E07D /* GraphView */,
-				175DED52278C750600C10DAB /* UINormView.swift */,
+				175DED52278C750600C10DAB /* UINormPicker.swift */,
 			);
 			path = CustomUI;
 			sourceTree = "<group>";
@@ -421,7 +421,7 @@
 				17003045275D85AB0093DAC3 /* AuthorizationView.swift in Sources */,
 				17003038275D84F70093DAC3 /* UIAbbreviationLabel.swift in Sources */,
 				17F90EE3275D8050002D03CD /* iTobacWorker.xcdatamodeld in Sources */,
-				175DED53278C750600C10DAB /* UINormView.swift in Sources */,
+				175DED53278C750600C10DAB /* UINormPicker.swift in Sources */,
 				17003037275D84F70093DAC3 /* UIWorkTabBar.swift in Sources */,
 				17FB368D27626F3A0046F6E0 /* UIUserImageView.swift in Sources */,
 				17003036275D84F70093DAC3 /* UIWakeUpTextField.swift in Sources */,

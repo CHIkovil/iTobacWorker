@@ -21,8 +21,16 @@ private enum UICountPickerConstants{
     static let defTextSize: CGFloat = 28
 }
 
+// MARK: DELEGATE
+
+protocol UICountPickerDelegate: AnyObject {
+    func didCountValueChanged(_ toValue: Int, _ type: Any)
+}
+
 final class UICountPicker: UIView{
+    weak var delegate: UICountPickerDelegate?
     var image: UIImage?
+    var countType: Any?
     
     override func draw(_ rect: CGRect) {
         makeUI()
@@ -34,14 +42,15 @@ final class UICountPicker: UIView{
     }
     
     //MARK: setCountValue
-    func setCountValue(_ newValue: Int){
+    func setCountValue(_ currentValue: Int){
         countLabel.text = "\(0)"
-        addCountValue(value: newValue)
+        addCountValue(value: currentValue)
     }
     
     //MARK: PRIVATE
     private var viewWidth: CGFloat {self.frame.width}
     private var viewHeight: CGFloat {self.frame.height}
+    private var countValue: Int = 0
     
     //MARK: UI
     
@@ -156,10 +165,16 @@ final class UICountPicker: UIView{
         if let number = NumberFormatter().number(from: countLabel.text!) {
             let oldValue = Int(truncating: number)
             countLabel.text = "\(oldValue + newValue)"
+            countValue += newValue
         }
         
         imageView.animateShake()
         countLabel.animateDrop()
+        
+        guard let countType = countType else {
+            return
+        }
+        delegate?.didCountValueChanged(countValue, countType)
     }
     
     private func switchInputState(_ isEnabled: Bool){

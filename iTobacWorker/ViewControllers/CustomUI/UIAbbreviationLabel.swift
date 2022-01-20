@@ -27,7 +27,7 @@ private enum UIAbbreviationLabelConstants{
 // MARK: DELEGATE
 
 protocol UIAbbreviationDelegate: AnyObject {
-    func animateEnd()
+    func didEndedAnimation()
 }
 
 final class UIAbbreviationLabel: UIView {
@@ -187,8 +187,7 @@ private extension UIAbbreviationLabel {
             guard let self = self else{return}
             self.cigaretteImageView.alpha = 0.9
         }, completion: { _ in
-            guard let delegate = delegate else {return}
-            delegate.animateEnd()
+            delegate?.didEndedAnimation()
         })
     }
     

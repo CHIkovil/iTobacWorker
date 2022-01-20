@@ -23,22 +23,21 @@ class WorkTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         makeUI()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
+        
         workTabBar.infoButton.addTarget(self, action: #selector(didPressInfoButton), for: .touchUpInside)
         workTabBar.searchButton.addTarget(self, action: #selector(didPressSearchButton), for: .touchUpInside)
         workTabBar.progressButton.addTarget(self, action: #selector(didPressProgressButton), for: .touchUpInside)
         
         self.view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(swipeViewController)))
-        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         workTabBar.selectItem(at: selectedIndex)
     }
     
     //MARK: SUPPORT FUNC
     
     func makeUI(){
-        
         let tabBar = UIWorkTabBar()
         self.workTabBar = tabBar
         self.setValue(tabBar, forKey: WorkTabBarControllerString.valueKey.rawValue)
