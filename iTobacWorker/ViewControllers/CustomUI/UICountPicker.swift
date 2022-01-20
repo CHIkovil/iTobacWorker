@@ -142,6 +142,24 @@ final class UICountPicker: UIView{
         }
     }
     
+    // MARK: OBJC
+    
+    @objc func didPressImage() {
+        addCountValue(value: 1)
+    }
+    
+    @objc func didLongPressImage() {
+        imageView.layer.addPulseAnimation()
+        switchInputState(true)
+    }
+    
+    @objc func didPressInputButton() {
+        guard let text = inputTextField.text else {return}
+        switchInputState(false)
+        guard let value = Int(text) else {return}
+        addCountValue(value: value)
+    }
+    
     
     //MARK: SUPPORT FUNC
     
@@ -183,23 +201,6 @@ final class UICountPicker: UIView{
         self.inputButton.isUserInteractionEnabled = isEnabled
         self.imageView.isUserInteractionEnabled = !isEnabled
         animateInputState(alpha: isEnabled ? 1 : 0)
-    }
-    
-    // MARK: OBJC
-    @objc func didPressImage() {
-        addCountValue(value: 1)
-    }
-    
-    @objc func didLongPressImage() {
-        imageView.layer.addPulseAnimation()
-        switchInputState(true)
-    }
-    
-    @objc func didPressInputButton() {
-        guard let text = inputTextField.text else {return}
-        switchInputState(false)
-        guard let value = Int(text) else {return}
-        addCountValue(value: value)
     }
 }
 

@@ -16,7 +16,7 @@ protocol ProgressStoreDelegate: AnyObject {
 }
 
 protocol ProgressRecalculateDelegate: AnyObject {
-    func recalculateGraphData(_ currentData: GraphData)
+    func recalculateGraphData(newValue: Int, _ data: GraphData)
 }
 
 //MARK: STRING
@@ -127,8 +127,12 @@ extension ProgressPresenter: ProgressStoreDelegate{
 
 //MARK: ProgressRecalculateDelegate
 extension ProgressPresenter: ProgressRecalculateDelegate{
-    func recalculateGraphData(_ currentData: GraphData) {
-        
+    func recalculateGraphData(newValue: Int, _ data: GraphData) {
+        var newData = data
+        let currentDate = Date().noon.ddMMyyyy
+        let pointIndex = Date().daysOfWeek(using: .iso8601).map(\.ddMMyyyy).firstIndex {$0 == currentDate}
+        newData.setup.points[pointIndex!] = newValue
+        progressViewDelegate?.showUpdatedGraph(newData)
     }
 }
 

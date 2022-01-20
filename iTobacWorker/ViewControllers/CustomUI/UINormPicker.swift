@@ -70,6 +70,15 @@ final class UINormPicker: UIView{
         }
     }
     
+    // MARK: OBJC
+    
+    @objc func didNormChanged() {
+        guard let normType = normType, let normValue = Int(inputTextField.text!) else {
+            return
+        }
+        delegate?.didNormValueChanged(normValue, normType)
+    }
+    
     //MARK: SUPPORT FUNC
     
     private func makeUI(){
@@ -82,13 +91,7 @@ final class UINormPicker: UIView{
         inputTextField.addTarget(self, action:  #selector(didNormChanged), for: .editingChanged)
     }
     
-    // MARK: OBJC
-    @objc func didNormChanged() {
-        guard let normType = normType, let normValue = Int(inputTextField.text!) else {
-            return
-        }
-        delegate?.didNormValueChanged(normValue, normType)
-    }
+ 
 }
 
 //MARK: DELEGATE EXTENSION
@@ -108,7 +111,7 @@ extension UINormPicker: UITextFieldDelegate {
             textField.text = ""
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             if (textField.text == ""){
                 textField.text = "0"
             }

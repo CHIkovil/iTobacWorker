@@ -289,7 +289,7 @@ class ProgressView: UIView {
 //MARK: ANIMATION
 
 extension ProgressView {
-    func switchGraphs(newGraphs: [GraphSetup]?,_ graphType: ProgressType){
+    func switchGraphs(_ newGraphs: [GraphSetup]?,_ graphType: ProgressType){
         var fromButton: UIButton!
         var toButton: UIButton!
         var fromView: UIGraphView!
@@ -339,7 +339,7 @@ extension ProgressView {
             duration: 1,
             options: animationOptions,
             completion: {_ in
-                toView.showGraphs(newGraphs)
+                toView.setGraphs(newGraphs)
                 UIView.animate(withDuration: 0.3){
                     toButton.alpha = 0.7
                     toButton.isUserInteractionEnabled = true

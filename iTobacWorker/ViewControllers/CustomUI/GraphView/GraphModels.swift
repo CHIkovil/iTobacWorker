@@ -10,7 +10,7 @@ import UIKit
 
 enum GraphModels {
     struct GraphSetup: Hashable{
-        let points: [Int]
+        var points: [Int]
         let color: UIColor
         let annotation: String
         var viewSetup: ViewSetup?

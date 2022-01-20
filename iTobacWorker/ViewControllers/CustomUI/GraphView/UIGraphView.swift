@@ -42,8 +42,8 @@ final class UIGraphView: UIView {
         showGraph(setup)
     }
     
-    //MARK: showGraphs
-    func showGraphs(_ newSetups: [GraphSetup]?) {
+    //MARK: setGraphs
+    func setGraphs(_ newSetups: [GraphSetup]?) {
         if let setups = newSetups {
             if (setups.isEmpty) {return}
             if (!checkGraphsMaxValue(setups)) {return}

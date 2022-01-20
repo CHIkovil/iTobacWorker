@@ -19,17 +19,11 @@ enum ProgressModels
     struct GraphData {
         var setup: GraphSetup
         let progress: ProgressType
-        let type: GraphType
     }
     
     enum ProgressType {
         case money
         case cigarette
-    }
-    
-    enum GraphType {
-        case count
-        case norm
     }
 }
 
@@ -60,5 +54,4 @@ class NSProgressData: NSObject, NSCoding {
 
 typealias UserData = ProgressModels.UserData
 typealias ProgressType = ProgressModels.ProgressType
-typealias GraphType = ProgressModels.GraphType
 typealias GraphData = ProgressModels.GraphData
