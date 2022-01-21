@@ -7,13 +7,6 @@
 
 import UIKit
 
-// MARK: STRING
-
-private enum ProgressViewControllerString: String {
-    case normGraphAnnotation = "Norm"
-    case countGraphAnnotation = "Count"
-}
-
 // MARK: DELEGATE
 
 protocol ProgressViewDelegate: AnyObject{
@@ -76,13 +69,13 @@ class ProgressViewController: UIViewController
         progressDelegate.loadUserData()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.saveAllData()
-//        DispatchQueue.main.async { [weak self] in
-//            guard let self = self else{return}
-//
-//        }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else{return}
+            self.saveAllData()
+        }
     }
     
     // MARK: OBJC
@@ -102,16 +95,17 @@ class ProgressViewController: UIViewController
     
     //MARK: SUPPORT FUNC
     
-    private func switchRecalculateGraphData(_ newValue: Int, _ type: Any, _ annotation: String) {
-        switch type {
+    private func switchRecalculateGraphData(_ newValue: Int, progressType: Any, graphType: GraphType) {
+        
+        switch progressType {
         case ProgressType.money:
             guard let currentGraphSetups = progressView.moneyGraphView.getCurrentGraphSetups() else {return}
-            guard let countGraphSetup = (currentGraphSetups.filter {$0.annotation == annotation}).first else {return}
-            progressDelegate.recalculateGraphData(newValue: newValue, GraphData(setup: countGraphSetup, progress: .money))
+            guard let graphSetup = currentGraphSetups[graphType.rawValue] else {return}
+            progressDelegate.recalculateGraphData(newValue: newValue, GraphData(setup: graphSetup, progressType: .money, graphType: graphType))
         case ProgressType.cigarette:
             guard let currentGraphSetups = progressView.cigaretteGraphView.getCurrentGraphSetups() else {return}
-            guard let countGraphSetup = (currentGraphSetups.filter {$0.annotation == annotation}).first else {return}
-            progressDelegate.recalculateGraphData(newValue: newValue, GraphData(setup: countGraphSetup, progress: .cigarette))
+            guard let countGraphSetup = currentGraphSetups[graphType.rawValue]  else {return}
+            progressDelegate.recalculateGraphData(newValue: newValue, GraphData(setup: countGraphSetup, progressType: .cigarette, graphType: graphType))
         default:
             return
         }
@@ -124,10 +118,10 @@ class ProgressViewController: UIViewController
               let moneyGraphSetups = progressView.moneyGraphView.getCurrentGraphSetups(),
               let cigaretteGraphSetup = progressView.cigaretteGraphView.getCurrentGraphSetups() else{return}
               
-        guard let moneyCountPoints = (moneyGraphSetups.filter {$0.annotation == ProgressViewControllerString.countGraphAnnotation.rawValue}).first?.points,
-              let moneyNormPoints = (moneyGraphSetups.filter {$0.annotation == ProgressViewControllerString.normGraphAnnotation.rawValue}).first?.points,
-              let cigarettCountPoints = (cigaretteGraphSetup.filter {$0.annotation == ProgressViewControllerString.countGraphAnnotation.rawValue}).first?.points,
-              let cigarettNormPoints = (cigaretteGraphSetup.filter {$0.annotation == ProgressViewControllerString.normGraphAnnotation.rawValue}).first?.points else{return}
+        guard let moneyCountPoints = moneyGraphSetups[GraphType.count.rawValue]?.points ,
+              let moneyNormPoints = moneyGraphSetups[GraphType.norm.rawValue]?.points,
+              let cigarettCountPoints = cigaretteGraphSetup[GraphType.count.rawValue]?.points,
+              let cigarettNormPoints = cigaretteGraphSetup[GraphType.norm.rawValue]?.points else{return}
                 
         let moneyProgress = NSProgressData(bank: moneyBank, count: moneyCountPoints, norm: moneyNormPoints)
         let cigaretteProgress = NSProgressData(bank: cigaretteBank, count: cigarettCountPoints, norm: cigarettNormPoints)
@@ -150,7 +144,7 @@ extension ProgressViewController: ImagePickerDelegate {
 
 extension ProgressViewController: ProgressViewDelegate {
     func showUpdatedGraph(_ data: GraphData) {
-        switch data.progress {
+        switch data.progressType {
         case .money:
             progressView.moneyGraphView.updateGraph(data.setup)
         case .cigarette:
@@ -169,26 +163,37 @@ extension ProgressViewController: ProgressViewDelegate {
         progressView.cigaretteBankPicker.setStorageValue(data.cigaretteProgress.bank)
         
         
-        progressView.moneyNormPicker.setNormValue(data.moneyProgress.norm.last!)
-        progressView.cigaretteNormPicker.setNormValue(data.cigaretteProgress.norm.last!)
+    
+        progressView.moneyNormPicker.setNormValue(data.moneyProgress.norm.lastPositive ?? 0)
+        progressView.cigaretteNormPicker.setNormValue(data.cigaretteProgress.norm.lastPositive ?? 0)
         
 
-        progressView.switchGraphs([GraphSetup(points: data.moneyProgress.count, color: UIColor(white: 0.8, alpha: 0.9), annotation: ProgressViewControllerString.countGraphAnnotation.rawValue), GraphSetup(points: data.moneyProgress.norm, color: UIColor(red: 0, green: 0.8, blue: 0, alpha: 0.9), annotation: ProgressViewControllerString.normGraphAnnotation.rawValue)], .money)
+        progressView.switchGraphs([GraphSetup(points: data.moneyProgress.count, color: UIColor(white: 0.8, alpha: 0.9), annotation: GraphType.count.rawValue), GraphSetup(points: data.moneyProgress.norm, color: UIColor(red: 0, green: 0.8, blue: 0, alpha: 0.9), annotation: GraphType.norm.rawValue)], .money)
         
-        progressView.cigaretteGraphView.setGraphs([GraphSetup(points: data.cigaretteProgress.count, color: UIColor(white: 0.8, alpha: 0.9), annotation: ProgressViewControllerString.countGraphAnnotation.rawValue), GraphSetup(points: data.cigaretteProgress.norm, color: UIColor(red: 0, green: 0.8, blue: 0, alpha: 0.9), annotation: ProgressViewControllerString.normGraphAnnotation.rawValue)])
+        progressView.cigaretteGraphView.setGraphs([GraphSetup(points: data.cigaretteProgress.count, color: UIColor(white: 0.8, alpha: 0.9), annotation: GraphType.count.rawValue), GraphSetup(points: data.cigaretteProgress.norm, color: UIColor(red: 0, green: 0.8, blue: 0, alpha: 0.9), annotation: GraphType.norm.rawValue)])
         
     }
 }
 
 extension ProgressViewController: UICountPickerDelegate {
     func didCountValueChanged(_ newValue: Int, _ type: Any) {
-        switchRecalculateGraphData(newValue, type, ProgressViewControllerString.countGraphAnnotation.rawValue)
+        switchRecalculateGraphData(newValue, progressType: type, graphType: .count)
     }
 }
 
 extension ProgressViewController: UINormPickerDelegate {
     func didNormValueChanged(_ newValue: Int, _ type: Any) {
-        switchRecalculateGraphData(newValue, type, ProgressViewControllerString.normGraphAnnotation.rawValue)
+        switchRecalculateGraphData(newValue, progressType: type, graphType: .norm)
     }
 }
 
+private extension Array where Element == Int  {
+    var lastPositive: Element? {
+        for number in reversed() {
+             if number > 0 {
+                 return number
+             }
+         }
+         return nil
+     }
+}

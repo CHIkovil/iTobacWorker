@@ -20,7 +20,7 @@ enum GraphModels {
         }
         
         static func == (lhs: GraphModels.GraphSetup, rhs: GraphModels.GraphSetup) -> Bool {
-            return lhs.points == rhs.points && lhs.annotation == rhs.annotation
+            return lhs.annotation == rhs.annotation
         }
     }
     

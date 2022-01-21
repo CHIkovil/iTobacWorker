@@ -28,6 +28,7 @@ final class UINormPicker: UIView{
         makeUI()
     }
     
+    
     // MARK: addTextFieldTarget
     func addTextFieldTarget(target: Any?, action: Selector, event: UIControl.Event){
         inputTextField.addTarget(target, action: action, for: event)
@@ -44,12 +45,12 @@ final class UINormPicker: UIView{
     private var viewHeight: CGFloat {self.frame.height}
     
     //MARK: UI
- 
+    
     private lazy var inputTextField: UITextField = {
         let textField = UITextField()
         textField.font = UIFont(name: GlobalString.fontName.rawValue, size: UINormPickerConstants.defTextSize - 5)
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.backgroundColor = .clear
+        textField.backgroundColor = #colorLiteral(red: 0.2277443409, green: 0.227789104, blue: 0.2277384698, alpha: 1)
         textField.delegate = self
         textField.textColor = #colorLiteral(red: 0, green: 0.7445449233, blue: 0.0140819503, alpha: 1)
         textField.layer.cornerRadius = 10
@@ -90,8 +91,6 @@ final class UINormPicker: UIView{
         
         inputTextField.addTarget(self, action:  #selector(didNormChanged), for: .editingChanged)
     }
-    
- 
 }
 
 //MARK: DELEGATE EXTENSION
@@ -106,17 +105,15 @@ extension UINormPicker: UITextFieldDelegate {
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.backgroundColor = #colorLiteral(red: 0.2277443409, green: 0.227789104, blue: 0.2277384698, alpha: 1)
-        if (textField.text == "0"){
-            textField.text = ""
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            if (textField.text == ""){
-                textField.text = "0"
-            }
-            textField.backgroundColor = .clear
-            textField.resignFirstResponder()
-        }
-    }
+         if (textField.text == "0"){
+             textField.text = ""
+         }
+         
+         DispatchQueue.main.asyncAfter(deadline: .now() + 7.0) {
+             if (textField.text == ""){
+                 textField.text = "0"
+             }
+             textField.resignFirstResponder()
+         }
+     }
 }

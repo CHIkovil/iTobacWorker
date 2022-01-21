@@ -131,7 +131,14 @@ extension ProgressPresenter: ProgressRecalculateDelegate{
         var newData = data
         let currentDate = Date().noon.ddMMyyyy
         let pointIndex = Date().daysOfWeek(using: .iso8601).map(\.ddMMyyyy).firstIndex {$0 == currentDate}
-        newData.setup.points[pointIndex!] = newValue
+        
+        switch data.graphType{
+        case .count:
+            newData.setup.points[pointIndex!] += newValue
+        case .norm:
+            newData.setup.points[pointIndex!] = newValue
+        }
+        
         progressViewDelegate?.showUpdatedGraph(newData)
     }
 }
@@ -152,11 +159,7 @@ private extension Date {
     }
     
     var noon: Date {
-        let gmtHour: Int = TimeZone.current.secondsFromGMT() / 3600
-        let hour = Calendar.current.component(.hour, from: self)
-        let minute = Calendar.current.component(.minute, from: self)
-        let second = Calendar.current.component(.second, from: self)
-        return Calendar.current.date(bySettingHour: gmtHour + hour, minute: minute, second: second, of: self)!
+        return Calendar.current.dateComponents([.day, .month, .year, .calendar], from: self).date!
     }
     
     func daysOfWeek(using calendar: Calendar = .current) -> [Date] {

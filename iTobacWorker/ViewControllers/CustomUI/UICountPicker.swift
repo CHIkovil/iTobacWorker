@@ -43,8 +43,7 @@ final class UICountPicker: UIView{
     
     //MARK: setStorageValue
     func setStorageValue(_ currentValue: Int){
-        storageLabel.text = "\(0)"
-        addCountValue(value: currentValue)
+        storageLabel.text = "\(currentValue)"
     }
     
     //MARK: getStorageValue
@@ -56,7 +55,6 @@ final class UICountPicker: UIView{
     //MARK: PRIVATE
     private var viewWidth: CGFloat {self.frame.width}
     private var viewHeight: CGFloat {self.frame.height}
-    private var countValue: Int = 0
     
     //MARK: UI
     
@@ -189,7 +187,6 @@ final class UICountPicker: UIView{
         if let number = NumberFormatter().number(from: storageLabel.text!) {
             let oldValue = Int(truncating: number)
             storageLabel.text = "\(oldValue + newValue)"
-            countValue += newValue
         }
         
         imageView.animateShake()
@@ -198,7 +195,7 @@ final class UICountPicker: UIView{
         guard let countType = countType else {
             return
         }
-        delegate?.didCountValueChanged(countValue, countType)
+        delegate?.didCountValueChanged(newValue, countType)
     }
     
     private func switchInputState(_ isEnabled: Bool){
@@ -207,6 +204,7 @@ final class UICountPicker: UIView{
         self.inputButton.isUserInteractionEnabled = isEnabled
         self.imageView.isUserInteractionEnabled = !isEnabled
         animateInputState(alpha: isEnabled ? 1 : 0)
+        inputTextField.text = ""
     }
 }
 

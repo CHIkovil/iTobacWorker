@@ -59,8 +59,14 @@ final class UIGraphView: UIView {
     }
     
     //MARK: getCurrentGraphSetups
-    func getCurrentGraphSetups() -> [GraphSetup]?{
-        return currentGraphSetups
+    func getCurrentGraphSetups() -> Dictionary<String, GraphSetup>?{
+        guard let currentGraphSetups = self.currentGraphSetups else{return nil}
+        
+        var result = Dictionary<String, GraphSetup>()
+        currentGraphSetups.forEach { setup in
+            result[setup.annotation] = setup
+        }
+        return result
     }
     
     
@@ -81,7 +87,7 @@ final class UIGraphView: UIView {
     }()
     
     private lazy var maxValueLabel: UILabel = {
-        let label = UILabel(frame: CGRect(x: viewWidth - UIGraphViewConstants.margin + 2, y: UIGraphViewConstants.topBorder - viewHeight * 0.05, width: viewWidth * 0.3, height: viewHeight * 0.1))
+        let label = UILabel(frame: CGRect(x: viewWidth - UIGraphViewConstants.margin + 2, y: UIGraphViewConstants.topBorder - viewHeight * 0.05, width: viewWidth * 0.2, height: viewHeight * 0.1))
         label.font = UIFont(name: GlobalString.fontName.rawValue, size: UIGraphViewConstants.defTextSize)
         label.backgroundColor = .clear
         label.textColor = .lightGray
@@ -97,7 +103,6 @@ final class UIGraphView: UIView {
     private lazy var annotationStackView: UIStackView = {
         let view = UIStackView(frame: CGRect(x: UIGraphViewConstants.margin, y: UIGraphViewConstants.topBorder - viewHeight * 0.1 - 10, width: viewWidth - 2 * UIGraphViewConstants.margin, height: viewHeight * 0.1))
         view.backgroundColor = .clear
-        view.alignment = .fill
         return view
     }()
     
@@ -164,7 +169,9 @@ final class UIGraphView: UIView {
         }
         
         label.layer.sublayers?.first?.addActivationAnimation()
-        self.annotationStackView.addArrangedSubview(label)
+        
+        let index = currentGraphSetups?.firstIndex(of: setup)
+        self.annotationStackView.insertArrangedSubview(label, at: index!)
     }
     
     private func showGraph(_ setup: GraphSetup) {
