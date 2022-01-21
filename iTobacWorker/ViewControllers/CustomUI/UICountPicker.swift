@@ -41,10 +41,16 @@ final class UICountPicker: UIView{
         imageView.animateShake()
     }
     
-    //MARK: setCountValue
-    func setCountValue(_ currentValue: Int){
-        countLabel.text = "\(0)"
+    //MARK: setStorageValue
+    func setStorageValue(_ currentValue: Int){
+        storageLabel.text = "\(0)"
         addCountValue(value: currentValue)
+    }
+    
+    //MARK: getStorageValue
+    func getStorageValue() -> Int?{
+        guard let text = storageLabel.text else{return nil}
+        return Int(text)
     }
     
     //MARK: PRIVATE
@@ -64,7 +70,7 @@ final class UICountPicker: UIView{
         return imageView
     }()
     
-    private lazy var countLabel: UILabel = {
+    private lazy var storageLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: GlobalString.fontName.rawValue, size: UICountPickerConstants.defTextSize)
         label.text = "\(0)"
@@ -115,8 +121,8 @@ final class UICountPicker: UIView{
         }
     }
     
-    private func constraintsCountLabel() {
-        countLabel.snp.makeConstraints {(make) -> Void in
+    private func constraintsStorageLabel() {
+        storageLabel.snp.makeConstraints {(make) -> Void in
             make.height.equalTo(viewHeight * 0.21)
             make.width.equalTo(viewWidth * 0.9)
             make.top.equalTo(imageView.snp.bottom).offset(5)
@@ -128,8 +134,8 @@ final class UICountPicker: UIView{
         inputTextField.snp.makeConstraints {(make) -> Void in
             make.height.equalTo(viewHeight * 0.19)
             make.width.equalTo(viewWidth * 0.55)
-            make.centerX.equalTo(countLabel.snp.centerX).offset(-5)
-            make.centerY.equalTo(countLabel.snp.centerY)
+            make.centerX.equalTo(storageLabel.snp.centerX).offset(-5)
+            make.centerY.equalTo(storageLabel.snp.centerY)
         }
     }
     
@@ -165,11 +171,11 @@ final class UICountPicker: UIView{
     
     private func makeUI(){
         self.addSubview(imageView)
-        self.addSubview(countLabel)
+        self.addSubview(storageLabel)
         self.addSubview(inputTextField)
         self.addSubview(inputButton)
         constraintsImageView()
-        constraintsCountLabel()
+        constraintsStorageLabel()
         constraintsInputTextField()
         constraintsInputButton()
         
@@ -180,14 +186,14 @@ final class UICountPicker: UIView{
     }
     
     private func addCountValue(value newValue: Int){
-        if let number = NumberFormatter().number(from: countLabel.text!) {
+        if let number = NumberFormatter().number(from: storageLabel.text!) {
             let oldValue = Int(truncating: number)
-            countLabel.text = "\(oldValue + newValue)"
+            storageLabel.text = "\(oldValue + newValue)"
             countValue += newValue
         }
         
         imageView.animateShake()
-        countLabel.animateDrop()
+        storageLabel.animateDrop()
         
         guard let countType = countType else {
             return
@@ -196,7 +202,7 @@ final class UICountPicker: UIView{
     }
     
     private func switchInputState(_ isEnabled: Bool){
-        self.countLabel.alpha = isEnabled ? 0 : 1
+        self.storageLabel.alpha = isEnabled ? 0 : 1
         self.inputTextField.isUserInteractionEnabled = isEnabled
         self.inputButton.isUserInteractionEnabled = isEnabled
         self.imageView.isUserInteractionEnabled = !isEnabled

@@ -7,18 +7,18 @@
 
 import UIKit
 
-// MARK: DELEGATE
-
-protocol ProgressViewDelegate: AnyObject{
-    func showUserData(_ data: UserData)
-    func showUpdatedGraph(_ data: GraphData)
-}
-
 // MARK: STRING
 
 private enum ProgressViewControllerString: String {
     case normGraphAnnotation = "Norm"
     case countGraphAnnotation = "Count"
+}
+
+// MARK: DELEGATE
+
+protocol ProgressViewDelegate: AnyObject{
+    func showUserData(_ data: UserData)
+    func showUpdatedGraph(_ data: GraphData)
 }
 
 class ProgressViewController: UIViewController
@@ -66,7 +66,7 @@ class ProgressViewController: UIViewController
         progressView.userImageView.addButtonGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didPressAddPhotoButton)))
         progressView.moneyGraphButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didPressMoneyGraphButton)))
         progressView.cigaretteGraphButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didPressCigaretteGraphButton)))
-       
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -74,6 +74,15 @@ class ProgressViewController: UIViewController
         progressView.moneyBankPicker.animateAttention()
         progressView.cigaretteBankPicker.animateAttention()
         progressDelegate.loadUserData()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.saveAllData()
+//        DispatchQueue.main.async { [weak self] in
+//            guard let self = self else{return}
+//
+//        }
     }
     
     // MARK: OBJC
@@ -107,6 +116,24 @@ class ProgressViewController: UIViewController
             return
         }
     }
+    
+    private func saveAllData(){
+        guard let imageData = progressView.userImageView.getImageData(),
+              let moneyBank = progressView.moneyBankPicker.getStorageValue(),
+              let cigaretteBank = progressView.cigaretteBankPicker.getStorageValue(),
+              let moneyGraphSetups = progressView.moneyGraphView.getCurrentGraphSetups(),
+              let cigaretteGraphSetup = progressView.cigaretteGraphView.getCurrentGraphSetups() else{return}
+              
+        guard let moneyCountPoints = (moneyGraphSetups.filter {$0.annotation == ProgressViewControllerString.countGraphAnnotation.rawValue}).first?.points,
+              let moneyNormPoints = (moneyGraphSetups.filter {$0.annotation == ProgressViewControllerString.normGraphAnnotation.rawValue}).first?.points,
+              let cigarettCountPoints = (cigaretteGraphSetup.filter {$0.annotation == ProgressViewControllerString.countGraphAnnotation.rawValue}).first?.points,
+              let cigarettNormPoints = (cigaretteGraphSetup.filter {$0.annotation == ProgressViewControllerString.normGraphAnnotation.rawValue}).first?.points else{return}
+                
+        let moneyProgress = NSProgressData(bank: moneyBank, count: moneyCountPoints, norm: moneyNormPoints)
+        let cigaretteProgress = NSProgressData(bank: cigaretteBank, count: cigarettCountPoints, norm: cigarettNormPoints)
+        
+        progressDelegate.saveUserData(UserData(image: imageData, moneyProgress: moneyProgress, cigaretteProgress: cigaretteProgress, dates: nil))
+    }
 }
 
 //MARK: DELEGATE EXTENSION
@@ -128,8 +155,6 @@ extension ProgressViewController: ProgressViewDelegate {
             progressView.moneyGraphView.updateGraph(data.setup)
         case .cigarette:
             progressView.cigaretteGraphView.updateGraph(data.setup)
-        default:
-            return
         }
     }
     
@@ -140,8 +165,8 @@ extension ProgressViewController: ProgressViewDelegate {
             }
         }
         
-        progressView.moneyBankPicker.setCountValue(data.moneyProgress.bank)
-        progressView.cigaretteBankPicker.setCountValue(data.cigaretteProgress.bank)
+        progressView.moneyBankPicker.setStorageValue(data.moneyProgress.bank)
+        progressView.cigaretteBankPicker.setStorageValue(data.cigaretteProgress.bank)
         
         
         progressView.moneyNormPicker.setNormValue(data.moneyProgress.norm.last!)
@@ -166,3 +191,4 @@ extension ProgressViewController: UINormPickerDelegate {
         switchRecalculateGraphData(newValue, type, ProgressViewControllerString.normGraphAnnotation.rawValue)
     }
 }
+

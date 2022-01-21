@@ -10,10 +10,10 @@ import Foundation
 enum ProgressModels
 {
     struct UserData {
-        let image: NSData?
+        let image: Data?
         let moneyProgress: NSProgressData
         let cigaretteProgress: NSProgressData
-        let dates: [String]
+        let dates: [String]?
     }
     
     struct GraphData {
@@ -46,7 +46,7 @@ class NSProgressData: NSObject, NSCoding {
     }
     
     required init?(coder: NSCoder) {
-        self.bank = coder.decodeObject(forKey: "bank") as! Int
+        self.bank = coder.decodeInteger(forKey: "bank")
         self.count = coder.decodeObject(forKey: "count") as! [Int]
         self.norm = coder.decodeObject(forKey: "norm") as! [Int]
     }

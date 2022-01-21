@@ -76,7 +76,10 @@ extension ProgressPresenter: ProgressStoreDelegate{
             
             switch result{
             case (let result?):
-                if let image = result.value(forKey: ProgressPresenterString.imageValueKey.rawValue) as? NSData, let moneyProgress = result.value(forKey: ProgressPresenterString.moneyProgressValueKey.rawValue) as? NSProgressData, let cigaretteProgress = result.value(forKey: ProgressPresenterString.cigaretteProgressValueKey.rawValue) as? NSProgressData, let dates = result.value(forKey: ProgressPresenterString.datesValueKey.rawValue) as? [String]{
+                if let image = result.value(forKey: ProgressPresenterString.imageValueKey.rawValue) as? Data,
+                   let moneyProgress = result.value(forKey: ProgressPresenterString.moneyProgressValueKey.rawValue) as? NSProgressData,
+                    let cigaretteProgress = result.value(forKey: ProgressPresenterString.cigaretteProgressValueKey.rawValue) as? NSProgressData,
+                    let dates = result.value(forKey: ProgressPresenterString.datesValueKey.rawValue) as? [String]{
                     
                     if (!dates.contains(Date().noon.ddMMyyyy)) {
                         self.clearUserDataStore()
@@ -101,23 +104,20 @@ extension ProgressPresenter: ProgressStoreDelegate{
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             let dates = Date().daysOfWeek(using: .iso8601).map(\.ddMMyyyy)
             
+            let userData:NSManagedObject!
             switch result{
             case (let result?):
-                result.setValue(data.image, forKey: ProgressPresenterString.imageValueKey.rawValue)
-                result.setValue(data.moneyProgress, forKey: ProgressPresenterString.moneyProgressValueKey.rawValue)
-                result.setValue(data.cigaretteProgress, forKey: ProgressPresenterString.cigaretteProgressValueKey.rawValue)
-                result.setValue(dates, forKey: ProgressPresenterString.datesValueKey.rawValue)
-                
+              userData = result
             default:
                 let entity = NSEntityDescription.entity(forEntityName: ProgressPresenterString.entityName.rawValue, in: appDelegate.persistentContainer.viewContext)
-                let newUserData = NSManagedObject(entity: entity!, insertInto: appDelegate.persistentContainer.viewContext)
-                
-                newUserData.setValue(data.image, forKey: ProgressPresenterString.imageValueKey.rawValue)
-                newUserData.setValue(data.moneyProgress, forKey: ProgressPresenterString.moneyProgressValueKey.rawValue)
-                newUserData.setValue(data.cigaretteProgress, forKey: ProgressPresenterString.cigaretteProgressValueKey.rawValue)
-                newUserData.setValue(dates, forKey: ProgressPresenterString.datesValueKey.rawValue)
+                userData = NSManagedObject(entity: entity!, insertInto: appDelegate.persistentContainer.viewContext)
+      
             }
             
+            userData.setValue(data.image, forKey: ProgressPresenterString.imageValueKey.rawValue)
+            userData.setValue(data.moneyProgress, forKey: ProgressPresenterString.moneyProgressValueKey.rawValue)
+            userData.setValue(data.cigaretteProgress, forKey: ProgressPresenterString.cigaretteProgressValueKey.rawValue)
+            userData.setValue(dates, forKey: ProgressPresenterString.datesValueKey.rawValue)
             appDelegate.saveContext()
         }
     }

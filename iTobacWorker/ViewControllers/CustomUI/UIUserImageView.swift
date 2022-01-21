@@ -33,6 +33,11 @@ class UIUserImageView: UIView {
         imageView.image = image
     }
     
+    // MARK: getImageData
+    func getImageData() -> Data?{
+        return imageView.image?.pngData()
+    }
+    
     // MARK: animateImagePulse
     func animateImagePulse(){
         imageView.layer.addPulseAnimation()
