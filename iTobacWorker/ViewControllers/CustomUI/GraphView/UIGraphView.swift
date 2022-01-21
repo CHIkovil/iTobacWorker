@@ -81,7 +81,7 @@ final class UIGraphView: UIView {
     }()
     
     private lazy var maxValueLabel: UILabel = {
-        let label = UILabel(frame: CGRect(x: viewWidth - UIGraphViewConstants.margin + 2, y: UIGraphViewConstants.topBorder - viewHeight * 0.05, width: viewHeight * 0.1, height: viewHeight * 0.1))
+        let label = UILabel(frame: CGRect(x: viewWidth - UIGraphViewConstants.margin + 2, y: UIGraphViewConstants.topBorder - viewHeight * 0.05, width: viewWidth * 0.3, height: viewHeight * 0.1))
         label.font = UIFont(name: GlobalString.fontName.rawValue, size: UIGraphViewConstants.defTextSize)
         label.backgroundColor = .clear
         label.textColor = .lightGray
@@ -97,6 +97,7 @@ final class UIGraphView: UIView {
     private lazy var annotationStackView: UIStackView = {
         let view = UIStackView(frame: CGRect(x: UIGraphViewConstants.margin, y: UIGraphViewConstants.topBorder - viewHeight * 0.1 - 10, width: viewWidth - 2 * UIGraphViewConstants.margin, height: viewHeight * 0.1))
         view.backgroundColor = .clear
+        view.alignment = .fill
         return view
     }()
     
@@ -153,7 +154,6 @@ final class UIGraphView: UIView {
         let width = (setup.viewSetup!.width - 2 * UIGraphViewConstants.margin) / 2
         let label = UILabel()
         label.widthAnchor.constraint(equalToConstant: width).isActive = true
-        label.heightAnchor.constraint(equalToConstant: setup.viewSetup!.height * 0.1 ).isActive = true
         label.textAlignment = .center
         label.font = UIFont(name: GlobalString.fontName.rawValue, size: UIGraphViewConstants.defTextSize - 2)
         label.textColor = .lightGray

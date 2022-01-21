@@ -51,7 +51,6 @@ class ProgressView: UIView {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.showsVerticalScrollIndicator = false
         scrollView.bounces = false
-        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height + 100)
         return scrollView
     }()
     
@@ -151,7 +150,7 @@ class ProgressView: UIView {
     
     func constraintsUserImageView() {
         userImageView.snp.makeConstraints {(make) -> Void in
-            make.top.equalTo(scrollView.snp.top).offset(20)
+            make.top.equalTo(scrollView.snp.top).offset(55)
             make.centerX.equalTo(scrollView.snp.centerX)
             make.height.equalTo(ProgressViewConstants.userImageViewSide)
             make.width.equalTo(ProgressViewConstants.userImageViewSide)
