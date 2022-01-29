@@ -42,9 +42,9 @@ extension CALayer{
     
     func addPulseAnimation(){
         let animation = CASpringAnimation(keyPath: "transform.scale")
-        animation.duration = 0.6
+        animation.duration = 1
         animation.fromValue = 1.0
-        animation.toValue = 1.005
+        animation.toValue = 1.01
         animation.autoreverses = true
         animation.repeatCount = 1
         animation.initialVelocity = 0.5
