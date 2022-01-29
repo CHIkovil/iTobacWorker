@@ -27,11 +27,11 @@ private enum ProgressViewConstants {
     static let graphViewHeight: CGFloat = 250
     static let bankPickerSide: CGFloat = 150
     static let userImageViewSide: CGFloat = 240
-    static let normViewWidth: CGFloat = 120
+    static let normViewWidth: CGFloat = 135
     static let normViewHeight: CGFloat = 50
     static let vertivalBlockIndent: CGFloat = 15
     static let horizontalBlockIndent: CGFloat = 10
-    static let blockScale: CGFloat = 1.05
+    static let blockScale: CGFloat = 1.04
 }
 
 class ProgressView: UIView {
@@ -58,7 +58,6 @@ class ProgressView: UIView {
     lazy var userImageView: UIUserImageView = {
         let imageView = UIUserImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.alpha = 0
         imageView.isUserInteractionEnabled = false
         return imageView
     }()
@@ -68,7 +67,6 @@ class ProgressView: UIView {
         picker.image = UIImage(named: ProgressViewString.moneyBankImageName.rawValue)
         picker.translatesAutoresizingMaskIntoConstraints = false
         picker.countType = ProgressType.money
-        picker.alpha = 0
         picker.isUserInteractionEnabled = false
         return picker
     }()
@@ -78,7 +76,6 @@ class ProgressView: UIView {
         picker.image = UIImage(named: ProgressViewString.cigaretteBankImageName.rawValue)
         picker.translatesAutoresizingMaskIntoConstraints = false
         picker.countType = ProgressType.cigarette
-        picker.alpha = 0
         picker.isUserInteractionEnabled = false
         return picker
     }()
@@ -87,7 +84,6 @@ class ProgressView: UIView {
         let picker = UINormPicker()
         picker.translatesAutoresizingMaskIntoConstraints = false
         picker.normType = ProgressType.money
-        picker.alpha = 0
         picker.isUserInteractionEnabled = false
         return picker
     }()
@@ -96,7 +92,6 @@ class ProgressView: UIView {
         let picker = UINormPicker()
         picker.translatesAutoresizingMaskIntoConstraints = false
         picker.normType = ProgressType.cigarette
-        picker.alpha = 0
         picker.isUserInteractionEnabled = false
         return picker
     }()
@@ -161,7 +156,7 @@ class ProgressView: UIView {
     
     func constraintsUserImageView() {
         userImageView.snp.makeConstraints {(make) -> Void in
-            make.top.equalTo(scrollView.snp.top).offset(55)
+            make.top.equalTo(scrollView.snp.top).offset(60)
             make.centerX.equalTo(scrollView.snp.centerX)
             make.height.equalTo(ProgressViewConstants.userImageViewSide)
             make.width.equalTo(ProgressViewConstants.userImageViewSide)
@@ -360,24 +355,18 @@ extension ProgressView {
     }
     
     func showBlock(){
-        
         UIView.animate(withDuration: 0.5, animations: {[weak self] in
             guard let self = self else{return}
-            self.userImageView.alpha = 1
             self.userImageView.transform = CGAffineTransform(scaleX: ProgressViewConstants.blockScale, y: ProgressViewConstants.blockScale)
         }, completion: { _ in
             UIView.animate(withDuration: 0.5, animations: {[weak self] in
                 guard let self = self else{return}
-                self.moneyBankPicker.alpha = 1
-                self.cigaretteBankPicker.alpha = 1
                 self.userImageView.transform = CGAffineTransform.identity
                 self.moneyBankPicker.transform = CGAffineTransform(scaleX: ProgressViewConstants.blockScale, y: ProgressViewConstants.blockScale)
                 self.cigaretteBankPicker.transform = CGAffineTransform(scaleX: ProgressViewConstants.blockScale, y: ProgressViewConstants.blockScale)
             }, completion: { _ in
                 UIView.animate(withDuration: 0.5, animations: {[weak self] in
                     guard let self = self else{return}
-                    self.moneyNormPicker.alpha = 1
-                    self.cigaretteNormPicker.alpha = 1
                     self.moneyBankPicker.transform = CGAffineTransform.identity
                     self.cigaretteBankPicker.transform = CGAffineTransform.identity
                     self.moneyNormPicker.transform = CGAffineTransform(scaleX: ProgressViewConstants.blockScale, y: ProgressViewConstants.blockScale)

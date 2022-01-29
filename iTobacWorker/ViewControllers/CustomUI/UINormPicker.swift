@@ -86,7 +86,7 @@ final class UINormPicker: UIView{
         self.addSubview(inputTextField)
         constraintsInputTextField()
         
-        let color = #colorLiteral(red: 0.1261322796, green: 0.1471925974, blue: 0.2156360745, alpha: 0.8)
+        let color =  #colorLiteral(red: 0.1261322796, green: 0.1471925974, blue: 0.2156360745, alpha: 0.7)
         self.layer.drawBlockLayer(cornerWidth: 15,color: color)
         
         inputTextField.addTarget(self, action:  #selector(didNormChanged), for: .editingChanged)
@@ -105,15 +105,15 @@ extension UINormPicker: UITextFieldDelegate {
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-         if (textField.text == "0"){
-             textField.text = ""
-         }
-         
-         DispatchQueue.main.asyncAfter(deadline: .now() + 7.0) {
-             if (textField.text == ""){
-                 textField.text = "0"
-             }
-             textField.resignFirstResponder()
-         }
-     }
+        if (textField.text == "0"){
+            textField.text = ""
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            if (textField.text == ""){
+                textField.text = "0"
+                textField.resignFirstResponder()
+            }
+        }
+    }
 }

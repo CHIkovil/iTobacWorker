@@ -127,7 +127,8 @@ class UIUserImageView: UIView {
         constraintsImageView()
         constraintsButton()
         
-        self.layer.drawBlockLayer(cornerWidth: 35, color: #colorLiteral(red: 0.1261322796, green: 0.1471925974, blue: 0.2156360745, alpha: 0.7))
+        let color =  #colorLiteral(red: 0.1261322796, green: 0.1471925974, blue: 0.2156360745, alpha: 0.7)
+        self.layer.drawBlockLayer(cornerWidth: 35, color:color)
         showImageFrame()
     }
     
