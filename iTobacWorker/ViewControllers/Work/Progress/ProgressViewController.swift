@@ -17,7 +17,6 @@ protocol ProgressViewDelegate: AnyObject{
 class ProgressViewController: UIViewController
 {
     var imagePicker: ImagePicker!
-    
     var progressView: ProgressView!
     var progressDelegate: (ProgressStoreDelegate & ProgressRecalculateDelegate)!
     
@@ -67,6 +66,7 @@ class ProgressViewController: UIViewController
         progressView.moneyBankPicker.animateAttention()
         progressView.cigaretteBankPicker.animateAttention()
         progressDelegate.loadUserData()
+        progressView.showBlock()
     }
     
     override func viewDidDisappear(_ animated: Bool) {

@@ -57,6 +57,8 @@ class ProgressView: UIView {
     lazy var userImageView: UIUserImageView = {
         let imageView = UIUserImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.alpha = 0
+        imageView.isUserInteractionEnabled = false
         return imageView
     }()
     
@@ -65,6 +67,8 @@ class ProgressView: UIView {
         picker.image = UIImage(named: ProgressViewString.moneyBankImageName.rawValue)
         picker.translatesAutoresizingMaskIntoConstraints = false
         picker.countType = ProgressType.money
+        picker.alpha = 0
+        picker.isUserInteractionEnabled = false
         return picker
     }()
     
@@ -73,21 +77,27 @@ class ProgressView: UIView {
         picker.image = UIImage(named: ProgressViewString.cigaretteBankImageName.rawValue)
         picker.translatesAutoresizingMaskIntoConstraints = false
         picker.countType = ProgressType.cigarette
+        picker.alpha = 0
+        picker.isUserInteractionEnabled = false
         return picker
     }()
     
     lazy var moneyNormPicker: UINormPicker = {
-        let view = UINormPicker()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.normType = ProgressType.money
-        return view
+        let picker = UINormPicker()
+        picker.translatesAutoresizingMaskIntoConstraints = false
+        picker.normType = ProgressType.money
+        picker.alpha = 0
+        picker.isUserInteractionEnabled = false
+        return picker
     }()
     
     lazy var cigaretteNormPicker: UINormPicker = {
-        let view = UINormPicker()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.normType = ProgressType.cigarette
-        return view
+        let picker = UINormPicker()
+        picker.translatesAutoresizingMaskIntoConstraints = false
+        picker.normType = ProgressType.cigarette
+        picker.alpha = 0
+        picker.isUserInteractionEnabled = false
+        return picker
     }()
     
     lazy var graphBackgroundView: UIView = {
@@ -238,7 +248,7 @@ class ProgressView: UIView {
         }
     }
     
-
+    
     
     //MARK: SUPPORT FUNC
     
@@ -346,5 +356,29 @@ extension ProgressView {
                 
             }
         )
+    }
+    
+    func showBlock(){
+        UIView.animate(withDuration: 0.5, animations: {[weak self] in
+            guard let self = self else{return}
+            self.userImageView.alpha = 1
+            self.userImageView.isUserInteractionEnabled = true
+        }, completion: { _ in
+            UIView.animate(withDuration: 0.5, animations: {[weak self] in
+                guard let self = self else{return}
+                self.moneyBankPicker.alpha = 1
+                self.moneyBankPicker.isUserInteractionEnabled = true
+                self.cigaretteBankPicker.alpha = 1
+                self.cigaretteBankPicker.isUserInteractionEnabled = true
+            }, completion: { _ in
+                UIView.animate(withDuration: 0.5, animations: {[weak self] in
+                    guard let self = self else{return}
+                    self.moneyNormPicker.alpha = 1
+                    self.moneyNormPicker.isUserInteractionEnabled = true
+                    self.cigaretteNormPicker.alpha = 1
+                    self.cigaretteNormPicker.isUserInteractionEnabled = true
+                })
+            })
+        })
     }
 }

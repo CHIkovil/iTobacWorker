@@ -145,6 +145,7 @@ extension ProgressPresenter: ProgressRecalculateDelegate{
 
 
 //MARK: EXTENSION
+
 private extension Date {
     func byAdding(component: Calendar.Component, value: Int, wrappingComponents: Bool = false, using calendar: Calendar = .current) -> Date? {
         calendar.date(byAdding: component, value: value, to: self, wrappingComponents: wrappingComponents)

@@ -45,6 +45,10 @@
 		17FB36922765169D0046F6E0 /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = 17FB36912765169D0046F6E0 /* add.png */; };
 		17FB36952766759D0046F6E0 /* safe-box.png in Resources */ = {isa = PBXBuildFile; fileRef = 17FB36932766759D0046F6E0 /* safe-box.png */; };
 		17FB36962766759D0046F6E0 /* ashtray.png in Resources */ = {isa = PBXBuildFile; fileRef = 17FB36942766759D0046F6E0 /* ashtray.png */; };
+		17FB3FE827A4D2C000A76F51 /* BrandsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB3FE227A4D2C000A76F51 /* BrandsPresenter.swift */; };
+		17FB3FEB27A4D2C000A76F51 /* BrandsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB3FE527A4D2C000A76F51 /* BrandsModels.swift */; };
+		17FB3FEC27A4D2C000A76F51 /* BrandsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB3FE627A4D2C000A76F51 /* BrandsViewController.swift */; };
+		17FB3FEF27A4D2F100A76F51 /* BrandsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB3FEE27A4D2F100A76F51 /* BrandsView.swift */; };
 		688067CF4C454BF842E84131 /* Pods_iTobacWorker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10C7E1F6C4C8C067D68F6016 /* Pods_iTobacWorker.framework */; };
 /* End PBXBuildFile section */
 
@@ -90,6 +94,10 @@
 		17FB36912765169D0046F6E0 /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add.png; sourceTree = "<group>"; };
 		17FB36932766759D0046F6E0 /* safe-box.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "safe-box.png"; sourceTree = "<group>"; };
 		17FB36942766759D0046F6E0 /* ashtray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ashtray.png; sourceTree = "<group>"; };
+		17FB3FE227A4D2C000A76F51 /* BrandsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsPresenter.swift; sourceTree = "<group>"; };
+		17FB3FE527A4D2C000A76F51 /* BrandsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsModels.swift; sourceTree = "<group>"; };
+		17FB3FE627A4D2C000A76F51 /* BrandsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsViewController.swift; sourceTree = "<group>"; };
+		17FB3FEE27A4D2F100A76F51 /* BrandsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsView.swift; sourceTree = "<group>"; };
 		27731B277CC6197EFAFC4A28 /* Pods-iTobacWorker-iTobacWorkerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iTobacWorker-iTobacWorkerUITests.debug.xcconfig"; path = "Target Support Files/Pods-iTobacWorker-iTobacWorkerUITests/Pods-iTobacWorker-iTobacWorkerUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		388C7545A4F58196245E19D0 /* Pods-iTobacWorkerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iTobacWorkerTests.release.xcconfig"; path = "Target Support Files/Pods-iTobacWorkerTests/Pods-iTobacWorkerTests.release.xcconfig"; sourceTree = "<group>"; };
 		6113D42F1E5CFF4455D37F71 /* Pods-iTobacWorker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iTobacWorker.release.xcconfig"; path = "Target Support Files/Pods-iTobacWorker/Pods-iTobacWorker.release.xcconfig"; sourceTree = "<group>"; };
@@ -127,6 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				17003031275D84CC0093DAC3 /* WorkTabBarController.swift */,
+				17FB3FE127A4D29E00A76F51 /* Brands */,
 				17FB3672275FFFAD0046F6E0 /* Progress */,
 			);
 			path = Work;
@@ -262,6 +271,17 @@
 				17FB3673275FFFEC0046F6E0 /* ProgressPresenter.swift */,
 			);
 			path = Progress;
+			sourceTree = "<group>";
+		};
+		17FB3FE127A4D29E00A76F51 /* Brands */ = {
+			isa = PBXGroup;
+			children = (
+				17FB3FE527A4D2C000A76F51 /* BrandsModels.swift */,
+				17FB3FEE27A4D2F100A76F51 /* BrandsView.swift */,
+				17FB3FE627A4D2C000A76F51 /* BrandsViewController.swift */,
+				17FB3FE227A4D2C000A76F51 /* BrandsPresenter.swift */,
+			);
+			path = Brands;
 			sourceTree = "<group>";
 		};
 		6440D1556584387EA3F319AD /* Frameworks */ = {
@@ -432,8 +452,12 @@
 				17F90ED9275D8050002D03CD /* AppDelegate.swift in Sources */,
 				176E82822775361100B73B0A /* TextFieldExtension.swift in Sources */,
 				17FB36822760D9190046F6E0 /* AuthorizationModels.swift in Sources */,
+				17FB3FEB27A4D2C000A76F51 /* BrandsModels.swift in Sources */,
+				17FB3FEC27A4D2C000A76F51 /* BrandsViewController.swift in Sources */,
 				17FB367C275FFFEC0046F6E0 /* ProgressModels.swift in Sources */,
+				17FB3FE827A4D2C000A76F51 /* BrandsPresenter.swift in Sources */,
 				17F1D193276698F200C76A01 /* UICountPicker.swift in Sources */,
+				17FB3FEF27A4D2F100A76F51 /* BrandsView.swift in Sources */,
 				17FB3679275FFFEC0046F6E0 /* ProgressPresenter.swift in Sources */,
 				17003043275D85AB0093DAC3 /* AuthorizationViewController.swift in Sources */,
 				17F90EDB275D8050002D03CD /* SceneDelegate.swift in Sources */,
