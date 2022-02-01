@@ -66,7 +66,7 @@ class ProgressViewController: UIViewController
         progressView.moneyBankPicker.animateAttention()
         progressView.cigaretteBankPicker.animateAttention()
         progressDelegate.loadUserData()
-        progressView.showBlock()
+        progressView.showBlocks()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -74,7 +74,7 @@ class ProgressViewController: UIViewController
         
         DispatchQueue.main.async { [weak self] in
             guard let self = self else{return}
-            self.saveAllData()
+            self.saveUserData()
         }
     }
     
@@ -111,7 +111,7 @@ class ProgressViewController: UIViewController
         }
     }
     
-    private func saveAllData(){
+    private func saveUserData(){
         guard let imageData = progressView.userImageView.getImageData(),
               let moneyBank = progressView.moneyBankPicker.getStorageValue(),
               let cigaretteBank = progressView.cigaretteBankPicker.getStorageValue(),
@@ -161,9 +161,6 @@ extension ProgressViewController: ProgressViewDelegate {
         
         progressView.moneyBankPicker.setStorageValue(data.moneyProgress.bank)
         progressView.cigaretteBankPicker.setStorageValue(data.cigaretteProgress.bank)
-        
-        
-    
         progressView.moneyNormPicker.setNormValue(data.moneyProgress.norm.lastPositive ?? 0)
         progressView.cigaretteNormPicker.setNormValue(data.cigaretteProgress.norm.lastPositive ?? 0)
         

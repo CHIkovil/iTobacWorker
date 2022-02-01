@@ -38,6 +38,16 @@ extension CALayer{
         self.insertSublayer(shapeLayer, at: 0)
     }
     
+    func drawBorder(_ cornerRadius: CGFloat) {
+        self.cornerRadius = cornerRadius
+        self.borderWidth = 4
+        self.borderColor = #colorLiteral(red: 0.08958115429, green: 0.08975156397, blue: 0.09752175957, alpha: 1)
+        self.shadowColor = UIColor.black.cgColor
+        self.shadowOpacity = 1
+        self.shadowOffset = .zero
+        self.shadowRadius = 10
+    }
+    
     //MARK: ANIMATION
     
     func addPulseAnimation(){

@@ -21,6 +21,7 @@ class UIUserImageView: UIView {
 
     override func draw(_ rect: CGRect) {
         makeUI()
+        makeLayer()
     }
     
     // MARK: addButtonGestureRecognizer
@@ -126,14 +127,18 @@ class UIUserImageView: UIView {
         constraintsBackgroundView()
         constraintsImageView()
         constraintsButton()
+    }
+    
+    private func makeLayer(){
+        //        let color =  #colorLiteral(red: 0.1261322796, green: 0.1471925974, blue: 0.2156360745, alpha: 0.7)
         
-        let color =  #colorLiteral(red: 0.1261322796, green: 0.1471925974, blue: 0.2156360745, alpha: 0.7)
+        let color = #colorLiteral(red: 0.1126094386, green: 0.1120074913, blue: 0.1353533268, alpha: 1)
         self.layer.drawBlockLayer(cornerWidth: 35, color:color)
+        self.layer.drawBorder(25)
         showImageFrame()
     }
     
-    // MARK: showImageFrame
-    func showImageFrame(){
+    private func showImageFrame(){
         self.layer.sublayers?.forEach {
             if ($0.name == UIUserImageViewString.frameLayerName.rawValue){
                 $0.removeFromSuperlayer()
@@ -141,15 +146,15 @@ class UIUserImageView: UIView {
         }
         
         for index in 1...3 {
-            drawArcLayer(offset: CGFloat(index)) {shapeLayer in
-                shapeLayer.addInfinityRotationAnimation()
-                self.layer.addSublayer(shapeLayer)
-            }
-           
+            let arcLayer = drawArcLayer(offset: CGFloat(index))
+            arcLayer.addInfinityRotationAnimation()
+            self.layer.addSublayer(arcLayer)
         }
     }
     
-    private func drawArcLayer(offset: CGFloat, callback: @escaping(CAShapeLayer) -> Void){
+    //MARK: DRAW
+    
+    private func drawArcLayer(offset: CGFloat) -> CAShapeLayer{
         let shapeLayer = CAShapeLayer()
         let center = CGPoint(x: viewWidth / 2, y: viewHeight / 2)
         let bounds = CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight)
@@ -167,7 +172,7 @@ class UIUserImageView: UIView {
         
         shapeLayer.position = center
         shapeLayer.bounds = bounds
-        callback(shapeLayer)
+        return shapeLayer
     }
 }
 

@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import Dispatch
 
 //MARK: STRING
 
@@ -30,6 +31,7 @@ final class UIGraphView: UIView {
     
     override func draw(_ rect: CGRect) {
         makeUI()
+        makeLayer()
     }
     
     //MARK: updateGraph
@@ -71,12 +73,14 @@ final class UIGraphView: UIView {
     
     
     //MARK: PRIVATE
+    
     private var viewWidth: CGFloat {self.frame.height}
     private var viewHeight: CGFloat {self.frame.height}
     private var maxValue: Int?
     private var currentGraphSetups: [GraphSetup]?
     
     //MARK: UI
+    
     private lazy var minValueLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: viewWidth - UIGraphViewConstants.margin + 2, y: viewHeight - UIGraphViewConstants.bottomBorder - viewHeight * 0.05, width: viewHeight * 0.1, height: viewHeight * 0.1))
         label.font = UIFont(name: GlobalString.fontName.rawValue, size: UIGraphViewConstants.defTextSize)
@@ -109,14 +113,18 @@ final class UIGraphView: UIView {
     //MARK: SUPPORT FUNC
     
     private func makeUI(){
-        self.layer.drawBlockLayer(cornerWidth: 25, color: #colorLiteral(red: 0.1582991481, green: 0.1590825021, blue: 0.1307061911, alpha: 1))
+        let color = #colorLiteral(red: 0.1582991481, green: 0.1590825021, blue: 0.1307061911, alpha: 1)
+        self.layer.drawBlockLayer(cornerWidth: 25, color: color)
         
         self.addSubview(minValueLabel)
         self.addSubview(maxValueLabel)
         self.addSubview(weekStackView)
         self.addSubview(annotationStackView)
         
-        showWeekdays()
+        addWeekStack()
+    }
+    
+    private func makeLayer() {
         showMarkup()
     }
     
@@ -127,17 +135,15 @@ final class UIGraphView: UIView {
             }
         }
         
-        drawHorizontalMarkup { markup in
-            self.layer.addSublayer(markup)
-        }
+        let horizontalLayer = drawHorizontalMarkup()
+        let verticalLayer = drawVerticalMarkup()
         
-        drawVerticalMarkup{ markup in
-            self.layer.addSublayer(markup)
-        }
+        self.layer.addSublayer(horizontalLayer)
+        self.layer.addSublayer(verticalLayer)
         
     }
     
-    private func showWeekdays(){
+    private func addWeekStack(){
         if (!self.weekStackView.arrangedSubviews.isEmpty){return}
         
         let dateFormatter = DateFormatter()
@@ -164,10 +170,9 @@ final class UIGraphView: UIView {
         label.textColor = .lightGray
         label.text = setup.annotation
         
-        drawAnnotationLine(to: width, color: setup.color) { line in
-            label.layer.addSublayer(line)
-        }
+        let lineLayer = drawAnnotationLine(to: width, color: setup.color)
         
+        label.layer.addSublayer(lineLayer)
         label.layer.sublayers?.first?.addActivationAnimation()
         
         let index = currentGraphSetups?.firstIndex(of: setup)
@@ -182,16 +187,14 @@ final class UIGraphView: UIView {
                 finalSetup.viewSetup = ViewSetup(width: self.viewWidth, height: self.viewHeight, graphMaxValue: self.maxValue!)
             }
             
-            self.drawGraph(finalSetup) {
-                self.layer.addSublayer($0.line)
-                self.layer.addSublayer($0.clipping)
-                
-                $0.points.enumerated().forEach {(index,point) in
-                    point.addStickAnimation(duration: CGFloat(index + 1) / 10 + 0.1)
-                    self.layer.addSublayer(point)
-                }
+            let graphLayer = self.drawGraph(finalSetup)
+            self.layer.addSublayer(graphLayer.line)
+            self.layer.addSublayer(graphLayer.clipping)
+            graphLayer.points.enumerated().forEach {(index,point) in
+                point.addStickAnimation(duration: CGFloat(index + 1) / 10 + 0.1)
+                self.layer.addSublayer(point)
             }
-            
+
             self.showGraphAnnotation(finalSetup)
         }
     }
@@ -297,7 +300,7 @@ final class UIGraphView: UIView {
     
     //MARK: DRAW
     
-    private func drawHorizontalMarkup(callback: @escaping(CAShapeLayer) -> Void) {
+    private func drawHorizontalMarkup() -> CAShapeLayer {
         let linePath = UIBezierPath()
         
         linePath.move(to: CGPoint(x:UIGraphViewConstants.margin, y: UIGraphViewConstants.topBorder))
@@ -317,10 +320,10 @@ final class UIGraphView: UIView {
         shapeLayer.lineWidth = 2
         shapeLayer.name = UIGraphViewString.markupLayerName.rawValue
         
-        callback(shapeLayer)
+        return shapeLayer
     }
     
-    private func drawVerticalMarkup(callback: @escaping(CAShapeLayer) -> Void) {
+    private func drawVerticalMarkup() -> CAShapeLayer {
         let linePath = UIBezierPath()
         
         for column in 0...6{
@@ -336,10 +339,10 @@ final class UIGraphView: UIView {
         shapeLayer.lineWidth = 2
         shapeLayer.name = UIGraphViewString.markupLayerName.rawValue
         
-        callback(shapeLayer)
+        return shapeLayer
     }
     
-    private func drawGraph(_ setup: GraphSetup, callback: @escaping(Graph) -> Void)  {
+    private func drawGraph(_ setup: GraphSetup)  -> Graph{
         
         let linePath = UIBezierPath()
         linePath.move(to: CGPoint(x: calculateX(0, setup), y: calculateY(setup.points[0], setup)))
@@ -369,12 +372,12 @@ final class UIGraphView: UIView {
         linesLayer.lineCap = .round
         linesLayer.name = setup.annotation
         
-        drawGraphClipping(setup, path: UIBezierPath(cgPath: linesLayer.path!)) {
-            callback(Graph(line: linesLayer, points: pointLayers, clipping: $0))
-        }
+        let clippingLayer = drawGraphClipping(setup, path: UIBezierPath(cgPath: linesLayer.path!))
+        
+        return Graph(line: linesLayer, points: pointLayers, clipping: clippingLayer)
     }
     
-    private func drawGraphClipping(_ setup: GraphSetup, path: UIBezierPath, callback: @escaping(CAShapeLayer) -> Void) {
+    private func drawGraphClipping(_ setup: GraphSetup, path: UIBezierPath) -> CAShapeLayer {
         let clippingPath = path.copy() as! UIBezierPath
         
         clippingPath.addLine(to: CGPoint(x: calculateX(6, setup),y: viewHeight - UIGraphViewConstants.bottomBorder - 5))
@@ -386,10 +389,10 @@ final class UIGraphView: UIView {
         shapeLayer.opacity = 0.3
         shapeLayer.name = setup.annotation
         
-        callback(shapeLayer)
+        return shapeLayer
     }
     
-    private func drawAnnotationLine(to x: CGFloat,color: UIColor, callback: @escaping(CAShapeLayer) -> Void){
+    private func drawAnnotationLine(to x: CGFloat,color: UIColor) -> CAShapeLayer{
         let linePath = UIBezierPath()
         
         linePath.move(to: CGPoint(x: 20, y: self.annotationStackView.frame.height))
@@ -401,7 +404,7 @@ final class UIGraphView: UIView {
         shapeLayer.fillColor = UIColor.clear.cgColor
         shapeLayer.lineWidth = 4
         shapeLayer.lineCap = .round
-        callback(shapeLayer)
+        return shapeLayer
     }
 }
 

@@ -34,6 +34,7 @@ final class UICountPicker: UIView{
     
     override func draw(_ rect: CGRect) {
         makeUI()
+        makeLayer()
     }
     
     //MARK: animateAttention
@@ -177,11 +178,15 @@ final class UICountPicker: UIView{
         constraintsInputTextField()
         constraintsInputButton()
         
-
-        let color =  #colorLiteral(red: 0.1261322796, green: 0.1471925974, blue: 0.2156360745, alpha: 0.7)
-        self.layer.drawBlockLayer(cornerWidth: 25,color: color)
+       
         guard let image = image else {return}
         imageView.image = image
+    }
+    
+    private func makeLayer(){
+        let color = #colorLiteral(red: 0.1126094386, green: 0.1120074913, blue: 0.1353533268, alpha: 1)
+        self.layer.drawBlockLayer(cornerWidth: 25,color: color)
+        self.layer.drawBorder(25)
     }
     
     private func addCountValue(value newValue: Int){

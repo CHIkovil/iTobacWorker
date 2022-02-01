@@ -27,14 +27,14 @@ final class UIWakeUpTextField: UIView {
     
     override func draw(_ rect: CGRect) {
         makeUI()
+        makeLayer()
     }
     
     // MARK: showInputField
     func showInputField(){
-        drawLineLayer(color: #colorLiteral(red: 0.1598679423, green: 0.1648836732, blue: 0.1904173791, alpha: 1)) {lineLayer in
-            lineLayer.addActivationAnimation()
-            self.layer.addSublayer(lineLayer)
-        }
+        let lineLayer = drawLineLayer(color: #colorLiteral(red: 0.1598679423, green: 0.1648836732, blue: 0.1904173791, alpha: 1))
+        lineLayer.addActivationAnimation()
+        self.layer.addSublayer(lineLayer)
 
         animateInputField()
     }
@@ -86,7 +86,7 @@ final class UIWakeUpTextField: UIView {
     private func constraintsTextField(){
         textField.snp.makeConstraints {(make) -> Void in
             make.width.equalTo(self.snp.width)
-            make.height.equalTo(textFieldHeight * 0.44)
+            make.height.equalTo(textFieldHeight * 0.5)
             make.centerX.equalTo(self.snp.centerX)
             make.bottom.equalTo(self.snp.bottom)
         }
@@ -100,7 +100,9 @@ final class UIWakeUpTextField: UIView {
         
         constraintsTitleLabel()
         constraintsTextField()
-        
+    }
+    
+    private func makeLayer(){
         showLine()
     }
     
@@ -111,12 +113,13 @@ final class UIWakeUpTextField: UIView {
             }
         }
         
-        drawLineLayer( color: .lightGray) { shapeLayer in
-            self.layer.addSublayer(shapeLayer)
-        }
+        let lineLayer = drawLineLayer( color: .lightGray)
+        self.layer.addSublayer(lineLayer)
     }
     
-    private func drawLineLayer(color: UIColor, callback: @escaping(CAShapeLayer) -> Void) {
+    //MARK: DRAW
+    
+    private func drawLineLayer(color: UIColor) -> CAShapeLayer{
         let path = UIBezierPath()
         path.move(to: lineStartPoint)
         path.addLine(to: lineEndPoint)
@@ -128,7 +131,7 @@ final class UIWakeUpTextField: UIView {
         shapeLayer.lineCap = .round
         shapeLayer.name = UIWakeUpTextFieldString.lineLayerName.rawValue
         
-        callback(shapeLayer)
+        return shapeLayer
     }
 }
 

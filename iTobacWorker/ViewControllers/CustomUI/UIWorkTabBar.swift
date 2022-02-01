@@ -29,6 +29,7 @@ final class UIWorkTabBar: UITabBar{
     
     override func draw(_ rect: CGRect) {
         makeUI()
+        makeLayer()
     }
     
     //MARK: point
@@ -136,7 +137,9 @@ final class UIWorkTabBar: UITabBar{
         constraintsSearchButton()
         constraintsInfoButton()
         constraintsProgressButton()
-        
+    }
+    
+    private func makeLayer(){
         showFrame()
     }
     
@@ -146,23 +149,28 @@ final class UIWorkTabBar: UITabBar{
                 return
             }
         }
+ 
+        let frameLayer = drawFrameLayer()
+        let circleLayer = drawCircleLayer()
         
+        self.layer.insertSublayer(frameLayer, at: 0)
+        self.layer.insertSublayer(circleLayer, at: 1)
         self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowOpacity = 1
         self.layer.shadowOffset = .zero
         self.layer.shadowRadius = 10
-        
-        drawFrameLayer() {shapeLayer in
-            self.layer.insertSublayer(shapeLayer, at: 0)
-        }
-       
-        drawCircleLayer() { shapeLayer in
-            self.layer.insertSublayer(shapeLayer, at: 1)
-        }
-        
     }
     
-    private func drawFrameLayer(callback: @escaping(CAShapeLayer) -> Void){
+    
+    private func deselectItems(){
+        for button in self.subviews{
+            button.animateDeselect()
+        }
+    }
+    
+    //MARK: DRAW
+    
+    private func drawFrameLayer() -> CAShapeLayer{
         let path = UIBezierPath(
             roundedRect: bounds,
             byRoundingCorners: [.topLeft, .topRight],
@@ -171,10 +179,10 @@ final class UIWorkTabBar: UITabBar{
         shapeLayer.path = path.cgPath
         shapeLayer.fillColor = #colorLiteral(red: 0.1598679423, green: 0.1648836732, blue: 0.1904173791, alpha: 1).withAlphaComponent(0.87).cgColor
         shapeLayer.name =  UIWorkTabBarString.frameLayerName.rawValue
-        callback(shapeLayer)
+        return shapeLayer
     }
     
-    private func drawCircleLayer(callback: @escaping(CAShapeLayer) -> Void) {
+    private func drawCircleLayer() -> CAShapeLayer{
         let path = UIBezierPath()
         path.addArc(withCenter: CGPoint(x: buttonStep * 2, y: 20),
                     radius: UIWorkTabBarConstants.circleRadius,
@@ -185,14 +193,9 @@ final class UIWorkTabBar: UITabBar{
         shapeLayer.path = path.cgPath
         shapeLayer.fillColor = #colorLiteral(red: 0.1598679423, green: 0.1648836732, blue: 0.1904173791, alpha: 1).withAlphaComponent(0.87).cgColor
         shapeLayer.name =  UIWorkTabBarString.frameLayerName.rawValue
-        callback(shapeLayer)
+        return shapeLayer
     }
-    
-    private func deselectItems(){
-        for button in self.subviews{
-            button.animateDeselect()
-        }
-    }
+
 }
 
 //MARK: ANIMATION EXTENSION

@@ -354,7 +354,7 @@ extension ProgressView {
         )
     }
     
-    func showBlock(){
+    func showBlocks(){
         UIView.animate(withDuration: 0.5, animations: {[weak self] in
             guard let self = self else{return}
             self.userImageView.transform = CGAffineTransform(scaleX: ProgressViewConstants.blockScale, y: ProgressViewConstants.blockScale)
