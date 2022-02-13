@@ -56,7 +56,7 @@
 		17FB403827B8282200A76F51 /* SingleBrandViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB403227B8282200A76F51 /* SingleBrandViewController.swift */; };
 		17FB403B27B8284800A76F51 /* SingleBrandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB403A27B8284800A76F51 /* SingleBrandView.swift */; };
 		17FB403D27B934B400A76F51 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 17FB403C27B934B400A76F51 /* close.png */; };
-		17FB404027B979C800A76F51 /* brands in Resources */ = {isa = PBXBuildFile; fileRef = 17FB403F27B979C800A76F51 /* brands */; };
+		17FB404227B9BD8600A76F51 /* Brands in Resources */ = {isa = PBXBuildFile; fileRef = 17FB404127B9BD8600A76F51 /* Brands */; };
 		688067CF4C454BF842E84131 /* Pods_iTobacWorker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10C7E1F6C4C8C067D68F6016 /* Pods_iTobacWorker.framework */; };
 /* End PBXBuildFile section */
 
@@ -113,7 +113,7 @@
 		17FB403227B8282200A76F51 /* SingleBrandViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleBrandViewController.swift; sourceTree = "<group>"; };
 		17FB403A27B8284800A76F51 /* SingleBrandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleBrandView.swift; sourceTree = "<group>"; };
 		17FB403C27B934B400A76F51 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
-		17FB403F27B979C800A76F51 /* brands */ = {isa = PBXFileReference; lastKnownFileType = folder; path = brands; sourceTree = "<group>"; };
+		17FB404127B9BD8600A76F51 /* Brands */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Brands; sourceTree = "<group>"; };
 		27731B277CC6197EFAFC4A28 /* Pods-iTobacWorker-iTobacWorkerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iTobacWorker-iTobacWorkerUITests.debug.xcconfig"; path = "Target Support Files/Pods-iTobacWorker-iTobacWorkerUITests/Pods-iTobacWorker-iTobacWorkerUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		388C7545A4F58196245E19D0 /* Pods-iTobacWorkerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iTobacWorkerTests.release.xcconfig"; path = "Target Support Files/Pods-iTobacWorkerTests/Pods-iTobacWorkerTests.release.xcconfig"; sourceTree = "<group>"; };
 		6113D42F1E5CFF4455D37F71 /* Pods-iTobacWorker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iTobacWorker.release.xcconfig"; path = "Target Support Files/Pods-iTobacWorker/Pods-iTobacWorker.release.xcconfig"; sourceTree = "<group>"; };
@@ -249,6 +249,7 @@
 		17F90F0B275D805A002D03CD /* AppSupport */ = {
 			isa = PBXGroup;
 			children = (
+				17FB404127B9BD8600A76F51 /* Brands */,
 				17FB3667275E5B020046F6E0 /* Images */,
 				17F90EDA275D8050002D03CD /* SceneDelegate.swift */,
 				17F90ED8275D8050002D03CD /* AppDelegate.swift */,
@@ -262,7 +263,6 @@
 		17FB3667275E5B020046F6E0 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				17FB403F27B979C800A76F51 /* brands */,
 				17FB403C27B934B400A76F51 /* close.png */,
 				17AE64A22787BDE4003820EC /* question.png */,
 				17AE64A0278791F8003820EC /* cigarettes.png */,
@@ -415,7 +415,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				17FB404027B979C800A76F51 /* brands in Resources */,
+				17FB404227B9BD8600A76F51 /* Brands in Resources */,
 				17FB36922765169D0046F6E0 /* add.png in Resources */,
 				17F90EE8275D8050002D03CD /* LaunchScreen.storyboard in Resources */,
 				1711EF4327877D620089E07D /* money.png in Resources */,
