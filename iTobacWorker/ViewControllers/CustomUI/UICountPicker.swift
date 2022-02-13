@@ -71,7 +71,7 @@ final class UICountPicker: UIView{
     
     private lazy var storageLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: GlobalString.fontName.rawValue, size: UICountPickerConstants.defTextSize)
+        label.font = UIFont(name: AppString.fontName.rawValue, size: UICountPickerConstants.defTextSize)
         label.text = "\(0)"
         label.textColor = .lightGray
         label.textAlignment = .center
@@ -81,7 +81,7 @@ final class UICountPicker: UIView{
     
     private lazy var inputTextField: UITextField = {
         let textField = UITextField()
-        textField.font = UIFont(name: GlobalString.fontName.rawValue, size: UICountPickerConstants.defTextSize - 5)
+        textField.font = UIFont(name: AppString.fontName.rawValue, size: UICountPickerConstants.defTextSize - 5)
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.isUserInteractionEnabled = false
         textField.setLeftPaddingPoints(12)

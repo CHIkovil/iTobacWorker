@@ -130,8 +130,6 @@ class UIUserImageView: UIView {
     }
     
     private func makeLayer(){
-        //        let color =  #colorLiteral(red: 0.1261322796, green: 0.1471925974, blue: 0.2156360745, alpha: 0.7)
-        
         let color = #colorLiteral(red: 0.1126094386, green: 0.1120074913, blue: 0.1353533268, alpha: 1)
         self.layer.drawBlockLayer(cornerWidth: 35, color:color)
         self.layer.drawBorder(25)

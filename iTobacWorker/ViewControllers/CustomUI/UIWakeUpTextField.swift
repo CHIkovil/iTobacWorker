@@ -49,7 +49,7 @@ final class UIWakeUpTextField: UIView {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: GlobalString.fontName.rawValue, size: UIWakeUpTextFieldConstants.defTextSize)
+        label.font = UIFont(name: AppString.fontName.rawValue, size: UIWakeUpTextFieldConstants.defTextSize)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = UIWakeUpTextFieldString.titleLabelText.rawValue
         label.textAlignment = .center
@@ -60,7 +60,7 @@ final class UIWakeUpTextField: UIView {
     
     private lazy var textField: UITextField = {
         let textField = UITextField()
-        textField.font = UIFont(name: GlobalString.fontName.rawValue, size: UIWakeUpTextFieldConstants.defTextSize + 1.5)
+        textField.font = UIFont(name: AppString.fontName.rawValue, size: UIWakeUpTextFieldConstants.defTextSize + 1.5)
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = #colorLiteral(red: 0.9386559129, green: 0.9388130307, blue: 0.9386352301, alpha: 1)
         textField.textColor = .black

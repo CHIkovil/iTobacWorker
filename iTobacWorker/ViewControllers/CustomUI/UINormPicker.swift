@@ -49,7 +49,7 @@ final class UINormPicker: UIView{
     
     private lazy var inputTextField: UITextField = {
         let textField = UITextField()
-        textField.font = UIFont(name: GlobalString.fontName.rawValue, size: UINormPickerConstants.defTextSize - 5)
+        textField.font = UIFont(name: AppString.fontName.rawValue, size: UINormPickerConstants.defTextSize - 5)
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = #colorLiteral(red: 0.2277443409, green: 0.227789104, blue: 0.2277384698, alpha: 1)
         textField.delegate = self

@@ -22,7 +22,7 @@
 		17AE64A1278791F8003820EC /* cigarettes.png in Resources */ = {isa = PBXBuildFile; fileRef = 17AE64A0278791F8003820EC /* cigarettes.png */; };
 		17AE64A32787BDE4003820EC /* question.png in Resources */ = {isa = PBXBuildFile; fileRef = 17AE64A22787BDE4003820EC /* question.png */; };
 		17ECA681277A183100A1ADD5 /* UIGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ECA680277A183100A1ADD5 /* UIGraphView.swift */; };
-		17ECA684277A1DFB00A1ADD5 /* GlobalString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ECA683277A1DFB00A1ADD5 /* GlobalString.swift */; };
+		17ECA684277A1DFB00A1ADD5 /* AppString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ECA683277A1DFB00A1ADD5 /* AppString.swift */; };
 		17F1D193276698F200C76A01 /* UICountPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F1D192276698F200C76A01 /* UICountPicker.swift */; };
 		17F1D19627669B0300C76A01 /* LayerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F1D19527669B0300C76A01 /* LayerExtension.swift */; };
 		17F90ED9275D8050002D03CD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F90ED8275D8050002D03CD /* AppDelegate.swift */; };
@@ -49,6 +49,14 @@
 		17FB3FEB27A4D2C000A76F51 /* BrandsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB3FE527A4D2C000A76F51 /* BrandsModels.swift */; };
 		17FB3FEC27A4D2C000A76F51 /* BrandsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB3FE627A4D2C000A76F51 /* BrandsViewController.swift */; };
 		17FB3FEF27A4D2F100A76F51 /* BrandsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB3FEE27A4D2F100A76F51 /* BrandsView.swift */; };
+		17FB402727B80C8600A76F51 /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB402627B80C8600A76F51 /* Animator.swift */; };
+		17FB402A27B80E1600A76F51 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB402927B80E1600A76F51 /* CollectionViewCell.swift */; };
+		17FB403427B8282200A76F51 /* SingleBrandPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB402E27B8282200A76F51 /* SingleBrandPresenter.swift */; };
+		17FB403727B8282200A76F51 /* SingleBrandModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB403127B8282200A76F51 /* SingleBrandModels.swift */; };
+		17FB403827B8282200A76F51 /* SingleBrandViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB403227B8282200A76F51 /* SingleBrandViewController.swift */; };
+		17FB403B27B8284800A76F51 /* SingleBrandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB403A27B8284800A76F51 /* SingleBrandView.swift */; };
+		17FB403D27B934B400A76F51 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 17FB403C27B934B400A76F51 /* close.png */; };
+		17FB404027B979C800A76F51 /* brands in Resources */ = {isa = PBXBuildFile; fileRef = 17FB403F27B979C800A76F51 /* brands */; };
 		688067CF4C454BF842E84131 /* Pods_iTobacWorker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10C7E1F6C4C8C067D68F6016 /* Pods_iTobacWorker.framework */; };
 /* End PBXBuildFile section */
 
@@ -69,7 +77,7 @@
 		17AE64A0278791F8003820EC /* cigarettes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cigarettes.png; sourceTree = "<group>"; };
 		17AE64A22787BDE4003820EC /* question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = question.png; sourceTree = "<group>"; };
 		17ECA680277A183100A1ADD5 /* UIGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIGraphView.swift; sourceTree = "<group>"; };
-		17ECA683277A1DFB00A1ADD5 /* GlobalString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalString.swift; sourceTree = "<group>"; };
+		17ECA683277A1DFB00A1ADD5 /* AppString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppString.swift; sourceTree = "<group>"; };
 		17F1D192276698F200C76A01 /* UICountPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICountPicker.swift; sourceTree = "<group>"; };
 		17F1D19527669B0300C76A01 /* LayerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerExtension.swift; sourceTree = "<group>"; };
 		17F90ED5275D8050002D03CD /* iTobacWorker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTobacWorker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,6 +106,14 @@
 		17FB3FE527A4D2C000A76F51 /* BrandsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsModels.swift; sourceTree = "<group>"; };
 		17FB3FE627A4D2C000A76F51 /* BrandsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsViewController.swift; sourceTree = "<group>"; };
 		17FB3FEE27A4D2F100A76F51 /* BrandsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsView.swift; sourceTree = "<group>"; };
+		17FB402627B80C8600A76F51 /* Animator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
+		17FB402927B80E1600A76F51 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		17FB402E27B8282200A76F51 /* SingleBrandPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleBrandPresenter.swift; sourceTree = "<group>"; };
+		17FB403127B8282200A76F51 /* SingleBrandModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleBrandModels.swift; sourceTree = "<group>"; };
+		17FB403227B8282200A76F51 /* SingleBrandViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleBrandViewController.swift; sourceTree = "<group>"; };
+		17FB403A27B8284800A76F51 /* SingleBrandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleBrandView.swift; sourceTree = "<group>"; };
+		17FB403C27B934B400A76F51 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
+		17FB403F27B979C800A76F51 /* brands */ = {isa = PBXFileReference; lastKnownFileType = folder; path = brands; sourceTree = "<group>"; };
 		27731B277CC6197EFAFC4A28 /* Pods-iTobacWorker-iTobacWorkerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iTobacWorker-iTobacWorkerUITests.debug.xcconfig"; path = "Target Support Files/Pods-iTobacWorker-iTobacWorkerUITests/Pods-iTobacWorker-iTobacWorkerUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		388C7545A4F58196245E19D0 /* Pods-iTobacWorkerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iTobacWorkerTests.release.xcconfig"; path = "Target Support Files/Pods-iTobacWorkerTests/Pods-iTobacWorkerTests.release.xcconfig"; sourceTree = "<group>"; };
 		6113D42F1E5CFF4455D37F71 /* Pods-iTobacWorker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iTobacWorker.release.xcconfig"; path = "Target Support Files/Pods-iTobacWorker/Pods-iTobacWorker.release.xcconfig"; sourceTree = "<group>"; };
@@ -123,10 +139,11 @@
 		1700302E275D84720093DAC3 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				176E827E2775267900B73B0A /* SupportVC */,
+				17ECA682277A1DCE00A1ADD5 /* String */,
+				17F1D19427669AA100C76A01 /* Extension */,
 				17003030275D849A0093DAC3 /* CustomUI */,
-				17003039275D854A0093DAC3 /* Authorization */,
-				1700302F275D84910093DAC3 /* Work */,
+				176E827E2775267900B73B0A /* SupportVC */,
+				17FB402427B8067F00A76F51 /* VC */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -136,6 +153,7 @@
 			children = (
 				17003031275D84CC0093DAC3 /* WorkTabBarController.swift */,
 				17FB3FE127A4D29E00A76F51 /* Brands */,
+				17FB402D27B8231100A76F51 /* SingleBrand */,
 				17FB3672275FFFAD0046F6E0 /* Progress */,
 			);
 			path = Work;
@@ -144,8 +162,6 @@
 		17003030275D849A0093DAC3 /* CustomUI */ = {
 			isa = PBXGroup;
 			children = (
-				17ECA682277A1DCE00A1ADD5 /* GlobalString */,
-				17F1D19427669AA100C76A01 /* GlobalExtension */,
 				17FB368C27626F3A0046F6E0 /* UIUserImageView.swift */,
 				17003035275D84F70093DAC3 /* UIAbbreviationLabel.swift */,
 				17003033275D84F70093DAC3 /* UIWakeUpTextField.swift */,
@@ -185,21 +201,21 @@
 			path = SupportVC;
 			sourceTree = "<group>";
 		};
-		17ECA682277A1DCE00A1ADD5 /* GlobalString */ = {
+		17ECA682277A1DCE00A1ADD5 /* String */ = {
 			isa = PBXGroup;
 			children = (
-				17ECA683277A1DFB00A1ADD5 /* GlobalString.swift */,
+				17ECA683277A1DFB00A1ADD5 /* AppString.swift */,
 			);
-			path = GlobalString;
+			path = String;
 			sourceTree = "<group>";
 		};
-		17F1D19427669AA100C76A01 /* GlobalExtension */ = {
+		17F1D19427669AA100C76A01 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
 				17F1D19527669B0300C76A01 /* LayerExtension.swift */,
 				176E82812775361100B73B0A /* TextFieldExtension.swift */,
 			);
-			path = GlobalExtension;
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		17F90ECC275D8050002D03CD = {
@@ -246,6 +262,8 @@
 		17FB3667275E5B020046F6E0 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				17FB403F27B979C800A76F51 /* brands */,
+				17FB403C27B934B400A76F51 /* close.png */,
 				17AE64A22787BDE4003820EC /* question.png */,
 				17AE64A0278791F8003820EC /* cigarettes.png */,
 				1711EF4227877D620089E07D /* money.png */,
@@ -276,12 +294,42 @@
 		17FB3FE127A4D29E00A76F51 /* Brands */ = {
 			isa = PBXGroup;
 			children = (
+				17FB402827B80D8400A76F51 /* Support */,
 				17FB3FE527A4D2C000A76F51 /* BrandsModels.swift */,
 				17FB3FEE27A4D2F100A76F51 /* BrandsView.swift */,
 				17FB3FE627A4D2C000A76F51 /* BrandsViewController.swift */,
 				17FB3FE227A4D2C000A76F51 /* BrandsPresenter.swift */,
 			);
 			path = Brands;
+			sourceTree = "<group>";
+		};
+		17FB402427B8067F00A76F51 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				17003039275D854A0093DAC3 /* Authorization */,
+				1700302F275D84910093DAC3 /* Work */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		17FB402827B80D8400A76F51 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				17FB402627B80C8600A76F51 /* Animator.swift */,
+				17FB402927B80E1600A76F51 /* CollectionViewCell.swift */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		17FB402D27B8231100A76F51 /* SingleBrand */ = {
+			isa = PBXGroup;
+			children = (
+				17FB403127B8282200A76F51 /* SingleBrandModels.swift */,
+				17FB403A27B8284800A76F51 /* SingleBrandView.swift */,
+				17FB403227B8282200A76F51 /* SingleBrandViewController.swift */,
+				17FB402E27B8282200A76F51 /* SingleBrandPresenter.swift */,
+			);
+			path = SingleBrand;
 			sourceTree = "<group>";
 		};
 		6440D1556584387EA3F319AD /* Frameworks */ = {
@@ -367,9 +415,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17FB404027B979C800A76F51 /* brands in Resources */,
 				17FB36922765169D0046F6E0 /* add.png in Resources */,
 				17F90EE8275D8050002D03CD /* LaunchScreen.storyboard in Resources */,
 				1711EF4327877D620089E07D /* money.png in Resources */,
+				17FB403D27B934B400A76F51 /* close.png in Resources */,
 				17FB36952766759D0046F6E0 /* safe-box.png in Resources */,
 				17F90EE5275D8050002D03CD /* Assets.xcassets in Resources */,
 				17FB36962766759D0046F6E0 /* ashtray.png in Resources */,
@@ -433,12 +483,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17FB403827B8282200A76F51 /* SingleBrandViewController.swift in Sources */,
 				17F1D19627669B0300C76A01 /* LayerExtension.swift in Sources */,
 				17FB3684276149760046F6E0 /* ImagePicker.swift in Sources */,
 				17ECA681277A183100A1ADD5 /* UIGraphView.swift in Sources */,
 				17003042275D85AB0093DAC3 /* AuthorizationPresenter.swift in Sources */,
 				17003032275D84CC0093DAC3 /* WorkTabBarController.swift in Sources */,
+				17FB403727B8282200A76F51 /* SingleBrandModels.swift in Sources */,
 				17003045275D85AB0093DAC3 /* AuthorizationView.swift in Sources */,
+				17FB402727B80C8600A76F51 /* Animator.swift in Sources */,
 				17003038275D84F70093DAC3 /* UIAbbreviationLabel.swift in Sources */,
 				17F90EE3275D8050002D03CD /* iTobacWorker.xcdatamodeld in Sources */,
 				175DED53278C750600C10DAB /* UINormPicker.swift in Sources */,
@@ -446,14 +499,17 @@
 				17FB368D27626F3A0046F6E0 /* UIUserImageView.swift in Sources */,
 				17003036275D84F70093DAC3 /* UIWakeUpTextField.swift in Sources */,
 				17FB3680276003560046F6E0 /* ProgressView.swift in Sources */,
+				17FB403B27B8284800A76F51 /* SingleBrandView.swift in Sources */,
 				1711EF3E2780E2620089E07D /* GraphModels.swift in Sources */,
 				17FB367D275FFFEC0046F6E0 /* ProgressViewController.swift in Sources */,
-				17ECA684277A1DFB00A1ADD5 /* GlobalString.swift in Sources */,
+				17ECA684277A1DFB00A1ADD5 /* AppString.swift in Sources */,
 				17F90ED9275D8050002D03CD /* AppDelegate.swift in Sources */,
 				176E82822775361100B73B0A /* TextFieldExtension.swift in Sources */,
 				17FB36822760D9190046F6E0 /* AuthorizationModels.swift in Sources */,
+				17FB402A27B80E1600A76F51 /* CollectionViewCell.swift in Sources */,
 				17FB3FEB27A4D2C000A76F51 /* BrandsModels.swift in Sources */,
 				17FB3FEC27A4D2C000A76F51 /* BrandsViewController.swift in Sources */,
+				17FB403427B8282200A76F51 /* SingleBrandPresenter.swift in Sources */,
 				17FB367C275FFFEC0046F6E0 /* ProgressModels.swift in Sources */,
 				17FB3FE827A4D2C000A76F51 /* BrandsPresenter.swift in Sources */,
 				17F1D193276698F200C76A01 /* UICountPicker.swift in Sources */,

@@ -46,8 +46,8 @@ final class UIAbbreviationLabel: UIView {
             }
         }
         
-        let stringAttributes = [NSAttributedString.Key.font: UIFont(name: GlobalString.fontName.rawValue, size: UIAbbreviationLabelConstants.defTextSize)!]
-        let attributedString = NSMutableAttributedString(string: GlobalString.appName.rawValue, attributes: stringAttributes )
+        let stringAttributes = [NSAttributedString.Key.font: UIFont(name: AppString.fontName.rawValue, size: UIAbbreviationLabelConstants.defTextSize)!]
+        let attributedString = NSMutableAttributedString(string: AppString.appName.rawValue, attributes: stringAttributes )
         let charPaths = self.getCharPaths(attributedString: attributedString, position: CGPoint(x: -10, y: labelHeight - 10))
         
         charPaths.enumerated().forEach { index, path in

@@ -83,7 +83,7 @@ final class UIGraphView: UIView {
     
     private lazy var minValueLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: viewWidth - UIGraphViewConstants.margin + 2, y: viewHeight - UIGraphViewConstants.bottomBorder - viewHeight * 0.05, width: viewHeight * 0.1, height: viewHeight * 0.1))
-        label.font = UIFont(name: GlobalString.fontName.rawValue, size: UIGraphViewConstants.defTextSize)
+        label.font = UIFont(name: AppString.fontName.rawValue, size: UIGraphViewConstants.defTextSize)
         label.backgroundColor = .clear
         label.textColor = .lightGray
         label.text = "\(0)"
@@ -92,7 +92,7 @@ final class UIGraphView: UIView {
     
     private lazy var maxValueLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: viewWidth - UIGraphViewConstants.margin + 2, y: UIGraphViewConstants.topBorder - viewHeight * 0.05, width: viewWidth * 0.2, height: viewHeight * 0.1))
-        label.font = UIFont(name: GlobalString.fontName.rawValue, size: UIGraphViewConstants.defTextSize)
+        label.font = UIFont(name: AppString.fontName.rawValue, size: UIGraphViewConstants.defTextSize)
         label.backgroundColor = .clear
         label.textColor = .lightGray
         return label
@@ -154,7 +154,7 @@ final class UIGraphView: UIView {
             label.translatesAutoresizingMaskIntoConstraints = false
             label.safeAreaLayoutGuide.widthAnchor.constraint(equalToConstant: (viewWidth - 2 * UIGraphViewConstants.margin) / 7).isActive = true
             label.textAlignment = .center
-            label.font = UIFont(name: GlobalString.fontName.rawValue, size: UIGraphViewConstants.defTextSize - 2)
+            label.font = UIFont(name: AppString.fontName.rawValue, size: UIGraphViewConstants.defTextSize - 2)
             label.textColor = .lightGray
             label.text = weekday
             weekStackView.addArrangedSubview(label)
@@ -166,7 +166,7 @@ final class UIGraphView: UIView {
         let label = UILabel()
         label.widthAnchor.constraint(equalToConstant: width).isActive = true
         label.textAlignment = .center
-        label.font = UIFont(name: GlobalString.fontName.rawValue, size: UIGraphViewConstants.defTextSize - 2)
+        label.font = UIFont(name: AppString.fontName.rawValue, size: UIGraphViewConstants.defTextSize - 2)
         label.textColor = .lightGray
         label.text = setup.annotation
         
