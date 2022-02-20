@@ -37,11 +37,11 @@ extension BrandsPresenter: BrandsParseDelegate {
     }
     
     func parseBrandsFromFolder() {
-        let imageUrls = Bundle.main.urls(forResourcesWithExtension: "jpg", subdirectory: "brands")!.sorted{$0.deletingPathExtension().lastPathComponent < $1.deletingPathExtension().lastPathComponent}
+        let imageUrls = Bundle.main.urls(forResourcesWithExtension: "jpg", subdirectory: "Brands")!.sorted{$0.deletingPathExtension().lastPathComponent < $1.deletingPathExtension().lastPathComponent}
         var brands = [Int: Brand]()
         
         
-        for index in 0...imageUrls.count - 1 {
+        for index in 1...imageUrls.count - 1 {
             guard let data = NSData(contentsOf: imageUrls[index]) as Data? else{return}
             guard let image = UIImage(data: data) else{return}
             let brandName = imageUrls[index].deletingPathExtension().lastPathComponent

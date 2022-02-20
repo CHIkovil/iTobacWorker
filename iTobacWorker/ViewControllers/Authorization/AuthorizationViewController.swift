@@ -27,17 +27,16 @@ class AuthorizationViewController: UIViewController
     // MARK: Setup
     private func setup()
     {
-
+        authorizationView = AuthorizationView()
+        
+        authorizationView.appLabel.delegate = self
     }
     
     // MARK: View lifecycle
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        authorizationView = AuthorizationView()
-        self.view = authorizationView
-        
-        authorizationView.appLabel.delegate = self
+        view = authorizationView
     }
     
     override func viewDidAppear(_ animated: Bool) {

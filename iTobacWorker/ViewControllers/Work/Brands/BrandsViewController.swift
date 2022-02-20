@@ -56,6 +56,9 @@ class BrandsViewController: UIViewController
     {
         brandsView = BrandsView()
         brandsPresenter = BrandsPresenter(delegate: self)
+        
+        brandsView.collectionView.delegate = self
+        brandsView.collectionView.dataSource = self
     }
     
     // MARK: View lifecycle
@@ -63,11 +66,7 @@ class BrandsViewController: UIViewController
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        
         view = brandsView
-        
-        brandsView.collectionView.delegate = self
-        brandsView.collectionView.dataSource = self
     }
     
     override func viewWillAppear(_ animated: Bool) {

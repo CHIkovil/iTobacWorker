@@ -54,8 +54,8 @@ final class CollectionViewCell: UICollectionViewCell {
     func constraintsBrandLabel() {
         brandLabel.snp.makeConstraints {(make) -> Void in
             make.center.equalTo(contentView.snp.center)
-            make.width.equalTo(contentView.bounds.width * 0.7)
-            make.height.equalTo(contentView.bounds.width * 0.3)
+            make.width.equalTo(contentView.snp.width).multipliedBy(0.7)
+            make.height.equalTo(contentView.snp.height).multipliedBy(0.3)
         }
     }
     
@@ -76,9 +76,15 @@ final class CollectionViewCell: UICollectionViewCell {
     }
     
     func makeLayer(){
-        let color = #colorLiteral(red: 0.1126094386, green: 0.1120074913, blue: 0.1353533268, alpha: 1)
-        contentView.layer.drawBlockLayer(cornerWidth: 25,color: color)
-        contentView.layer.drawBorder(25)
+        contentView.layer.cornerRadius = 12.0
+        contentView.layer.masksToBounds = true
+
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 1.0)
+        layer.shadowRadius = 1.0
+        layer.shadowOpacity = 0.2
+        layer.masksToBounds = false
+        layer.shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: self.contentView.layer.cornerRadius).cgPath
     }
 }
 

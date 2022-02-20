@@ -13,11 +13,9 @@ extension CALayer{
     
     //MARK: DRAW
     
-    func drawBlockLayer(cornerWidth: CGFloat, color: UIColor) {
-        self.sublayers?.forEach {
-            if ($0.name == "block"){
-                $0.removeFromSuperlayer()
-            }
+    func drawBlockLayer(cornerWidth: CGFloat, color: UIColor, borderWidth: CGFloat?) {
+        if self.sublayers?.contains(where: {$0.name == "block"}) == true{
+            return
         }
         
         let path = UIBezierPath(
@@ -34,18 +32,14 @@ extension CALayer{
         self.shadowOffset = .zero
         self.shadowRadius = 10
         
-    
         self.insertSublayer(shapeLayer, at: 0)
-    }
-    
-    func drawBorder(_ cornerRadius: CGFloat) {
-        self.cornerRadius = cornerRadius
-        self.borderWidth = 4
+        
+        guard let borderWidth = borderWidth else {
+            return
+        }
+
+        self.borderWidth = borderWidth
         self.borderColor = #colorLiteral(red: 0.08958115429, green: 0.08975156397, blue: 0.09752175957, alpha: 1)
-        self.shadowColor = UIColor.black.cgColor
-        self.shadowOpacity = 1
-        self.shadowOffset = .zero
-        self.shadowRadius = 10
     }
     
     //MARK: ANIMATION

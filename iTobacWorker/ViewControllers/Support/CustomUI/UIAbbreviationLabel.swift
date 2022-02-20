@@ -34,18 +34,18 @@ final class UIAbbreviationLabel: UIView {
     
     weak var delegate: UIAbbreviationDelegate?
     
-    override func draw(_ rect: CGRect) {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        makeUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
         makeUI()
     }
     
     //MARK: showAbbreviation
     func showAbbreviation() {
-        self.layer.sublayers?.forEach {
-            if ($0.name == UIAbbreviationLabelString.charLayerName.rawValue){
-                $0.removeFromSuperlayer()
-            }
-        }
-        
         let stringAttributes = [NSAttributedString.Key.font: UIFont(name: AppString.fontName.rawValue, size: UIAbbreviationLabelConstants.defTextSize)!]
         let attributedString = NSMutableAttributedString(string: AppString.appName.rawValue, attributes: stringAttributes )
         let charPaths = self.getCharPaths(attributedString: attributedString, position: CGPoint(x: -10, y: labelHeight - 10))
@@ -117,8 +117,8 @@ final class UIAbbreviationLabel: UIView {
     
     private func constraintsCigaretteImageView() {
         cigaretteImageView.snp.makeConstraints {(make) -> Void in
-            make.width.equalTo(labelHeight * 0.57)
-            make.height.equalTo(labelHeight * 0.57)
+            make.width.equalTo(self.snp.height).multipliedBy(0.57)
+            make.height.equalTo(self.snp.height).multipliedBy(0.57)
             make.centerX.equalTo(self.snp.centerX).offset(-22)
             make.bottom.equalTo(self.snp.bottom).offset(-6.5)
         }
@@ -126,8 +126,8 @@ final class UIAbbreviationLabel: UIView {
     
     private func constraintsSmokeImageView() {
         smokeImageView.snp.makeConstraints {(make) -> Void in
-            make.width.equalTo(labelHeight * 0.71)
-            make.height.equalTo(labelHeight * 0.71)
+            make.width.equalTo(self.snp.height).multipliedBy(0.81)
+            make.height.equalTo(self.snp.height).multipliedBy(0.81)
             make.centerX.equalTo(cigaretteImageView.snp.centerX).offset(-9)
             make.bottom.equalTo(cigaretteImageView.snp.top).offset(8)
         }

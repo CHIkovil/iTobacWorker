@@ -39,6 +39,11 @@ class SingleBrandViewController: UIViewController
     {
         singleBrandView = SingleBrandView()
         singleBrandPresenter = SingleBrandPresenter(delegate: self)
+        
+        
+        singleBrandView.brandImageView.image = brand.image
+        singleBrandView.brandLabel.text = brand.title
+        singleBrandView.closeButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didPressCloseButton)))
     }
     
     // MARK: View lifecycle
@@ -48,11 +53,6 @@ class SingleBrandViewController: UIViewController
         super.viewDidLoad()
         
         view = singleBrandView
-        
-        singleBrandView.brandImageView.image = brand.image
-        singleBrandView.brandLabel.text = brand.title
-        
-        singleBrandView.closeButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didPressCloseButton)))
     }
     
     // MARK: OBJC

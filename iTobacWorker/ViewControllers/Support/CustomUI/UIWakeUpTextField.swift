@@ -25,8 +25,18 @@ private enum UIWakeUpTextFieldConstants{
 
 final class UIWakeUpTextField: UIView {
     
-    override func draw(_ rect: CGRect) {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         makeUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        makeUI()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
         makeLayer()
     }
     
@@ -77,7 +87,7 @@ final class UIWakeUpTextField: UIView {
     private func constraintsTitleLabel(){
         titleLabel.snp.makeConstraints {(make) -> Void in
             make.width.equalTo(self.snp.width)
-            make.height.equalTo(textFieldHeight * 0.4)
+            make.height.equalTo(self.snp.height).multipliedBy(0.4)
             make.centerX.equalTo(textField.snp.centerX)
             make.bottom.equalTo(textField.snp.bottom)
         }
@@ -86,7 +96,7 @@ final class UIWakeUpTextField: UIView {
     private func constraintsTextField(){
         textField.snp.makeConstraints {(make) -> Void in
             make.width.equalTo(self.snp.width)
-            make.height.equalTo(textFieldHeight * 0.5)
+            make.height.equalTo(self.snp.height).multipliedBy(0.5)
             make.centerX.equalTo(self.snp.centerX)
             make.bottom.equalTo(self.snp.bottom)
         }
@@ -103,23 +113,21 @@ final class UIWakeUpTextField: UIView {
     }
     
     private func makeLayer(){
-        showLine()
+        self.showLine()
     }
     
     private func showLine(){
-        self.layer.sublayers?.forEach {
-            if ($0.name == UIWakeUpTextFieldString.lineLayerName.rawValue){
-                $0.removeFromSuperlayer()
-            }
+        if self.layer.sublayers?.contains(where: {$0.name == UIWakeUpTextFieldString.lineLayerName.rawValue}) == true{
+            return
         }
-        
-        let lineLayer = drawLineLayer( color: .lightGray)
+        let lineLayer = drawLineLayer(color: .lightGray)
         self.layer.addSublayer(lineLayer)
     }
     
     //MARK: DRAW
     
     private func drawLineLayer(color: UIColor) -> CAShapeLayer{
+     
         let path = UIBezierPath()
         path.move(to: lineStartPoint)
         path.addLine(to: lineEndPoint)

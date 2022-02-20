@@ -40,14 +40,6 @@ class ProgressViewController: UIViewController
     {
         self.progressView = ProgressView()
         self.progressDelegate = ProgressPresenter(delegate: self)
-    }
-    
-    // MARK: View lifecycle
-    
-    override func viewDidLoad()
-    {
-        super.viewDidLoad()
-        view = progressView
         
         self.imagePicker = ImagePicker(presentationController: self, delegate: self)
         self.progressView.moneyBankPicker.delegate = self
@@ -58,7 +50,14 @@ class ProgressViewController: UIViewController
         progressView.userImageView.addButtonGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didPressAddPhotoButton)))
         progressView.moneyGraphButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didPressMoneyGraphButton)))
         progressView.cigaretteGraphButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didPressCigaretteGraphButton)))
-        
+    }
+    
+    // MARK: View lifecycle
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        view = progressView
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -71,11 +70,7 @@ class ProgressViewController: UIViewController
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else{return}
-            self.saveUserData()
-        }
+        self.saveUserData()
     }
     
     // MARK: OBJC

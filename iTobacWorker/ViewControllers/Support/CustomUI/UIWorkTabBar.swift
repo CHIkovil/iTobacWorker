@@ -27,11 +27,20 @@ private enum UIWorkTabBarConstants{
 
 final class UIWorkTabBar: UITabBar{
     
-    override func draw(_ rect: CGRect) {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         makeUI()
-        makeLayer()
     }
     
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        makeUI()
+    }
+    
+    override func draw(_ rect: CGRect) {
+        makeLayer()
+    }
+
     //MARK: point
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         for subview in subviews {
@@ -81,7 +90,7 @@ final class UIWorkTabBar: UITabBar{
         return button
     }()
     
-
+    
     lazy var progressButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -104,8 +113,8 @@ final class UIWorkTabBar: UITabBar{
         infoButton.snp.makeConstraints {(make) -> Void in
             make.width.equalTo(UIWorkTabBarConstants.otherButtonDiameter)
             make.height.equalTo(UIWorkTabBarConstants.otherButtonDiameter)
-            make.centerX.equalTo(buttonStep)
-            make.centerY.equalTo(tabBarHeight / 2)
+            make.centerX.equalTo(self.snp.centerX).multipliedBy(0.5)
+            make.centerY.equalTo(self.snp.centerY)
         }
     }
     
@@ -113,8 +122,8 @@ final class UIWorkTabBar: UITabBar{
         searchButton.snp.makeConstraints {(make) -> Void in
             make.width.equalTo(UIWorkTabBarConstants.middleButtonDiameter)
             make.height.equalTo(UIWorkTabBarConstants.middleButtonDiameter)
-            make.centerX.equalTo(buttonStep * 2)
-            make.centerY.equalTo(tabBarHeight / 2).offset(20)
+            make.centerX.equalTo(self.snp.centerX)
+            make.centerY.equalTo(self.snp.centerY).offset(-20)
         }
     }
     
@@ -122,8 +131,8 @@ final class UIWorkTabBar: UITabBar{
         progressButton.snp.makeConstraints {(make) -> Void in
             make.width.equalTo(UIWorkTabBarConstants.otherButtonDiameter)
             make.height.equalTo(UIWorkTabBarConstants.otherButtonDiameter)
-            make.centerX.equalTo(buttonStep * 3)
-            make.centerY.equalTo(tabBarHeight / 2)
+            make.centerX.equalTo(self.snp.centerX).multipliedBy(1.5)
+            make.centerY.equalTo(self.snp.centerY)
         }
     }
     
@@ -140,25 +149,20 @@ final class UIWorkTabBar: UITabBar{
     }
     
     private func makeLayer(){
-        showFrame()
+        self.showFrame()
     }
     
     private func showFrame(){
-        if let layers = self.layer.sublayers?.filter({$0.name == UIWorkTabBarString.frameLayerName.rawValue}) {
-            if (!layers.isEmpty){
-                return
-            }
+        if self.layer.sublayers?.contains(where: {$0.name == UIWorkTabBarString.frameLayerName.rawValue}) == true{
+        return
         }
- 
-        let frameLayer = drawFrameLayer()
-        let circleLayer = drawCircleLayer()
+  
+        let color  = #colorLiteral(red: 0.1598679423, green: 0.1648836732, blue: 0.1904173791, alpha: 1)
+        self.layer.drawBlockLayer(cornerWidth: 25, color: color, borderWidth: nil)
         
-        self.layer.insertSublayer(frameLayer, at: 0)
+        let circleLayer = drawCircleLayer()
         self.layer.insertSublayer(circleLayer, at: 1)
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOpacity = 1
-        self.layer.shadowOffset = .zero
-        self.layer.shadowRadius = 10
+      
     }
     
     
@@ -169,18 +173,6 @@ final class UIWorkTabBar: UITabBar{
     }
     
     //MARK: DRAW
-    
-    private func drawFrameLayer() -> CAShapeLayer{
-        let path = UIBezierPath(
-            roundedRect: bounds,
-            byRoundingCorners: [.topLeft, .topRight],
-            cornerRadii: CGSize(width: 35, height: 0.0))
-        let shapeLayer = CAShapeLayer()
-        shapeLayer.path = path.cgPath
-        shapeLayer.fillColor = #colorLiteral(red: 0.1598679423, green: 0.1648836732, blue: 0.1904173791, alpha: 1).withAlphaComponent(0.87).cgColor
-        shapeLayer.name =  UIWorkTabBarString.frameLayerName.rawValue
-        return shapeLayer
-    }
     
     private func drawCircleLayer() -> CAShapeLayer{
         let path = UIBezierPath()
@@ -195,7 +187,7 @@ final class UIWorkTabBar: UITabBar{
         shapeLayer.name =  UIWorkTabBarString.frameLayerName.rawValue
         return shapeLayer
     }
-
+    
 }
 
 //MARK: ANIMATION EXTENSION

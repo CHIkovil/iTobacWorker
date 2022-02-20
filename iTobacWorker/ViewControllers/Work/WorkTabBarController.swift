@@ -18,38 +18,50 @@ class WorkTabBarController: UITabBarController {
     
     var workTabBar: UIWorkTabBar!
     
-    // MARK: View lifecycle
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        makeUI()
+    // MARK: Object lifecycle
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)
+    {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        setup()
+    }
+    
+    required init?(coder aDecoder: NSCoder)
+    {
+        super.init(coder: aDecoder)
+        setup()
+    }
+    
+    // MARK: Setup
+    
+    private func setup()
+    {
+        let brandsViewController = BrandsViewController()
+        let middleVC = UIViewController()
+        middleVC.view.backgroundColor = #colorLiteral(red: 0.1126094386, green: 0.1120074913, blue: 0.1353533268, alpha: 1)
+        let progressViewController = ProgressViewController()
+        
+        viewControllers = [brandsViewController, middleVC, progressViewController]
         
         workTabBar.infoButton.addTarget(self, action: #selector(didPressInfoButton), for: .touchUpInside)
         workTabBar.searchButton.addTarget(self, action: #selector(didPressSearchButton), for: .touchUpInside)
         workTabBar.progressButton.addTarget(self, action: #selector(didPressProgressButton), for: .touchUpInside)
-        
         self.view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(swipeViewController)))
+    }
+    
+    // MARK: View lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        let tabBar = UIWorkTabBar()
+        self.workTabBar = tabBar
+        self.setValue(tabBar, forKey: WorkTabBarControllerString.valueKey.rawValue)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         workTabBar.selectItem(at: selectedIndex)
-    }
-    
-    //MARK: SUPPORT FUNC
-    
-    func makeUI(){
-        let tabBar = UIWorkTabBar()
-        self.workTabBar = tabBar
-        self.setValue(tabBar, forKey: WorkTabBarControllerString.valueKey.rawValue)
-        
-        let brandsViewController = BrandsViewController()
-        
-        let middleVC = UIViewController()
-        middleVC.view.backgroundColor = #colorLiteral(red: 0.1126094386, green: 0.1120074913, blue: 0.1353533268, alpha: 1)
-        
-        let progressViewController = ProgressViewController()
-        
-        viewControllers = [brandsViewController, middleVC, progressViewController]
     }
     
     // MARK: OBJC

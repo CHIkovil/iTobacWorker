@@ -32,9 +32,22 @@ final class UICountPicker: UIView{
     var image: UIImage?
     var countType: Any?
     
-    override func draw(_ rect: CGRect) {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         makeUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        makeUI()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
         makeLayer()
+        
+        guard let image = image else {return}
+        imageView.image = image
     }
     
     //MARK: animateAttention
@@ -113,8 +126,8 @@ final class UICountPicker: UIView{
     
     private func constraintsImageView() {
         imageView.snp.makeConstraints {(make) -> Void in
-            make.width.equalTo(viewWidth * 0.55)
-            make.height.equalTo(viewHeight * 0.55)
+            make.width.equalTo(self.snp.width).multipliedBy(0.55)
+            make.height.equalTo(self.snp.height).multipliedBy(0.55)
             make.centerX.equalTo(self.snp.centerX)
             make.centerY.equalTo(self.snp.centerY).offset(-12)
         }
@@ -122,8 +135,8 @@ final class UICountPicker: UIView{
     
     private func constraintsStorageLabel() {
         storageLabel.snp.makeConstraints {(make) -> Void in
-            make.height.equalTo(viewHeight * 0.21)
-            make.width.equalTo(viewWidth * 0.9)
+            make.height.equalTo(self.snp.height).multipliedBy(0.21)
+            make.width.equalTo(self.snp.width).multipliedBy(0.9)
             make.top.equalTo(imageView.snp.bottom).offset(5)
             make.centerX.equalTo(imageView.snp.centerX)
         }
@@ -131,8 +144,8 @@ final class UICountPicker: UIView{
     
     private func constraintsInputTextField() {
         inputTextField.snp.makeConstraints {(make) -> Void in
-            make.height.equalTo(viewHeight * 0.19)
-            make.width.equalTo(viewWidth * 0.55)
+            make.height.equalTo(self.snp.height).multipliedBy(0.19)
+            make.width.equalTo(self.snp.width).multipliedBy(0.55)
             make.centerX.equalTo(storageLabel.snp.centerX).offset(-5)
             make.centerY.equalTo(storageLabel.snp.centerY)
         }
@@ -140,8 +153,8 @@ final class UICountPicker: UIView{
     
     private func constraintsInputButton() {
         inputButton.snp.makeConstraints {(make) -> Void in
-            make.height.equalTo(viewHeight * 0.17)
-            make.width.equalTo(viewWidth * 0.17)
+            make.height.equalTo(self.snp.height).multipliedBy(0.17)
+            make.width.equalTo(self.snp.width).multipliedBy(0.17)
             make.centerY.equalTo(inputTextField.snp.centerY)
             make.leading.equalTo(inputTextField.snp.trailing).offset(5)
         }
@@ -177,16 +190,11 @@ final class UICountPicker: UIView{
         constraintsStorageLabel()
         constraintsInputTextField()
         constraintsInputButton()
-        
-       
-        guard let image = image else {return}
-        imageView.image = image
     }
     
     private func makeLayer(){
         let color = #colorLiteral(red: 0.1126094386, green: 0.1120074913, blue: 0.1353533268, alpha: 1)
-        self.layer.drawBlockLayer(cornerWidth: 25,color: color)
-        self.layer.drawBorder(25)
+        self.layer.drawBlockLayer(cornerWidth: 25, color: color, borderWidth: 4)
     }
     
     private func addCountValue(value newValue: Int){
@@ -235,7 +243,7 @@ private extension UIView{
         animation.autoreverses = true
         animation.fromValue = NSValue(cgPoint: CGPoint(x: self.center.x - 1.5, y: self.center.y))
         animation.toValue = NSValue(cgPoint: CGPoint(x: self.center.x + 1.5, y: self.center.y))
-    
+        
         self.layer.add(animation, forKey: UICountPickerString.animationKey.rawValue)
     }
     

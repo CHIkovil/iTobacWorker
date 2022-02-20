@@ -30,6 +30,10 @@ class AuthorizationView: UIView{
         makeUI()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+    }
+    
     //MARK: UI
     
     lazy var boardView:UIView = {

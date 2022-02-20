@@ -10,7 +10,7 @@ import UIKit
 
 //MARK: STRING
 
-private enum UIUserImageViewString: String {
+enum UIUserImageViewString: String {
     case defImageName = "question"
     case buttonImageName = "add"
     case frameLayerName = "arcLayer"
@@ -19,8 +19,18 @@ private enum UIUserImageViewString: String {
 
 class UIUserImageView: UIView {
 
-    override func draw(_ rect: CGRect) {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         makeUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        makeUI()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
         makeLayer()
     }
     
@@ -56,7 +66,6 @@ class UIUserImageView: UIView {
         let imageView = UIImageView()
         imageView.image = UIImage(named: UIUserImageViewString.defImageName.rawValue)
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.layer.cornerRadius = (viewWidth + viewHeight) * 0.15
         imageView.clipsToBounds = true
         imageView.layer.masksToBounds = true
         imageView.backgroundColor = #colorLiteral(red: 0.9983720183, green: 0.890299499, blue: 0.4330784082, alpha: 1)
@@ -82,7 +91,6 @@ class UIUserImageView: UIView {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .clear
-        view.layer.cornerRadius = (viewWidth + viewHeight) * 0.15
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowOpacity = 1
         view.layer.shadowOffset = .zero
@@ -94,24 +102,24 @@ class UIUserImageView: UIView {
     
     private func constraintsBackgroundView() {
         backgroundView.snp.makeConstraints {(make) -> Void in
-            make.height.equalTo(viewHeight * 0.6)
-            make.width.equalTo(viewWidth * 0.6)
+            make.height.equalTo(self.snp.height).multipliedBy(0.6)
+            make.width.equalTo(self.snp.width).multipliedBy(0.6)
             make.center.equalTo(self.snp.center)
         }
     }
     
     private func constraintsImageView() {
         imageView.snp.makeConstraints {(make) -> Void in
-            make.height.equalTo(viewHeight * 0.6)
-            make.width.equalTo(viewWidth * 0.6)
+            make.height.equalTo(self.snp.height).multipliedBy(0.6)
+            make.width.equalTo(self.snp.width).multipliedBy(0.6)
             make.center.equalTo(self.snp.center)
         }
     }
     
     private func constraintsButton() {
         button.snp.makeConstraints {(make) -> Void in
-            make.height.equalTo(viewHeight * 0.18)
-            make.width.equalTo(viewWidth * 0.18)
+            make.height.equalTo(self.snp.height).multipliedBy(0.18)
+            make.width.equalTo(self.snp.width).multipliedBy(0.18)
             make.top.equalTo(imageView.snp.bottom).offset(-10)
             make.leading.equalTo(imageView.snp.trailing).offset(-10)
         }
@@ -131,16 +139,16 @@ class UIUserImageView: UIView {
     
     private func makeLayer(){
         let color = #colorLiteral(red: 0.1126094386, green: 0.1120074913, blue: 0.1353533268, alpha: 1)
-        self.layer.drawBlockLayer(cornerWidth: 35, color:color)
-        self.layer.drawBorder(25)
-        showImageFrame()
+        self.layer.drawBlockLayer(cornerWidth: 35, color:color, borderWidth: 4)
+        self.showImageFrame()
+        
+        imageView.layer.cornerRadius = (viewWidth + viewHeight) * 0.15
+        backgroundView.layer.cornerRadius = (viewWidth + viewHeight) * 0.15
     }
     
     private func showImageFrame(){
-        self.layer.sublayers?.forEach {
-            if ($0.name == UIUserImageViewString.frameLayerName.rawValue){
-                $0.removeFromSuperlayer()
-            }
+        if self.layer.sublayers?.contains(where: {$0.name == UIUserImageViewString.frameLayerName.rawValue}) == true{
+            return
         }
         
         for index in 1...3 {
@@ -174,6 +182,7 @@ class UIUserImageView: UIView {
     }
 }
 
+
 //MARK: ANIMATION EXTENSION
 
 private extension CALayer {
@@ -185,3 +194,4 @@ private extension CALayer {
         self.add(animation, forKey: UIUserImageViewString.arcAnimationKey.rawValue)
     }
 }
+

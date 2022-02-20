@@ -29,7 +29,8 @@ private enum UIGraphViewConstants {
 
 final class UIGraphView: UIView {
     
-    override func draw(_ rect: CGRect) {
+    override func layoutSubviews() {
+        super.layoutSubviews()
         makeUI()
         makeLayer()
     }
@@ -113,9 +114,6 @@ final class UIGraphView: UIView {
     //MARK: SUPPORT FUNC
     
     private func makeUI(){
-        let color = #colorLiteral(red: 0.1582991481, green: 0.1590825021, blue: 0.1307061911, alpha: 1)
-        self.layer.drawBlockLayer(cornerWidth: 25, color: color)
-        
         self.addSubview(minValueLabel)
         self.addSubview(maxValueLabel)
         self.addSubview(weekStackView)
@@ -125,14 +123,14 @@ final class UIGraphView: UIView {
     }
     
     private func makeLayer() {
-        showMarkup()
+        let color = #colorLiteral(red: 0.1582991481, green: 0.1590825021, blue: 0.1307061911, alpha: 1)
+        self.layer.drawBlockLayer(cornerWidth: 25, color: color, borderWidth: nil)
+        self.showMarkup()
     }
     
     private func showMarkup(){
-        self.layer.sublayers?.forEach {
-            if ($0.name == UIGraphViewString.markupLayerName.rawValue){
-                $0.removeFromSuperlayer()
-            }
+        if self.layer.sublayers?.contains(where: {$0.name == UIGraphViewString.markupLayerName.rawValue}) == true {
+            return
         }
         
         let horizontalLayer = drawHorizontalMarkup()
@@ -180,23 +178,20 @@ final class UIGraphView: UIView {
     }
     
     private func showGraph(_ setup: GraphSetup) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else {return}
-            var finalSetup = setup
-            if (finalSetup.viewSetup == nil) {
-                finalSetup.viewSetup = ViewSetup(width: self.viewWidth, height: self.viewHeight, graphMaxValue: self.maxValue!)
-            }
-            
-            let graphLayer = self.drawGraph(finalSetup)
-            self.layer.addSublayer(graphLayer.line)
-            self.layer.addSublayer(graphLayer.clipping)
-            graphLayer.points.enumerated().forEach {(index,point) in
-                point.addStickAnimation(duration: CGFloat(index + 1) / 10 + 0.1)
-                self.layer.addSublayer(point)
-            }
-
-            self.showGraphAnnotation(finalSetup)
+        var finalSetup = setup
+        if (finalSetup.viewSetup == nil) {
+            finalSetup.viewSetup = ViewSetup(width: self.viewWidth, height: self.viewHeight, graphMaxValue: self.maxValue!)
         }
+        
+        let graphLayer = self.drawGraph(finalSetup)
+        self.layer.addSublayer(graphLayer.line)
+        self.layer.addSublayer(graphLayer.clipping)
+        graphLayer.points.enumerated().forEach {(index,point) in
+            point.addStickAnimation(duration: CGFloat(index + 1) / 10 + 0.1)
+            self.layer.addSublayer(point)
+        }
+
+        self.showGraphAnnotation(finalSetup)
     }
     
     private func checkGraphsMaxValue(_ setups: [GraphSetup]) -> Bool {

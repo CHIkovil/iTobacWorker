@@ -24,11 +24,20 @@ final class UINormPicker: UIView{
     weak var delegate: UINormPickerDelegate?
     var normType: Any?
     
-    override func draw(_ rect: CGRect) {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         makeUI()
-        makeLayer()
     }
     
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        makeUI()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        makeLayer()
+    }    
     
     // MARK: addTextFieldTarget
     func addTextFieldTarget(target: Any?, action: Selector, event: UIControl.Event){
@@ -65,8 +74,8 @@ final class UINormPicker: UIView{
     
     private func constraintsInputTextField() {
         inputTextField.snp.makeConstraints {(make) -> Void in
-            make.width.equalTo(viewWidth * 0.60)
-            make.height.equalTo(viewHeight * 0.55)
+            make.width.equalTo(self.snp.width).multipliedBy(0.6)
+            make.height.equalTo(self.snp.height).multipliedBy(0.55)
             make.centerX.equalTo(self.snp.centerX)
             make.centerY.equalTo(self.snp.centerY)
         }
@@ -92,8 +101,7 @@ final class UINormPicker: UIView{
     
     private func makeLayer() {
         let color = #colorLiteral(red: 0.1126094386, green: 0.1120074913, blue: 0.1353533268, alpha: 1)
-        self.layer.drawBlockLayer(cornerWidth: 15,color: color)
-        self.layer.drawBorder(10)
+        self.layer.drawBlockLayer(cornerWidth: 15,color: color, borderWidth: 4)
     }
 }
 

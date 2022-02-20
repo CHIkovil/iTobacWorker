@@ -139,11 +139,9 @@
 		1700302E275D84720093DAC3 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				17ECA682277A1DCE00A1ADD5 /* String */,
-				17F1D19427669AA100C76A01 /* Extension */,
-				17003030275D849A0093DAC3 /* CustomUI */,
-				176E827E2775267900B73B0A /* SupportVC */,
-				17FB402427B8067F00A76F51 /* VC */,
+				179BA8B927C29D0F00FA2851 /* Support */,
+				17003039275D854A0093DAC3 /* Authorization */,
+				1700302F275D84910093DAC3 /* Work */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -193,12 +191,16 @@
 			path = GraphView;
 			sourceTree = "<group>";
 		};
-		176E827E2775267900B73B0A /* SupportVC */ = {
+		179BA8B927C29D0F00FA2851 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				17003030275D849A0093DAC3 /* CustomUI */,
+				17F1D19427669AA100C76A01 /* Extension */,
+				17ECA682277A1DCE00A1ADD5 /* String */,
 				17FB3683276149760046F6E0 /* ImagePicker.swift */,
+				17FB402627B80C8600A76F51 /* Animator.swift */,
 			);
-			path = SupportVC;
+			path = Support;
 			sourceTree = "<group>";
 		};
 		17ECA682277A1DCE00A1ADD5 /* String */ = {
@@ -294,31 +296,13 @@
 		17FB3FE127A4D29E00A76F51 /* Brands */ = {
 			isa = PBXGroup;
 			children = (
-				17FB402827B80D8400A76F51 /* Support */,
+				17FB402927B80E1600A76F51 /* CollectionViewCell.swift */,
 				17FB3FE527A4D2C000A76F51 /* BrandsModels.swift */,
 				17FB3FEE27A4D2F100A76F51 /* BrandsView.swift */,
 				17FB3FE627A4D2C000A76F51 /* BrandsViewController.swift */,
 				17FB3FE227A4D2C000A76F51 /* BrandsPresenter.swift */,
 			);
 			path = Brands;
-			sourceTree = "<group>";
-		};
-		17FB402427B8067F00A76F51 /* VC */ = {
-			isa = PBXGroup;
-			children = (
-				17003039275D854A0093DAC3 /* Authorization */,
-				1700302F275D84910093DAC3 /* Work */,
-			);
-			path = VC;
-			sourceTree = "<group>";
-		};
-		17FB402827B80D8400A76F51 /* Support */ = {
-			isa = PBXGroup;
-			children = (
-				17FB402627B80C8600A76F51 /* Animator.swift */,
-				17FB402927B80E1600A76F51 /* CollectionViewCell.swift */,
-			);
-			path = Support;
 			sourceTree = "<group>";
 		};
 		17FB402D27B8231100A76F51 /* SingleBrand */ = {
