@@ -194,7 +194,7 @@ final class UICountPicker: UIView{
     
     private func makeLayer(){
         let color = #colorLiteral(red: 0.1126094386, green: 0.1120074913, blue: 0.1353533268, alpha: 1)
-        self.layer.drawBlockLayer(cornerWidth: 25, color: color, borderWidth: 4)
+        self.layer.drawBlockLayer(cornerWidth: 25, color: color, borderWidth: nil)
     }
     
     private func addCountValue(value newValue: Int){

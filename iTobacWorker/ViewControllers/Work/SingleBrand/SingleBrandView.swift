@@ -18,7 +18,8 @@ private enum SingleBrandViewString: String {
 //MARK: CONSTANTS
 
 private enum SingleBrandViewConstants {
-    static let closeButtonOffset = 20
+    static let closeButtonTopOffset = 60
+    static let closeButtonRightOffset = 30
     static let imageViewHeight = 300.0
 }
 
@@ -39,16 +40,17 @@ class SingleBrandView: UIView {
     lazy var brandImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.backgroundColor = .clear
+        imageView.backgroundColor = #colorLiteral(red: 0.1220629886, green: 0.1255925298, blue: 0.1454096735, alpha: 1)
         return imageView
     }()
     
     lazy var brandLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: AppString.fontName.rawValue, size: 20)
-        label.textColor = .black
+        label.font = UIFont(name: AppString.fontName.rawValue, size: 40)
+        label.textColor = .white
         label.backgroundColor = .clear
+        label.textAlignment = .center
         return label
     }()
     
@@ -81,10 +83,10 @@ class SingleBrandView: UIView {
     
     func constraintsCloseButton() {
         closeButton.snp.makeConstraints {(make) -> Void in
-            make.top.equalTo(brandImageView.snp.top).offset(SingleBrandViewConstants.closeButtonOffset)
-            make.trailing.equalTo(brandImageView.snp.trailing).offset(-SingleBrandViewConstants.closeButtonOffset)
-            make.width.equalTo(SingleBrandViewConstants.imageViewHeight * 0.15)
-            make.height.equalTo(SingleBrandViewConstants.imageViewHeight * 0.15)
+            make.top.equalTo(self.snp.top).offset(SingleBrandViewConstants.closeButtonTopOffset)
+            make.trailing.equalTo(self.snp.trailing).offset(-SingleBrandViewConstants.closeButtonRightOffset)
+            make.width.equalTo(SingleBrandViewConstants.imageViewHeight * 0.12)
+            make.height.equalTo(SingleBrandViewConstants.imageViewHeight * 0.12)
         }
     }
     

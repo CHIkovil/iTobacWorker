@@ -27,6 +27,12 @@ extension CALayer{
         shapeLayer.fillColor = color.cgColor
         shapeLayer.name = "block"
        
+        if let borderWidth = borderWidth  {
+            self.borderWidth = borderWidth
+            self.borderColor = #colorLiteral(red: 0.08958115429, green: 0.08975156397, blue: 0.09752175957, alpha: 1)
+        }
+        
+        self.cornerRadius = cornerWidth
         self.shadowColor = UIColor.black.cgColor
         self.shadowOpacity = 1
         self.shadowOffset = .zero
@@ -34,12 +40,7 @@ extension CALayer{
         
         self.insertSublayer(shapeLayer, at: 0)
         
-        guard let borderWidth = borderWidth else {
-            return
-        }
-
-        self.borderWidth = borderWidth
-        self.borderColor = #colorLiteral(red: 0.08958115429, green: 0.08975156397, blue: 0.09752175957, alpha: 1)
+   
     }
     
     //MARK: ANIMATION

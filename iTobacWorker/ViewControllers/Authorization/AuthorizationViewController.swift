@@ -29,7 +29,7 @@ class AuthorizationViewController: UIViewController
     {
         authorizationView = AuthorizationView()
         
-        authorizationView.appLabel.delegate = self
+        
     }
     
     // MARK: View lifecycle
@@ -37,6 +37,8 @@ class AuthorizationViewController: UIViewController
     {
         super.viewDidLoad()
         view = authorizationView
+        
+        authorizationView.appLabel.delegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {

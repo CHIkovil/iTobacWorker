@@ -13,10 +13,14 @@ final class CollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         makeUI()
+        makeLayer()
+
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        makeUI()
+       
     }
     
     override func layoutSubviews() {
@@ -29,6 +33,7 @@ final class CollectionViewCell: UICollectionViewCell {
     lazy var brandImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.backgroundColor = #colorLiteral(red: 0.1220629886, green: 0.1255925298, blue: 0.1454096735, alpha: 1)
         return imageView
     }()
     
@@ -36,12 +41,14 @@ final class CollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: AppString.fontName.rawValue, size: 20)
-        label.textColor = .black
+        label.textColor = .white
+        label.backgroundColor = .clear
+        label.textAlignment = .center
         return label
     }()
     
     //MARK: CONSTRAINTS
-    
+
     func constraintsBrandImageView() {
         brandImageView.snp.makeConstraints {(make) -> Void in
             make.top.equalTo(contentView.snp.top)
@@ -50,12 +57,12 @@ final class CollectionViewCell: UICollectionViewCell {
             make.trailing.equalTo(contentView.snp.trailing)
         }
     }
-    
+
     func constraintsBrandLabel() {
         brandLabel.snp.makeConstraints {(make) -> Void in
             make.center.equalTo(contentView.snp.center)
-            make.width.equalTo(contentView.snp.width).multipliedBy(0.7)
-            make.height.equalTo(contentView.snp.height).multipliedBy(0.3)
+            make.width.equalTo(contentView.snp.width)
+            make.height.equalTo(contentView.snp.height)
         }
     }
     
@@ -63,7 +70,6 @@ final class CollectionViewCell: UICollectionViewCell {
     //MARK: SUPPORT FUNC
     
     func configure(with cellData: Brand) {
-        brandImageView.image = cellData.image
         brandLabel.text = cellData.title
     }
     
@@ -80,11 +86,12 @@ final class CollectionViewCell: UICollectionViewCell {
         contentView.layer.masksToBounds = true
 
         layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOffset = CGSize(width: 0, height: 1.0)
-        layer.shadowRadius = 1.0
-        layer.shadowOpacity = 0.2
+        layer.shadowOpacity = 1
+        layer.shadowOffset = .zero
+        layer.shadowRadius = 4
         layer.masksToBounds = false
         layer.shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: self.contentView.layer.cornerRadius).cgPath
+        
     }
 }
 

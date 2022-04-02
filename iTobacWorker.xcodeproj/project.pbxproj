@@ -49,7 +49,7 @@
 		17FB3FEB27A4D2C000A76F51 /* BrandsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB3FE527A4D2C000A76F51 /* BrandsModels.swift */; };
 		17FB3FEC27A4D2C000A76F51 /* BrandsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB3FE627A4D2C000A76F51 /* BrandsViewController.swift */; };
 		17FB3FEF27A4D2F100A76F51 /* BrandsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB3FEE27A4D2F100A76F51 /* BrandsView.swift */; };
-		17FB402727B80C8600A76F51 /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB402627B80C8600A76F51 /* Animator.swift */; };
+		17FB402727B80C8600A76F51 /* CollectionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB402627B80C8600A76F51 /* CollectionAnimator.swift */; };
 		17FB402A27B80E1600A76F51 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB402927B80E1600A76F51 /* CollectionViewCell.swift */; };
 		17FB403427B8282200A76F51 /* SingleBrandPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB402E27B8282200A76F51 /* SingleBrandPresenter.swift */; };
 		17FB403727B8282200A76F51 /* SingleBrandModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FB403127B8282200A76F51 /* SingleBrandModels.swift */; };
@@ -106,7 +106,7 @@
 		17FB3FE527A4D2C000A76F51 /* BrandsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsModels.swift; sourceTree = "<group>"; };
 		17FB3FE627A4D2C000A76F51 /* BrandsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsViewController.swift; sourceTree = "<group>"; };
 		17FB3FEE27A4D2F100A76F51 /* BrandsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsView.swift; sourceTree = "<group>"; };
-		17FB402627B80C8600A76F51 /* Animator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
+		17FB402627B80C8600A76F51 /* CollectionAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionAnimator.swift; sourceTree = "<group>"; };
 		17FB402927B80E1600A76F51 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		17FB402E27B8282200A76F51 /* SingleBrandPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleBrandPresenter.swift; sourceTree = "<group>"; };
 		17FB403127B8282200A76F51 /* SingleBrandModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleBrandModels.swift; sourceTree = "<group>"; };
@@ -198,7 +198,15 @@
 				17F1D19427669AA100C76A01 /* Extension */,
 				17ECA682277A1DCE00A1ADD5 /* String */,
 				17FB3683276149760046F6E0 /* ImagePicker.swift */,
-				17FB402627B80C8600A76F51 /* Animator.swift */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		179BA8BA27E79DDC00FA2851 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				17FB402627B80C8600A76F51 /* CollectionAnimator.swift */,
+				17FB402927B80E1600A76F51 /* CollectionViewCell.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -296,7 +304,7 @@
 		17FB3FE127A4D29E00A76F51 /* Brands */ = {
 			isa = PBXGroup;
 			children = (
-				17FB402927B80E1600A76F51 /* CollectionViewCell.swift */,
+				179BA8BA27E79DDC00FA2851 /* Support */,
 				17FB3FE527A4D2C000A76F51 /* BrandsModels.swift */,
 				17FB3FEE27A4D2F100A76F51 /* BrandsView.swift */,
 				17FB3FE627A4D2C000A76F51 /* BrandsViewController.swift */,
@@ -475,7 +483,7 @@
 				17003032275D84CC0093DAC3 /* WorkTabBarController.swift in Sources */,
 				17FB403727B8282200A76F51 /* SingleBrandModels.swift in Sources */,
 				17003045275D85AB0093DAC3 /* AuthorizationView.swift in Sources */,
-				17FB402727B80C8600A76F51 /* Animator.swift in Sources */,
+				17FB402727B80C8600A76F51 /* CollectionAnimator.swift in Sources */,
 				17003038275D84F70093DAC3 /* UIAbbreviationLabel.swift in Sources */,
 				17F90EE3275D8050002D03CD /* iTobacWorker.xcdatamodeld in Sources */,
 				175DED53278C750600C10DAB /* UINormPicker.swift in Sources */,

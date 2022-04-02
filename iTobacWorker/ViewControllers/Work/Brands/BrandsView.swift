@@ -11,8 +11,15 @@ import UIKit
 //MARK: CONSTANTS
 
 private enum BrandViewConstants {
-    static let collectionViewSide = 300
-    
+    static let collectionViewWidth = 350
+    static let collectionViewHeight = 507
+}
+
+// MARK: CONTANTS
+
+enum BrandsViewConstants {
+
+    static let cellSpacing: CGFloat = 8
 }
 
 class BrandsView: UIView {
@@ -31,8 +38,8 @@ class BrandsView: UIView {
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = Constants.cellSpacing
-        layout.minimumInteritemSpacing = Constants.cellSpacing
+        layout.minimumLineSpacing = BrandsViewConstants.cellSpacing
+        layout.minimumInteritemSpacing = BrandsViewConstants.cellSpacing
         layout.scrollDirection = .vertical
         
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -48,8 +55,8 @@ class BrandsView: UIView {
     func constraintsCollectionView() {
         collectionView.snp.makeConstraints {(make) -> Void in
             make.center.equalTo(self.snp.center)
-            make.height.equalTo(BrandViewConstants.collectionViewSide)
-            make.width.equalTo(BrandViewConstants.collectionViewSide)
+            make.height.equalTo(BrandViewConstants.collectionViewHeight)
+            make.width.equalTo(BrandViewConstants.collectionViewWidth)
         }
     }
     

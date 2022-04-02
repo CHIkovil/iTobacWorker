@@ -139,7 +139,7 @@ class UIUserImageView: UIView {
     
     private func makeLayer(){
         let color = #colorLiteral(red: 0.1126094386, green: 0.1120074913, blue: 0.1353533268, alpha: 1)
-        self.layer.drawBlockLayer(cornerWidth: 35, color:color, borderWidth: 4)
+        self.layer.drawBlockLayer(cornerWidth: 35, color:color, borderWidth: nil)
         self.showImageFrame()
         
         imageView.layer.cornerRadius = (viewWidth + viewHeight) * 0.15

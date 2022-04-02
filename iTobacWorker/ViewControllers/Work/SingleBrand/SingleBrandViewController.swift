@@ -41,8 +41,6 @@ class SingleBrandViewController: UIViewController
         singleBrandPresenter = SingleBrandPresenter(delegate: self)
         
         
-        singleBrandView.brandImageView.image = brand.image
-        singleBrandView.brandLabel.text = brand.title
         singleBrandView.closeButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didPressCloseButton)))
     }
     
@@ -53,6 +51,8 @@ class SingleBrandViewController: UIViewController
         super.viewDidLoad()
         
         view = singleBrandView
+        
+        singleBrandView.brandLabel.text = brand.title
     }
     
     // MARK: OBJC

@@ -27,17 +27,8 @@ private enum UIWorkTabBarConstants{
 
 final class UIWorkTabBar: UITabBar{
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        makeUI()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        makeUI()
-    }
-    
     override func draw(_ rect: CGRect) {
+        makeUI()
         makeLayer()
     }
 
