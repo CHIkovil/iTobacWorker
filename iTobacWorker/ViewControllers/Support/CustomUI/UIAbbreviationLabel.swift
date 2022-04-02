@@ -27,7 +27,7 @@ private enum UIAbbreviationLabelConstants{
 // MARK: DELEGATE
 
 protocol UIAbbreviationDelegate: AnyObject {
-    func didEndedAnimation()
+    func didEndedPresentAnimation()
 }
 
 final class UIAbbreviationLabel: UIView {
@@ -126,9 +126,9 @@ final class UIAbbreviationLabel: UIView {
     
     private func constraintsSmokeImageView() {
         smokeImageView.snp.makeConstraints {(make) -> Void in
-            make.width.equalTo(self.snp.height).multipliedBy(0.81)
-            make.height.equalTo(self.snp.height).multipliedBy(0.81)
-            make.centerX.equalTo(cigaretteImageView.snp.centerX).offset(-9)
+            make.width.equalTo(self.snp.height).multipliedBy(0.85)
+            make.height.equalTo(self.snp.height).multipliedBy(0.85)
+            make.centerX.equalTo(cigaretteImageView.snp.centerX).offset(-12)
             make.bottom.equalTo(cigaretteImageView.snp.top).offset(8)
         }
     }
@@ -187,12 +187,12 @@ private extension UIAbbreviationLabel {
             guard let self = self else{return}
             self.cigaretteImageView.alpha = 0.9
         }, completion: { _ in
-            delegate?.didEndedAnimation()
+            delegate?.didEndedPresentAnimation()
         })
     }
     
     func animateSmoke(){
-        UIView.animate(withDuration: 2) {[weak self] in
+        UIView.animate(withDuration: 3) {[weak self] in
             guard let self = self else{return}
             self.smokeImageView.alpha = 0.8
         }

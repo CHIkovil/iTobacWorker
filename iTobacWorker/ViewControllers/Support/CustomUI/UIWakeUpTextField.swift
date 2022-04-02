@@ -12,7 +12,7 @@ import SnapKit
 //MARK: STRING
 
 private enum UIWakeUpTextFieldString: String {
-    case titleLabelText = "Email or Username"
+    case titleLabelText = "Password"
     case lineLayerName = "line"
 }
 
@@ -23,7 +23,16 @@ private enum UIWakeUpTextFieldConstants{
     static let lineWidth: CGFloat = 2
 }
 
+// MARK: DELEGATE
+
+protocol UIWakeUpTextFieldDelegate: AnyObject {
+    func didEndedEnterAnimation()
+}
+
+
 final class UIWakeUpTextField: UIView {
+    
+    weak var delegate: UIWakeUpTextFieldDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,7 +54,6 @@ final class UIWakeUpTextField: UIView {
         let lineLayer = drawLineLayer(color: #colorLiteral(red: 0.1598679423, green: 0.1648836732, blue: 0.1904173791, alpha: 1))
         lineLayer.addActivationAnimation()
         self.layer.addSublayer(lineLayer)
-
         animateInputField()
     }
     
@@ -70,7 +78,7 @@ final class UIWakeUpTextField: UIView {
     
     private lazy var textField: UITextField = {
         let textField = UITextField()
-        textField.font = UIFont(name: AppString.fontName.rawValue, size: UIWakeUpTextFieldConstants.defTextSize + 1.5)
+        textField.font = UIFont(name: AppString.fontName.rawValue, size: UIWakeUpTextFieldConstants.defTextSize + 10)
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = #colorLiteral(red: 0.9386559129, green: 0.9388130307, blue: 0.9386352301, alpha: 1)
         textField.textColor = .black
@@ -79,6 +87,8 @@ final class UIWakeUpTextField: UIView {
         textField.alpha = 0
         textField.setLeftPaddingPoints(12)
         textField.layer.cornerRadius = 15
+        textField.isSecureTextEntry = true
+        textField.textAlignment = .center
         return textField
     }()
     
@@ -127,7 +137,7 @@ final class UIWakeUpTextField: UIView {
     //MARK: DRAW
     
     private func drawLineLayer(color: UIColor) -> CAShapeLayer{
-     
+        
         let path = UIBezierPath()
         path.move(to: lineStartPoint)
         path.addLine(to: lineEndPoint)
@@ -143,6 +153,14 @@ final class UIWakeUpTextField: UIView {
     }
 }
 
+//MARK: EXTENSION
+private extension String {
+    static func random(length: Int) -> String {
+        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        return String((0..<length).map{ _ in letters.randomElement()! })
+    }
+}
+
 //MARK: ANIMATION EXTENSION
 
 private extension UIWakeUpTextField {
@@ -151,11 +169,28 @@ private extension UIWakeUpTextField {
             guard let self = self else{return}
             self.titleLabel.transform.ty = -abs(self.textField.frame.height)
         },completion: {_ in
-            UIView.animate(withDuration: 0.5) {[weak self] in
+            UIView.animate(withDuration: 0.5, animations: {[weak self] in
                 guard let self = self else{return}
                 self.textField.alpha = 1
-            }
+            }, completion: { _ in
+                self.displayPassword(allDelay: 10, value: String.random(length: 7))
+            })
         })
     }
-   
+    
+    func displayPassword(allDelay: Int, value: String) {
+        var strValue = value
+        let delay = TimeInterval(allDelay / strValue.count)
+        
+        let timer = Timer.scheduledTimer(withTimeInterval: delay, repeats: true) {[weak self] timer in
+            guard let self = self else{return}
+            self.textField.text? += String(strValue.removeFirst())
+            if strValue == ""{
+                self.delegate?.didEndedEnterAnimation()
+                timer.invalidate()
+            }
+        }
+        RunLoop.main.add(timer, forMode: .common)
+    }
+    
 }

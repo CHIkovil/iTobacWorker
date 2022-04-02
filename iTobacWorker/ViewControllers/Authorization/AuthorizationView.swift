@@ -14,7 +14,7 @@ import SnapKit
 private enum AuthorizationViewConstants {
     static let boardViewSide: CGFloat = 300
     static let titleAppLabelHeight: CGFloat = 70
-    static let loginTextFieldWidth: CGFloat = 220
+    static let loginTextFieldWidth: CGFloat = 200
     static let loginTextFieldHeight: CGFloat = 100
 }
 
@@ -57,7 +57,7 @@ class AuthorizationView: UIView{
         return label
     }()
     
-    lazy var loginTextField: UIWakeUpTextField = {
+    lazy var passwordTextField: UIWakeUpTextField = {
         let textField = UIWakeUpTextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
@@ -82,11 +82,11 @@ class AuthorizationView: UIView{
         }
     }
     
-    func constraintsLoginTextField() {
-        loginTextField.snp.makeConstraints {(make) -> Void in
+    func constraintsPasswordTextField() {
+        passwordTextField.snp.makeConstraints {(make) -> Void in
             make.width.equalTo(AuthorizationViewConstants.loginTextFieldWidth)
             make.height.equalTo(AuthorizationViewConstants.loginTextFieldHeight)
-            make.bottom.equalTo(self.snp.centerY).offset(10)
+            make.bottom.equalTo(self.snp.centerY).offset(15)
             make.centerX.equalTo(self.snp.centerX)
         }
     }
@@ -95,13 +95,13 @@ class AuthorizationView: UIView{
     
     func makeUI() {
         self.backgroundColor = #colorLiteral(red: 0.1126094386, green: 0.1120074913, blue: 0.1353533268, alpha: 1)
-        boardView.addSubview(loginTextField)
+        boardView.addSubview(passwordTextField)
         self.addSubview(boardView)
         self.addSubview(appLabel)
         
         constraintsBoardView()
         constraintsTitleAppLabel()
-        constraintsLoginTextField()
+        constraintsPasswordTextField()
     }
 }
 
@@ -116,7 +116,7 @@ extension AuthorizationView {
             UIView.animate(withDuration: 0.5,animations: {[weak self] in
                 guard let self = self else{return}
                 self.boardView.alpha = 1
-                self.loginTextField.showInputField()
+                self.passwordTextField.showInputField()
             },completion: {[weak self] _ in
                 guard let self = self else{return}
                 self.appLabel.showSmoke()

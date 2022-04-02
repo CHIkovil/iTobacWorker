@@ -58,7 +58,7 @@ class SingleBrandViewController: UIViewController
     // MARK: OBJC
     
     @objc func didPressCloseButton() {
-        self.dismiss(animated: true)
+        self.dismiss(animated: false)
     }
 }
 

@@ -40,7 +40,7 @@ final class CollectionViewCell: UICollectionViewCell {
     lazy var brandLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: AppString.fontName.rawValue, size: 20)
+        label.font = UIFont(name: AppString.fontName.rawValue, size: 25)
         label.textColor = .white
         label.backgroundColor = .clear
         label.textAlignment = .center

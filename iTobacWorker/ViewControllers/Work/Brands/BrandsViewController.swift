@@ -95,8 +95,13 @@ extension BrandsViewController: BrandsViewDelegate {
 extension BrandsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
         let origCenter = cell.center
-        cell.transform = CGAffineTransform(scaleX: 0.2, y: 0.2).rotated(by: .pi)
+        
+        let random = arc4random_uniform(1000)
+        let angle = Double(2*CGFloat.pi*1000) / Double(random)
+        
+        cell.transform = CGAffineTransform(scaleX: 0.01, y: 0.01).rotated(by: angle)
         cell.center = CGPoint(x: self.brandsView.collectionView.bounds.midX, y: self.brandsView.collectionView.bounds.maxY)
         
         UIView.animate(

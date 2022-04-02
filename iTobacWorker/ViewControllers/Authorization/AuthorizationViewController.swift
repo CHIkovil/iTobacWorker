@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Dispatch
 
 class AuthorizationViewController: UIViewController
 {
@@ -39,6 +40,7 @@ class AuthorizationViewController: UIViewController
         view = authorizationView
         
         authorizationView.appLabel.delegate = self
+        authorizationView.passwordTextField.delegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -50,8 +52,20 @@ class AuthorizationViewController: UIViewController
 //MARK: DELEGATE EXTENSION
 
 extension AuthorizationViewController: UIAbbreviationDelegate{
-    func didEndedAnimation() {
+    func didEndedPresentAnimation() {
+        authorizationView.appLabel.showSmoke()
         authorizationView.showInputBoard()
+    }
+}
+
+extension AuthorizationViewController: UIWakeUpTextFieldDelegate {
+    func didEndedEnterAnimation() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            let nextViewController = WorkTabBarController()
+            nextViewController.modalTransitionStyle = .coverVertical
+            nextViewController.modalPresentationStyle = .fullScreen
+            self.present(nextViewController, animated: true)
+        }
     }
 }
 

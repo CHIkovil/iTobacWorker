@@ -76,7 +76,7 @@ class SingleBrandView: UIView {
     func constraintsBrandLabel() {
         brandLabel.snp.makeConstraints {(make) -> Void in
             make.center.equalTo(brandImageView.snp.center)
-            make.width.equalTo(SingleBrandViewConstants.imageViewHeight * 0.7)
+            make.width.equalTo(self.snp.width)
             make.height.equalTo(SingleBrandViewConstants.imageViewHeight * 0.3)
         }
     }

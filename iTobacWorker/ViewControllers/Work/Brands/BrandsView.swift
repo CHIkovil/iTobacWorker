@@ -44,7 +44,9 @@ class BrandsView: UIView {
         
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = #colorLiteral(red: 0.1126094386, green: 0.1120074913, blue: 0.1353533268, alpha: 1)
+        view.backgroundColor = #colorLiteral(red: 0.1075955555, green: 0.1069958732, blue: 0.1293319464, alpha: 1)
+        view.layer.cornerRadius = 15
+        view.layer.borderColor = UIColor.black.cgColor
         view.bounces = true
         view.showsVerticalScrollIndicator = false
         return view

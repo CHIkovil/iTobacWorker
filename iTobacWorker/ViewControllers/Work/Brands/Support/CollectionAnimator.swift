@@ -10,7 +10,7 @@ import UIKit
 
 final class CollectionAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
-    static let duration: TimeInterval = 1
+    static let duration: TimeInterval = 0.7
 
     private let firstViewController: BrandsViewController
     private let secondViewController: SingleBrandViewController
