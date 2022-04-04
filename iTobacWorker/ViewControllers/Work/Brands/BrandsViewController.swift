@@ -98,10 +98,9 @@ extension BrandsViewController: UICollectionViewDelegate, UICollectionViewDataSo
         
         let origCenter = cell.center
         
-        let random = arc4random_uniform(1000)
-        let angle = Double(2*CGFloat.pi*1000) / Double(random)
+        let randomAngle = arc4random_uniform(361) + 360
         
-        cell.transform = CGAffineTransform(scaleX: 0.01, y: 0.01).rotated(by: angle)
+        cell.transform = CGAffineTransform(scaleX: 0.01, y: 0.01).rotated(by: CGFloat(randomAngle))
         cell.center = CGPoint(x: self.brandsView.collectionView.bounds.midX, y: self.brandsView.collectionView.bounds.maxY)
         
         UIView.animate(
