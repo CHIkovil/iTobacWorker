@@ -21,6 +21,7 @@
 		176E82842779F7FD00B73B0A /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 176E82832779F7FD00B73B0A /* plus.png */; };
 		17AE64A1278791F8003820EC /* cigarettes.png in Resources */ = {isa = PBXBuildFile; fileRef = 17AE64A0278791F8003820EC /* cigarettes.png */; };
 		17AE64A32787BDE4003820EC /* question.png in Resources */ = {isa = PBXBuildFile; fileRef = 17AE64A22787BDE4003820EC /* question.png */; };
+		17C0F41627FE238200E1355F /* app.gif in Resources */ = {isa = PBXBuildFile; fileRef = 17C0F41527FE238200E1355F /* app.gif */; };
 		17ECA681277A183100A1ADD5 /* UIGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ECA680277A183100A1ADD5 /* UIGraphView.swift */; };
 		17ECA684277A1DFB00A1ADD5 /* AppString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ECA683277A1DFB00A1ADD5 /* AppString.swift */; };
 		17F1D193276698F200C76A01 /* UICountPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F1D192276698F200C76A01 /* UICountPicker.swift */; };
@@ -76,6 +77,7 @@
 		176E82832779F7FD00B73B0A /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
 		17AE64A0278791F8003820EC /* cigarettes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cigarettes.png; sourceTree = "<group>"; };
 		17AE64A22787BDE4003820EC /* question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = question.png; sourceTree = "<group>"; };
+		17C0F41527FE238200E1355F /* app.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = app.gif; sourceTree = "<group>"; };
 		17ECA680277A183100A1ADD5 /* UIGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIGraphView.swift; sourceTree = "<group>"; };
 		17ECA683277A1DFB00A1ADD5 /* AppString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppString.swift; sourceTree = "<group>"; };
 		17F1D192276698F200C76A01 /* UICountPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICountPicker.swift; sourceTree = "<group>"; };
@@ -211,6 +213,14 @@
 			path = Support;
 			sourceTree = "<group>";
 		};
+		17C0F41427FE22BF00E1355F /* Example */ = {
+			isa = PBXGroup;
+			children = (
+				17C0F41527FE238200E1355F /* app.gif */,
+			);
+			path = Example;
+			sourceTree = "<group>";
+		};
 		17ECA682277A1DCE00A1ADD5 /* String */ = {
 			isa = PBXGroup;
 			children = (
@@ -231,6 +241,7 @@
 		17F90ECC275D8050002D03CD = {
 			isa = PBXGroup;
 			children = (
+				17C0F41427FE22BF00E1355F /* Example */,
 				17F90ED7275D8050002D03CD /* iTobacWorker */,
 				17F90ED6275D8050002D03CD /* Products */,
 				6E90641452C66F4D5C10986D /* Pods */,
@@ -417,6 +428,7 @@
 				17FB36962766759D0046F6E0 /* ashtray.png in Resources */,
 				17AE64A1278791F8003820EC /* cigarettes.png in Resources */,
 				17FB3671275E5B1A0046F6E0 /* smoke.png in Resources */,
+				17C0F41627FE238200E1355F /* app.gif in Resources */,
 				17FB366D275E5B1A0046F6E0 /* info.png in Resources */,
 				17AE64A32787BDE4003820EC /* question.png in Resources */,
 				17FB366E275E5B1A0046F6E0 /* search.png in Resources */,
